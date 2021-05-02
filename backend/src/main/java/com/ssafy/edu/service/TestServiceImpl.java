@@ -44,4 +44,11 @@ public class TestServiceImpl implements TestService {
         ret.status = false;
         return new ResponseEntity<>(ret, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<TestResponse> sendReturn(){
+        TestResponse ret = new TestResponse();
+        ret.status = true;
+        return new ResponseEntity<>(ret, HttpStatus.OK);
+    }
 }

@@ -31,5 +31,7 @@ public class test {
     public ResponseEntity<TestResponse> SendDate(@PathVariable("pk") int pk) {
         return testService.sendDate(pk);
     }
-
+    @ApiOperation(value = "test", notes = "")
+    @GetMapping("/")
+    public ResponseEntity<TestResponse> SendReturn(){return testService.sendReturn();}
 }
