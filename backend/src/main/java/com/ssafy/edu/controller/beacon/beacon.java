@@ -1,0 +1,36 @@
+package com.ssafy.edu.controller.beacon;
+
+
+import com.ssafy.edu.model.beacon.BeaconResponse;
+import com.ssafy.edu.service.beacon.BeaconService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@ApiResponses(value = {@ApiResponse(code = 401, message = "Unauthorized", response = BeaconResponse.class),
+        @ApiResponse(code = 403, message = "Forbidden", response = BeaconResponse.class),
+        @ApiResponse(code = 404, message = "Not Found", response = BeaconResponse.class),
+        @ApiResponse(code = 500, message = "Failure", response = BeaconResponse.class)})
+
+
+@RestController
+@RequestMapping("/beacon")
+public class beacon {
+    @Autowired
+    BeaconService beaconService;
+
+    @ApiOperation(value = "비콘 전체 목록 불러오기", notes = "")
+    @GetMapping("/")
+    public ResponseEntity<BeaconResponse> GetBeaconAll(){
+        return beaconService.getBeaconAll();
+    }
+
+    @ApiOperation(value = "비콘 추가", notes = "")
+    @PostMapping("/{beacon_id}/{name}")
+    public ResponseEntity<BeaconResponse> CreateBeacon(@PathVariable("beacon_id") String beacon_id, @PathVariable("name") String name){
+        return beaconService.createBeacon(beacon_id, name);
+    }
+}
