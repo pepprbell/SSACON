@@ -49,6 +49,7 @@
   "author": "DataCyber-OrChuban, react.cordova: Apache Cordova Team and React.js",
   "license": "Apache-2.0",
   "devDependencies": {
+    "cordova-android": "9.1.0",
     "cordova-browser": "6.0.0",
     "cordova-plugin-badge": "0.8.8",
     "cordova-plugin-device": "2.0.3",
@@ -61,7 +62,8 @@
       "cordova-plugin-local-notification": {}
     },
     "platforms": [
-      "browser"
+      "browser",
+      "android"
     ]
   }
 }
