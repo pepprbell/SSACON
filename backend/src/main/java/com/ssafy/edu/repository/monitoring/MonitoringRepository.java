@@ -1,4 +1,4 @@
-package com.ssafy.edu.repository.beacon;
+package com.ssafy.edu.repository.monitoring;
 
 
 import com.ssafy.edu.model.beacon.Beacon;
@@ -6,10 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface BeaconRepository extends JpaRepository<Beacon, String> {
+public interface MonitoringRepository extends JpaRepository<Beacon, String> {
     public List<Beacon> findAll();
-//    public Optional<Beacon> findByBeaconId(String beaconid);
 }
