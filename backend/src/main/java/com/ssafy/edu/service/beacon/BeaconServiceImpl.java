@@ -90,6 +90,7 @@ public class BeaconServiceImpl implements BeaconService{
                     beaconOpt.get().setBeaconTemperature(i.getTemperature());
                     beaconOpt.get().setBeaconMoisture(i.getHumidity());
                     beaconOpt.get().setBeaconBattery(i.getBattery());
+                    beaconRepository.save(beaconOpt.get());
                 }
                 else{
                     ret.status = false;
