@@ -1,6 +1,7 @@
 package com.ssafy.edu.model.beacon;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.edu.model.user.User;
 import lombok.*;
 
@@ -19,10 +20,12 @@ public class BeaconUsers {
     @Column(name = "user_beacon_id")
     private Long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "beacon_id")
     private Beacon beacon;

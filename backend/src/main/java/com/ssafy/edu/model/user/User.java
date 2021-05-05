@@ -1,7 +1,6 @@
 package com.ssafy.edu.model.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ssafy.edu.model.beacon.Beacon;
 import com.ssafy.edu.model.beacon.BeaconUsers;
 import lombok.*;
 
@@ -28,7 +27,7 @@ public class User {
 
     private Date lastSignal;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "user")
-    private List<BeaconUsers> beacons = new ArrayList<>();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
+    List<BeaconUsers> beacons = new ArrayList<>();
 }

@@ -2,7 +2,6 @@ package com.ssafy.edu.model.beacon;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ssafy.edu.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,7 +26,7 @@ public class Beacon {
 
     private double beaconBattery;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "beacon")
-    private List<BeaconUsers> users = new ArrayList<>();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "beacon", cascade = {CascadeType.ALL})
+    List<BeaconUsers> users = new ArrayList<>();
 }

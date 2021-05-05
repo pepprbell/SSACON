@@ -15,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,22 +34,19 @@ public class BeaconServiceImpl implements BeaconService{
 
     @Override
     public ResponseEntity<BeaconResponse> getBeaconAll(){
-        ResponseEntity response;
         BeaconResponse ret = new BeaconResponse();
         List<Beacon> beacons = beaconRepository.findAll();
         List<BeaconMonitorResponse> beaconMonitorResponses = new ArrayList<>();
         for(Beacon i:beacons){
             String tmp = i.getBeaconId();
-            Beacon tmp1 = i;
             BeaconMonitorResponse t = new BeaconMonitorResponse();
             t.setId(tmp);
-            t.setBeacon(tmp1);
+            t.setBeacon(i);
             beaconMonitorResponses.add(t);
         }
         ret.data = beaconMonitorResponses;
         ret.status = true;
-        response = new ResponseEntity<>(ret, HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(ret, HttpStatus.OK);
     }
 
     @Override
@@ -71,20 +70,23 @@ public class BeaconServiceImpl implements BeaconService{
         List<String> ids = new ArrayList<>();
         Optional<User> userOpt = userRepository.findByUserId(userid);
         if(userOpt.isPresent()) {
+            userOpt.get().setLastSignal(Date.from(Instant.now()));
             List<BeaconUsers> beaconUsersOptU = beaconUsersRepository.findByUser(userOpt.get());
-            for(BeaconUsers i: beaconUsersOptU){
-                beaconUsersRepository.delete(i);
+            if(!beaconUsersOptU.isEmpty()) {
+                for (BeaconUsers i : beaconUsersOptU) {
+                    beaconUsersRepository.delete(i);
+                }
             }
             for (BeaconContent i : beaconScanList) {
                 String id = i.getBeacon_id();
                 Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(id);
-                BeaconUsers beaconUsers = new BeaconUsers();
-                beaconUsers = BeaconUsers.builder()
-                        .user(userOpt.get())
-                        .beacon(beaconOpt.get())
-                        .build();
-                BeaconUsers save = beaconUsersRepository.save(beaconUsers);
                 if(beaconOpt.isPresent()){
+                    BeaconUsers beaconUsers = new BeaconUsers();
+                    beaconUsers = BeaconUsers.builder()
+                            .user(userOpt.get())
+                            .beacon(beaconOpt.get())
+                            .build();
+                    BeaconUsers save = beaconUsersRepository.save(beaconUsers);
                     beaconOpt.get().setBeaconTemperature(i.getTemperature());
                     beaconOpt.get().setBeaconMoisture(i.getHumidity());
                     beaconOpt.get().setBeaconBattery(i.getBattery());
