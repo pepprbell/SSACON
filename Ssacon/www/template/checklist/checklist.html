@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="checklist.css">
+  <title>Checklist</title>
+</head>
+<body>
+  <!-- input값은 라디오버튼(OK, NG)으로만 input하도록 넣어둠 -->
+  <!-- 사용된 ID 목록 | 라디오버튼OK : radioOk | 라디오버튼NG : radioNg | 제출용 버튼 : checkSubmit -->
+  <div class="check-container">
+    <h3>Check Sheet 입력</h3>
+    <table class="c-tg">
+    <thead>
+      <tr>
+        <td class="tg-0pky c-head">No.1</td>
+        <td class="tg-0pky" colspan="3">조작장치가 정상적으로 작동하는가?</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tg-0pky c-head">점검방법</td>
+        <td class="tg-0pky" colspan="3">육안확인</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky c-head">이전 점검자</td>
+        <td class="tg-0pky">ㅁㅁㅁ</td>
+        <td class="tg-0pky">이전 점검일 </td>
+        <td class="tg-0pky">2021-05-05</td>
+      </tr>
+      <tr>
+        <div class="four-cells">
+        <td class="tg-0pky c-head">이전 점검 결과</td>
+        <td class="tg-0pky">Y</td>
+        </div>
+        <div class="four-cells">
+        <td class="tg-0pky c-head">Spec</td>
+        <td class="tg-0pky">-</td>
+      </div>
+      </tr>
+      <tr>
+        <td class="tg-0pky c-head">점검 결과</td>
+        <td class="tg-0pky" colspan="3">
+          <div class="c-radio">
+          <label for="radioOk">OK</label>
+          <input id="radioOk" name="cRadio" type="radio" value="OK">
+          <label for="radioNg">NG</label>
+          <input id="radioNg" name="cRadio" type="radio" value="NG">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="tg-0pky c-head">처리 결과</td>
+        <td class="tg-0pky" colspan="3">이슈사항</td>
+      </tr>
+      <tr>
+        <div class="four-cells">
+        <td class="tg-0lax c-head">점검할 위치</td>
+        <td class="tg-0lax">설비비콘명</td>
+        </div>
+        <div class="four-cells">
+        <td class="tg-0lax c-head">현재 위치</td>
+        <td class="tg-0lax">설비비콘명</td>
+        </div>
+      </tr>
+    </tbody>
+    </table>
+    <button id="checkSubmit" class="c-btn">테스트용 제출 버튼</button>
+  </div>
+</body>
+</html>
