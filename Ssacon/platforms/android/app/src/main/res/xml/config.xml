@@ -34,4 +34,5 @@
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="KeepRunning" value="true" />
+    <preference name="AndroidXEnabled" value="true" />
 </widget>
