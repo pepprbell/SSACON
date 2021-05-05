@@ -25,9 +25,9 @@ public class Beacon {
 
     private double beaconTemperature;
 
-    private int beaconBattery;
+    private double beaconBattery;
 
     @Builder.Default
-    @OneToMany(mappedBy = "beacon", cascade = {CascadeType.ALL})
-    private List<User> wokerList = new ArrayList<>();
+    @OneToMany(mappedBy = "beacon")
+    private List<BeaconUsers> users = new ArrayList<>();
 }

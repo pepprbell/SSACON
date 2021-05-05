@@ -1,8 +1,8 @@
 package com.ssafy.edu.controller.beacon;
 
 
+import com.ssafy.edu.model.beacon.BeaconContent;
 import com.ssafy.edu.model.beacon.BeaconResponse;
-import com.ssafy.edu.model.beacon.BeaconScan;
 import com.ssafy.edu.service.beacon.BeaconService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -39,7 +39,7 @@ public class beacon {
 
     @ApiOperation(value = "현재 스캔된 비콘 정보", notes = "")
     @PostMapping("/{userid}/scan")
-    public ResponseEntity<BeaconResponse> ScanBeacon(@PathVariable("userid") String userid,@RequestBody List<BeaconScan> beaconScanList){
+    public ResponseEntity<BeaconResponse> ScanBeacon(@PathVariable("userid") String userid,@RequestBody List<BeaconContent> beaconScanList){
         return beaconService.scanBeacons(beaconScanList, userid);
     }
 }

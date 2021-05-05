@@ -18,4 +18,5 @@ public class BeaconContent {
     String beacon_name;
     double temperature;
     double humidity;
+    double battery;
 }

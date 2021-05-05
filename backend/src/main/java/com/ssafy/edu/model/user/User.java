@@ -2,9 +2,13 @@ package com.ssafy.edu.model.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.edu.model.beacon.Beacon;
+import com.ssafy.edu.model.beacon.BeaconUsers;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Builder
@@ -22,8 +26,9 @@ public class User {
 
     private String userPassword;
 
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name="beaconId")
-    private Beacon beacon;
+    private Date lastSignal;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "user")
+    private List<BeaconUsers> beacons = new ArrayList<>();
 }

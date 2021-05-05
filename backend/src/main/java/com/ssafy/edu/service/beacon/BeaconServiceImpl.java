@@ -1,15 +1,14 @@
 package com.ssafy.edu.service.beacon;
 
 
-import com.amazonaws.services.dynamodbv2.xspec.B;
 import com.ssafy.edu.model.beacon.Beacon;
 import com.ssafy.edu.model.beacon.BeaconContent;
 import com.ssafy.edu.model.beacon.BeaconResponse;
-import com.ssafy.edu.model.beacon.BeaconScan;
+import com.ssafy.edu.model.beacon.BeaconUsers;
 import com.ssafy.edu.model.monitoring.BeaconMonitorResponse;
-import com.ssafy.edu.model.monitoring.MonitoringResponse;
 import com.ssafy.edu.model.user.User;
 import com.ssafy.edu.repository.beacon.BeaconRepository;
+import com.ssafy.edu.repository.blockusers.BeaconUsersRepository;
 import com.ssafy.edu.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +26,9 @@ public class BeaconServiceImpl implements BeaconService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    BeaconUsersRepository beaconUsersRepository;
 
     @Override
     public ResponseEntity<BeaconResponse> getBeaconAll(){
@@ -64,35 +66,41 @@ public class BeaconServiceImpl implements BeaconService{
     }
 
     @Override
-    public ResponseEntity<BeaconResponse> scanBeacons(List<BeaconScan> beaconScanList, String userid){
+    public ResponseEntity<BeaconResponse> scanBeacons(List<BeaconContent> beaconScanList, String userid){
         BeaconResponse ret = new BeaconResponse();
         List<String> ids = new ArrayList<>();
         Optional<User> userOpt = userRepository.findByUserId(userid);
         if(userOpt.isPresent()) {
-            for (BeaconScan i : beaconScanList) {
+            List<BeaconUsers> beaconUsersOptU = beaconUsersRepository.findByUser(userOpt.get());
+            for(BeaconUsers i: beaconUsersOptU){
+                beaconUsersRepository.delete(i);
+            }
+            for (BeaconContent i : beaconScanList) {
                 String id = i.getBeacon_id();
-//                Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(id);
-                BeaconContent content = i.getContent();
-//                if(beaconOpt.isPresent()){
-//                    beaconOpt.get().setBeaconTemperature(content.getTemperature());
-//                    beaconOpt.get().setBeaconMoisture(content.getHumidity());
-//                    List<User> tmpworkers = beaconOpt.get().getWokerList();
-//                    tmpworkers.add(userOpt.get());
-//                    beaconOpt.get().setWokerList(tmpworkers);
-//                }
-//                else{
-//                    ret.status = false;
-//                    return new ResponseEntity<>(ret, HttpStatus.OK);
-//                 }
+                Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(id);
+                BeaconUsers beaconUsers = new BeaconUsers();
+                beaconUsers = BeaconUsers.builder()
+                        .user(userOpt.get())
+                        .beacon(beaconOpt.get())
+                        .build();
+                BeaconUsers save = beaconUsersRepository.save(beaconUsers);
+                if(beaconOpt.isPresent()){
+                    beaconOpt.get().setBeaconTemperature(i.getTemperature());
+                    beaconOpt.get().setBeaconMoisture(i.getHumidity());
+                    beaconOpt.get().setBeaconBattery(i.getBattery());
+                }
+                else{
+                    ret.status = false;
+                    return new ResponseEntity<>(ret, HttpStatus.OK);
+                }
                 ids.add(id);
             }
             ret.data = ids;
             ret.status = true;
-            return new ResponseEntity<>(ret, HttpStatus.OK);
         }
         else{
             ret.status = false;
-            return new ResponseEntity<>(ret, HttpStatus.OK);
         }
+        return new ResponseEntity<>(ret, HttpStatus.OK);
     }
 }

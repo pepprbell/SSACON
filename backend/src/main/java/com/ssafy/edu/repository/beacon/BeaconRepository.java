@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface BeaconRepository extends JpaRepository<Beacon, String> {
     public List<Beacon> findAll();
-//    public Optional<Beacon> findByBeaconId(String beaconid);
+    public Optional<Beacon> findByBeaconId(String beaconid);
 }
