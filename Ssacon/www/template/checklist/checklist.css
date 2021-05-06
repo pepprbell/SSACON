@@ -1,11 +1,17 @@
 @media screen and (min-width: 640px) {
-  .c-tg {
+  .c-table ul {
+    width: 640px;
+  }
+  .c-table {
     width: 640px;
   }
 }
 
 @media screen and (max-width: 640px) {
-  .c-tg {
+  .c-table ul {
+    width: 100%;
+  }
+  .c-table {
     width: 100%;
   }
 }
@@ -13,33 +19,28 @@
 .check-container {
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
-
-.c-tg {
-  margin: 0 auto;
-  font-size: 11px;
-  border-collapse: collapse;
-  border-spacing:0;
-  border-top: 2px solid rgba(0,0,0,0.3);
-  border-bottom: 2px solid rgba(0,0,0,0.3);
+.c-table {
+  border-top: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
+  margin: 20px auto;
+  text-align: left;
 }
 
-.c-tg tr {
+.c-table ul {
+  margin: 0;
+  padding: 0;
+  display: table;
+  table-layout: fixed;
+}
+
+.c-table li {
+  list-style-type: none;
   border-bottom: 1px solid #ccc;
-}
-
-.c-tg td {
-  overflow:hidden;
-  padding:10px 5px;
-  word-break:normal;
-}
-
-.c-tg th {
-  font-weight:normal;
-  overflow:hidden;
-  padding:10px 5px;
-  word-break:normal;
+  display: table-cell;
+  padding: 10px 0;
 }
 
 .c-btn {
@@ -58,15 +59,6 @@
   width: 50%;
 }
 
-.c-tg input[type=text] {
-  width: 90%;
-  margin: 0 5px;
-  border: none;
-}
-
-.c-tg input[type=radio] {
-  margin: 0 15px 0 5px;
-}
-
-.c-tg label {
+.c-head {
+  font-weight: bold;
 }
