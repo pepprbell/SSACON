@@ -1,6 +1,6 @@
 const { Manager, Connection } = require('buildthing-ble-sdk')
 
-const beaconList = { name : 'dfdf' } 
+const beaconList = {} 
 
 var app = {
    initialize: function() {
@@ -18,8 +18,6 @@ var app = {
        document.getElementById("addBeacon").addEventListener("click", this.callBeaconListDB.bind(this))
       //  document.getElementById("addBeacon").addEventListener("click", this.createBeaconForm.bind(this))
    },
-
-
 
    onDeviceReady: function() {
     this.bleManager = new Manager()
@@ -39,7 +37,6 @@ var app = {
     //       bleConnection.changeMode()
     //     }
     //   }
-      console.log(beacon);
       beaconList[beacon.id] = beacon
       console.log(beaconList);
     })
@@ -47,10 +44,10 @@ var app = {
 
    startScan: function() {
      if(this.isBlePoweredOn === true) {
-        this.bleManager.setBackgroundBetweenScanPeriod(2000)
-        this.bleManager.setBackgroundScanPeriod(2000)
-        this.bleManager.setForegroundBetweenScanPeriod(2000)
-        this.bleManager.setForegroundScanPeriod(2000)
+        this.bleManager.setBackgroundBetweenScanPeriod(3000)
+        this.bleManager.setBackgroundScanPeriod(3000)
+        this.bleManager.setForegroundBetweenScanPeriod(3000)
+        this.bleManager.setForegroundScanPeriod(3000)
         this.bleManager.updateScanPeriod()
         this.bleManager.startScan()
         // createBeaconForm();
