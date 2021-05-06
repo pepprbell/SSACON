@@ -73,6 +73,9 @@ public class BeaconServiceImpl implements BeaconService{
             userOpt.get().setLastSignal(Date.from(Instant.now()));
             userRepository.save(userOpt.get());
             List<BeaconUsers> beaconUsersOptU = beaconUsersRepository.findByUser(userOpt.get());
+            for(BeaconUsers i: beaconUsersOptU){
+                beaconUsersRepository.delete(i);
+            }
             if(!beaconUsersOptU.isEmpty()) {
                 for (BeaconUsers i : beaconUsersOptU) {
                     beaconUsersRepository.delete(i);

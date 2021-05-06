@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,7 +37,11 @@ public class MonitoringServiceImpl implements MonitoringService{
             List<User> tmp1 = new ArrayList<>();
             if(!beaconUsers.isEmpty()){
                 for(BeaconUsers j: beaconUsers){
-                    tmp1.add(j.getUser());
+                    Date tmptime = j.getUser().getLastSignal();
+                    Date timeNow = Date.from(Instant.now());
+                    if(timeNow.getTime() - tmptime.getTime() < 4000){
+                        tmp1.add(j.getUser());
+                    }
                 }
             }
             tmp.setBeaconId(i.getBeaconId());
