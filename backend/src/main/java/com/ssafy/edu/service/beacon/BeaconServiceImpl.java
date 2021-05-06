@@ -16,10 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BeaconServiceImpl implements BeaconService{
@@ -73,34 +70,35 @@ public class BeaconServiceImpl implements BeaconService{
             userOpt.get().setLastSignal(Date.from(Instant.now()));
             userRepository.save(userOpt.get());
             List<BeaconUsers> beaconUsersOptU = beaconUsersRepository.findByUser(userOpt.get());
-            for(BeaconUsers i: beaconUsersOptU){
-                beaconUsersRepository.delete(i);
-            }
             if(!beaconUsersOptU.isEmpty()) {
                 for (BeaconUsers i : beaconUsersOptU) {
                     beaconUsersRepository.delete(i);
                 }
             }
+            List<String> tmpset = new ArrayList<>();
+            Collections.reverse(beaconScanList);
             for (BeaconContent i : beaconScanList) {
                 String id = i.getBeacon_id();
                 Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(id);
                 if(beaconOpt.isPresent()){
-                    BeaconUsers beaconUsers = new BeaconUsers();
-                    beaconUsers = BeaconUsers.builder()
-                            .user(userOpt.get())
-                            .beacon(beaconOpt.get())
-                            .build();
-                    BeaconUsers save = beaconUsersRepository.save(beaconUsers);
-                    beaconOpt.get().setBeaconTemperature(i.getTemperature());
-                    beaconOpt.get().setBeaconMoisture(i.getHumidity());
-                    beaconOpt.get().setBeaconBattery(i.getBattery());
-                    beaconRepository.save(beaconOpt.get());
+                    if(!tmpset.contains(id)) {
+                        tmpset.add(id);
+                        BeaconUsers beaconUsers = BeaconUsers.builder()
+                                .user(userOpt.get())
+                                .beacon(beaconOpt.get())
+                                .build();
+                        BeaconUsers save = beaconUsersRepository.save(beaconUsers);
+                        beaconOpt.get().setBeaconTemperature(i.getTemperature());
+                        beaconOpt.get().setBeaconMoisture(i.getHumidity());
+                        beaconOpt.get().setBeaconBattery(i.getBattery());
+                        beaconRepository.save(beaconOpt.get());
+                        ids.add(id);
+                    }
                 }
                 else{
                     ret.status = false;
                     return new ResponseEntity<>(ret, HttpStatus.OK);
                 }
-                ids.add(id);
             }
             ret.data = ids;
             ret.status = true;
