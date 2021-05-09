@@ -8,10 +8,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @ApiResponses(value = {@ApiResponse(code = 401, message = "Unauthorized", response = UserResponse.class),
         @ApiResponse(code = 403, message = "Forbidden", response = UserResponse.class),
@@ -27,7 +24,7 @@ public class user {
 
     @ApiOperation(value = "로그인", notes = "")
     @PostMapping("/login")
-    public ResponseEntity<UserResponse> Login(@RequestBody LoginRequest loginInfo){
+    public ResponseEntity<UserResponse> Login(@ModelAttribute LoginRequest loginInfo){
         return userService.login(loginInfo);
     }
 }
