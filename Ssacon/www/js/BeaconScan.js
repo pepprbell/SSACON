@@ -1,6 +1,7 @@
 const { Manager, Connection } = require('buildthing-ble-sdk')
 
-let beaconList = []
+let beaconList = [];
+let user_name = '';
 
 var app = {
    initialize: function() {
@@ -18,10 +19,8 @@ var app = {
        document.getElementById("sendBeaconInfo").addEventListener("click", this.sendBeacon.bind(this))
        document.getElementById("checkAttendance").addEventListener("click", this.eduCheckAttendance.bind(this))
 
-
-       document.getElementById("nextPage").addEventListener("click", this.testNextPage.bind(this))
-
-
+       
+       
        document.getElementById("addBeacon").addEventListener("click", this.callBeaconListDB.bind(this))
    },
 
@@ -43,6 +42,8 @@ var app = {
     //       bleConnection.changeMode()
     //     }
     //   }
+      // beaconList[beacon.id] = beacon
+      console.log(beaconList);
       if (beacon.sensors.length === 0) {
         beaconList.push({
             beacon_id: beacon.id,
@@ -89,24 +90,29 @@ var app = {
        this.bleManager.setForegroundScanPeriod(2000)
        this.bleManager.updateScanPeriod()
        this.bleManager.startScan()
+       user_name = document.getElementById("username").value
+       
        setInterval(() => {
-         console.log(beaconList);
-         beaconList = []
-         // fetch('http://k4b101.p.ssafy.io/api/test/2000', {
-         //   method:'POST',
-       //     body: JSON.stringify(this.beaconList),
-       //   })
-       //   .then((response) => {
-       //       return response.json();
-       //   })
-       //   .then((result) => {
-       //       console.log(result)
-       //       this.beaconList = {}
-       //   })
-       //   .catch((error) => {
-       //   console.error(error)
-       //   })
-       }, 4000);
+         fetch(`http://k4b101.p.ssafy.io/api/beacon/${user_name}/scan`, {
+           method:'POST',
+           headers: {
+            'Content-Type': 'application/json',
+            // Accept: 'application/json',
+          },
+           body: JSON.stringify(beaconList),
+          //  body: beaconList,
+         })
+         .then((response) => {
+             return response.json();
+         })
+         .then((result) => {
+             console.log(result)
+             this.beaconList = {}
+         })
+         .catch((error) => {
+         console.error(error)
+         })
+       }, 10000);
     }
     else {
        alert('블루투스 기능이 꺼져 있습니다.')
@@ -143,10 +149,6 @@ var app = {
    else {
       alert('블루투스 기능이 꺼져 있습니다.')
    }
-  },
-
-  testNextPage: function() {
-    window.location = "./template/testrouter/testrouter.html";
   },
 
     callBeaconListDB: function() {

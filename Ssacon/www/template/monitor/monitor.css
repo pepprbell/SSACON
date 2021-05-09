@@ -1,0 +1,45 @@
+header {
+  display: flex;
+  width: 100%;
+  height: 5%;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 500px;
+  background-color: antiquewhite;
+}
+
+.BeaconList {
+  width: 40%;
+  height: 300px;
+  background-color: white;
+}
+.card {
+  border: solid 1px #aaa;
+  border-radius: 9px;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  width: 30px;
+  height: 30px;
+  float: left;
+  background-color: white;
+  padding: 3px 3px 3px 3px;
+  margin: 5px;
+  font-size: 5pt;
+  font-family: sans-serif;
+}
+.BeaconStatus {
+  width: 60%;
+  height: 300px;
+  background-color: yellow;
+}
+
+.table {
+  border: 1px solid black;
+}
