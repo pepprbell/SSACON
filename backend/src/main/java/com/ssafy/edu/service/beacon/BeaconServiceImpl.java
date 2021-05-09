@@ -33,13 +33,14 @@ public class BeaconServiceImpl implements BeaconService{
     public ResponseEntity<BeaconResponse> getBeaconAll(){
         BeaconResponse ret = new BeaconResponse();
         List<Beacon> beacons = beaconRepository.findAll();
-        List<BeaconMonitorResponse> beaconMonitorResponses = new ArrayList<>();
+//        List<BeaconMonitorResponse> beaconMonitorResponses = new ArrayList<>();
+        List<String> beaconMonitorResponses = new ArrayList<>();
         for(Beacon i:beacons){
             String tmp = i.getBeaconId();
-            BeaconMonitorResponse t = new BeaconMonitorResponse();
-            t.setId(tmp);
-            t.setBeacon(i);
-            beaconMonitorResponses.add(t);
+//            BeaconMonitorResponse t = new BeaconMonitorResponse();
+//            t.setId(tmp);
+//            t.setBeacon(i);
+            beaconMonitorResponses.add(tmp);
         }
         ret.data = beaconMonitorResponses;
         ret.status = true;
