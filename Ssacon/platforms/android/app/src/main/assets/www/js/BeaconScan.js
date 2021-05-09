@@ -97,10 +97,8 @@ var app = {
            method:'POST',
            headers: {
             'Content-Type': 'application/json',
-            // Accept: 'application/json',
           },
            body: JSON.stringify(beaconList),
-          //  body: beaconList,
          })
          .then((response) => {
              return response.json();
