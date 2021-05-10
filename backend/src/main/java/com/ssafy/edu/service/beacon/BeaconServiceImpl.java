@@ -1,10 +1,7 @@
 package com.ssafy.edu.service.beacon;
 
 
-import com.ssafy.edu.model.beacon.Beacon;
-import com.ssafy.edu.model.beacon.BeaconContent;
-import com.ssafy.edu.model.beacon.BeaconResponse;
-import com.ssafy.edu.model.beacon.BeaconUsers;
+import com.ssafy.edu.model.beacon.*;
 import com.ssafy.edu.model.monitoring.BeaconMonitorResponse;
 import com.ssafy.edu.model.user.User;
 import com.ssafy.edu.repository.beacon.BeaconRepository;
@@ -48,18 +45,25 @@ public class BeaconServiceImpl implements BeaconService{
     }
 
     @Override
-    public ResponseEntity<BeaconResponse> createBeacon(String id, String name) {
-        ResponseEntity response;
+    public ResponseEntity<BeaconResponse> createBeacon(String id, BeaconCreateRequest beaconCreateRequest) {
         BeaconResponse ret = new BeaconResponse();
         Beacon tmp = Beacon.builder()
                 .beaconId(id)
-                .beaconName(name)
+                .beaconName(beaconCreateRequest.getName())
+                .line(beaconCreateRequest.getLine())
+                .equipment(beaconCreateRequest.getEquipment())
+                .tempMax(beaconCreateRequest.getTemperatureMax())
+                .tempMin(beaconCreateRequest.getTemperatureMin())
+                .humidtyMax(beaconCreateRequest.getHumidityMax())
+                .humidtyMin(beaconCreateRequest.getHumidityMin())
+                .beaconMoisture(beaconCreateRequest.getHumidity())
+                .beaconTemperature(beaconCreateRequest.getTemperature())
+                .beaconBattery(beaconCreateRequest.getVbatt())
                 .build();
         Beacon t = beaconRepository.save(tmp);
         ret.data = t.getBeaconId();
         ret.status = true;
-        response = new ResponseEntity<>(ret, HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(ret, HttpStatus.OK);
     }
 
     @Override
@@ -91,7 +95,7 @@ public class BeaconServiceImpl implements BeaconService{
                         BeaconUsers save = beaconUsersRepository.save(beaconUsers);
                         beaconOpt.get().setBeaconTemperature(i.getTemperature());
                         beaconOpt.get().setBeaconMoisture(i.getHumidity());
-                        beaconOpt.get().setBeaconBattery(i.getBattery());
+                        beaconOpt.get().setBeaconBattery(i.getVbatt());
                         beaconRepository.save(beaconOpt.get());
                         ids.add(id);
                     }
