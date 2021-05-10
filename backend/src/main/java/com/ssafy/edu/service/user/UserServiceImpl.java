@@ -27,21 +27,19 @@ public class UserServiceImpl implements UserService{
             String tmppw = loginInfo.getPassword();
             String tmppw1 = tmp.get().getUserPassword();
             if(tmppw.equals(tmppw1)){
-                re.setLogin(true);
+                re.setAdmin(tmp.get().isAdmin());
                 re.setUserId(tmp.get().getUserId());
                 ret.status = true;
                 ret.data = re;
                 return new ResponseEntity<>(ret, HttpStatus.OK);
             }
             else{
-                re.setLogin(false);
                 ret.status = false;
                 ret.data = re;
                 return new ResponseEntity<>(ret, HttpStatus.BAD_REQUEST);
             }
         }
         else{
-            re.setLogin(false);
             ret.status = false;
             ret.data = re;
             return new ResponseEntity<>(ret, HttpStatus.BAD_REQUEST);

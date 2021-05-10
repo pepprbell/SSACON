@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 public class LoginResponse {
     String userId;
-    boolean isLogin;
+    boolean admin;
 }
