@@ -2,7 +2,7 @@ package com.ssafy.edu.model.line;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ssafy.edu.model.equipment.LineEquipment;
+import com.ssafy.edu.model.equipment.Equipment;
 import lombok.*;
 
 import javax.persistence.CascadeType;
@@ -26,5 +26,5 @@ public class Line {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "line", cascade = {CascadeType.ALL})
-    List<LineEquipment> equipment = new ArrayList<>();
+    List<Equipment> equipment = new ArrayList<>();
 }

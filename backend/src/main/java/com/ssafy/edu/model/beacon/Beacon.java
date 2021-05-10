@@ -2,6 +2,7 @@ package com.ssafy.edu.model.beacon;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ssafy.edu.model.equipment.Equipment;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,8 +20,6 @@ public class Beacon {
     private String beaconId;
 
     private String beaconName;
-    private String line;
-    private String equipment;
     private double tempMax;
     private double tempMin;
     private double humidtyMax;
@@ -32,4 +31,7 @@ public class Beacon {
     @JsonManagedReference
     @OneToMany(mappedBy = "beacon", cascade = {CascadeType.ALL})
     List<BeaconUsers> users = new ArrayList<>();
+
+    @OneToOne(mappedBy = "beacon")
+    Equipment equipment;
 }

@@ -2,10 +2,15 @@ package com.ssafy.edu.service.beacon;
 
 
 import com.ssafy.edu.model.beacon.*;
+import com.ssafy.edu.model.equipment.Equipment;
+import com.ssafy.edu.model.line.Line;
+import com.ssafy.edu.model.line.LineInfo;
 import com.ssafy.edu.model.monitoring.BeaconMonitorResponse;
 import com.ssafy.edu.model.user.User;
 import com.ssafy.edu.repository.beacon.BeaconRepository;
 import com.ssafy.edu.repository.blockusers.BeaconUsersRepository;
+import com.ssafy.edu.repository.equipment.EquipmentRepository;
+import com.ssafy.edu.repository.line.LineRepository;
 import com.ssafy.edu.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,20 +31,42 @@ public class BeaconServiceImpl implements BeaconService{
     @Autowired
     BeaconUsersRepository beaconUsersRepository;
 
+    @Autowired
+    LineRepository lineRepository;
+
+    @Autowired
+    EquipmentRepository equipmentRepository;
+
     @Override
     public ResponseEntity<BeaconResponse> getBeaconAll(){
         BeaconResponse ret = new BeaconResponse();
         List<Beacon> beacons = beaconRepository.findAll();
-//        List<BeaconMonitorResponse> beaconMonitorResponses = new ArrayList<>();
+        BeaconList beaconList = new BeaconList();
+        LineInfo lines = new LineInfo();
         List<String> beaconMonitorResponses = new ArrayList<>();
         for(Beacon i:beacons){
             String tmp = i.getBeaconId();
-//            BeaconMonitorResponse t = new BeaconMonitorResponse();
-//            t.setId(tmp);
-//            t.setBeacon(i);
             beaconMonitorResponses.add(tmp);
         }
-        ret.data = beaconMonitorResponses;
+        beaconList.setBeacon_id(beaconMonitorResponses);
+        List<Line> allLine = lineRepository.findAll();
+        for(Line i: allLine){
+            String tmp = i.getLineName();
+            List<String> equips = new ArrayList<>();
+            List<Equipment> e = i.getEquipment();
+            for(Equipment j:e){
+                equips.add(j.getEquipmentName());
+            }
+            if(tmp == "line_name1"){
+                lines.setLine_name1(equips);
+            }
+            else if(tmp == "line_name2"){
+                lines.setLine_name2(equips);
+            }
+        }
+        beaconList.setBeacon_id(beaconMonitorResponses);
+        beaconList.setLine_equipment(lines);
+        ret.data = beaconList;
         ret.status = true;
         return new ResponseEntity<>(ret, HttpStatus.OK);
     }
@@ -50,8 +77,6 @@ public class BeaconServiceImpl implements BeaconService{
         Beacon tmp = Beacon.builder()
                 .beaconId(id)
                 .beaconName(beaconCreateRequest.getName())
-                .line(beaconCreateRequest.getLine())
-                .equipment(beaconCreateRequest.getEquipment())
                 .tempMax(beaconCreateRequest.getTemperatureMax())
                 .tempMin(beaconCreateRequest.getTemperatureMin())
                 .humidtyMax(beaconCreateRequest.getHumidityMax())
@@ -61,6 +86,8 @@ public class BeaconServiceImpl implements BeaconService{
                 .beaconBattery(beaconCreateRequest.getVbatt())
                 .build();
         Beacon t = beaconRepository.save(tmp);
+        Optional<Equipment> equipment = equipmentRepository.findByEquipmentId(beaconCreateRequest.getEquipment_id());
+        t.setEquipment(equipment.get());
         ret.data = t.getBeaconId();
         ret.status = true;
         return new ResponseEntity<>(ret, HttpStatus.OK);

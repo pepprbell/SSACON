@@ -2,12 +2,11 @@ package com.ssafy.edu.model.equipment;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ssafy.edu.model.beacon.Beacon;
+import com.ssafy.edu.model.line.Line;
 import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,10 @@ public class Equipment {
     private String equipmentName;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "equipment", cascade = {CascadeType.ALL})
-    List<LineEquipment> lines = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "equipment")
+    private Line line;
+
+    @OneToOne(mappedBy = "Equipment")
+    Beacon beacon;
 }
