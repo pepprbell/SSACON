@@ -4,26 +4,6 @@ let beaconScanList = {};
 let beaconListDBfront = [];
 let beaconAddInfo = {};
 
-function startScan() {
-  bleManager.on('stateChange', function (state) {
-    if(state === 'poweredOn') {
-      this.bleManager.setBackgroundBetweenScanPeriod(0)
-      this.bleManager.setBackgroundScanPeriod(2000)
-      this.bleManager.setForegroundBetweenScanPeriod(0)
-      this.bleManager.setForegroundScanPeriod(2000)
-      this.bleManager.updateScanPeriod()
-      this.bleManager.startScan()
-    }
-    else {
-       alert('블루투스 기능이 꺼져 있습니다.')
-    }
-  })
-
-  bleManager.on('discover', function(beacon) {
-    console.log(beacon);
-  })
-}
-
 
 const beaconAdd = {
    initialize: function() {
@@ -114,17 +94,19 @@ const beaconAdd = {
     window.history.back();
    },
 
-   beaconAddModalClose: function(e) {
-    const modalClose = document.querySelector('.modal-close')
-  
-    modalClose.addEventListener('click', function() {
-      modalBg.classList.remove('bg-active')
-    })
+   onlyStopScan: function() {
+    this.bleManager.stopScan();
+   },
 
+   beaconAddModalClose: function() {
+    const modalBg = document.querySelector('.modal-bg')
+    modalBg.classList.remove('bg-active')
     beaconAddInfo = {};
+    this.bleManager.startScan()
    },
 
    beaconCreate: function(e) {
+     console.log(e);
     e.preventdefault()
 
     // 모든창에 데이터가 잘 나왔는지 확인
@@ -159,6 +141,7 @@ const beaconAdd = {
     })
     beaconListDBfront.push(e.target.value)
     document.getElementById(`${e.target.value}`).remove()
+    this.bleManager.startScan()
    },
 };
 
@@ -187,20 +170,19 @@ function updateBeaconCard(beacon) {
 }
 
 function beaconAddModalOpen(e) {
-  const modalBtn = document.querySelector('.modal-btt');
+  beaconAdd.onlyStopScan()
+
   const modalBg = document.querySelector('.modal-bg')
 
-  modalBtn.addEventListener('click', function() {
-    modalBg.classList.add('bg-active')
-  })
+  modalBg.classList.add('bg-active')
 
-  const info = beaconScanList[e.target.value]
+  beaconAddInfo = beaconScanList[e.target.value]
 
-  beaconAddInfo = {
-    temperature: info.sensors[0].data.temperature.value || 0,
-    humidity: info.sensors[0].data.humidity.value || 0,
-    vbatt: info.vbatt.percentage.value
-  }
+  // beaconAddInfo = {
+  //   temperature: info.sensors[0].data.temperature.value || 0,
+  //   humidity: info.sensors[0].data.humidity.value || 0,
+  //   vbatt: info.vbatt.percentage.value
+  // }
   // beaconAddInfo[temperature] = info.sensors[0].data.temperature.value || 0
   // beaconAddInfo[humidity] = info.sensors[0].data.humidity.value || 0
   // beaconAddInfo[vbatt] = info.vbatt.percentage.value
