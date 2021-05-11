@@ -1,4 +1,3 @@
-// document.getElementById("modal").addEventListener("click", closeModal)
 document.getElementById("closeMessage").addEventListener("click", closeModal)
 document.getElementById("submitMessage").addEventListener("click", sendMessage)
 document.getElementById("seeAll").addEventListener("click", seeAll)
@@ -47,6 +46,7 @@ const viewAll = document.getElementById('beaconAll')
 
 beaconHere.forEach(function(beacon) {
   let item = document.createElement("div")
+  item.id = beacon.beaconName
   item.className = "item"
   item.innerHTML = beacon.beaconName
   viewHere.appendChild(item)
@@ -68,20 +68,18 @@ beaconAll.forEach(function(beacon) {
   viewAll.appendChild(item)
 })
 
-let everyBeacon = false
+let everyBeacon = true
 
 function seeAll() {
   let btn = document.getElementById('seeAll')
   if (everyBeacon) {
     btn.innerHTML = "현재 설비 보기"
-    console.log("많이보기")
     everyBeacon = false
     viewAll.classList.remove("invisible")
     viewHere.classList.add("invisible")
   }
   else {
     btn.innerHTML = "전체 설비 보기"
-    console.log("적게보기")
     everyBeacon = true
     viewHere.classList.remove("invisible")
     viewAll.classList.add("invisible")
@@ -103,9 +101,6 @@ function closeModal() {
 window.addEventListener('click', (e) => {
   let modal = document.getElementById("modal")
   e.target === modal ? modal.classList.remove("m-show-modal") : false
-
-  let beacon = document.getElementsByClassName("item")
-  e.target === beacon ? openModal(e.target.innerHTML) : false
 })
 
 function sendMessage() {
@@ -125,4 +120,9 @@ function sendMessage() {
   closeModal()
 }
 
-document.getElementById("#1").addEventListener("click", openModal)
+window.onload = function() {
+  let circle = document.getElementById("scanning")
+  let word = document.getElementById("scanning-2")
+  // circle.classList.add("invisible")
+  // word.classList.add("invisible")
+}

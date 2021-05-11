@@ -29,7 +29,7 @@ header {
   background-color: #fff;
   height: 80%;
   width: 80%;
-  margin: 10% auto;
+  margin: 5% auto;
   border-radius: 10px;
   padding: 1.2rem;
   justify-content: space-between;
@@ -44,6 +44,41 @@ header {
 
 .title p {
   margin: 0;
+  width: auto;
+}
+
+.title span {
+  font-size: 0.5rem;
+  font-weight: normal; 
+  margin-left: 6px;
+}
+
+.loading {
+  margin-left: 100%;
+  width: 1px;
+  height: 1px;
+}
+
+.loading .circle {
+  display: inline-block;
+  width:0.5rem; 
+  height:0.5rem; 
+  border:6px solid #ccc; 
+  border-top:6px solid #034EA2; 
+  border-radius:50em; transition:all .2s;
+  animation-name:spinCircle;
+  animation-duration:.8s;
+  animation-iteration-count:infinite;
+  animation-timing-function:linear;
+}
+
+@keyframes spinCircle {
+    from {
+        transform:translate(-50%, -50%) rotate(0);
+    }
+    to {
+        transform:translate(-50%, -50%) rotate(360deg);
+    }
 }
 
 .btn {
@@ -60,14 +95,15 @@ header {
 
 .invisible {
   display: none;
+  visibility: hidden;
 }
 
 .beacon-div {
   margin-top: 4vw;
   width: inherit;
   display: grid;
-  grid-template-rows: repeat(2, 28vw);  /* 세로 높이 */
-  grid-template-columns: repeat(3, 1fr);  /* 한 줄에 갯수 */
+  grid-template-rows: repeat(2, 20vw);  /* 세로 높이 */
+  grid-template-columns: repeat(4, 1fr);  /* 한 줄에 갯수 */
   grid-auto-rows: 100px;
   place-items: center;
   position: absolute;
@@ -84,8 +120,8 @@ header {
   border-radius: 15px;
   color: #034EA2;
   font-weight: bold;
-  width: 20vw;
-  height: 20vw;
+  width: 16vw;
+  height: 16vw;
   }
 
 .m-modal {
@@ -170,7 +206,7 @@ header {
 
 .m-submit {
   all: inherit;
-  background-color: #0044A9;
+  background-color: #034EA2;
   color: #fff;
   font-weight: bold;
   border-radius: 2px;
