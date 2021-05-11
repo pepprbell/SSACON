@@ -9,7 +9,7 @@ alarm = {
     "Location": "F2",
     "equipment": "D2",
     "writer": "구진범",
-    "description": "매 정각 3번 안전핀 확인",
+    "description": "매 정각 3번 안전핀 확인 ",
     "time": "2020-05-14 16:43:22",
 }
 
@@ -19,15 +19,10 @@ if(alarm.type == "takeover") {
     type.className ="type"
     type.innerHTML="인수 인계"
     content.appendChild(type)
-
-    let info = document.createElement("div")
-    info.className="info"
-    info.innerHTML= alarm.line + " " + alarm.equipment
-    content.appendChild(info)
     
     let description = document.createElement("div")
-    description.className ="description"
-    description.innerHTML= alarm.description + " - " + alarm.writer
+        description.className ="description"
+        description.innerHTML= alarm.line+ " " + alarm.equipment+ " " + alarm.description + " - " + alarm.writer
     content.appendChild(description)
 }
 else if(alarm.type == "checksheet") {
