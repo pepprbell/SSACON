@@ -34,13 +34,12 @@ public class AlarmServiceImpl implements AlarmService{
             tmp.setId(i.getId());
             tmp.setType(i.getType());
             tmp.setLine(i.getLine());
-            tmp.setLocation(i.getLocation());
             tmp.setEquipment(i.getEquipment());
             tmp.setWriter(i.getWriter());
             tmp.setDescription(i.getDescription());
             tmp.setTime(i.getTime());
-            tmp.setProperLocation(i.getProperLocation());
-            tmp.setSubmissionLocation(i.getSubmissionLocation());
+            tmp.setProperBeaconId(i.getProperBeaconId());
+            tmp.setSubmissionBeaconId(i.getSubmissionBeaconId());
             tmp.setMinProperHumidity(i.getMinProperHumidity());
             tmp.setMaxProperHumidity(i.getMaxProperHumidity());
             tmp.setMinProperTemperature(i.getMinProperTemperature());
