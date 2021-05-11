@@ -223,6 +223,7 @@ public class BeaconServiceImpl implements BeaconService{
                                             .time(now)
                                             .userId(admin.getUserId())
                                             .beaconId(wBeacon.getBeaconId())
+                                            .receive(false)
                                             .build();
                                     alarmRepository.save(wadmin);
                                 }
@@ -241,6 +242,10 @@ public class BeaconServiceImpl implements BeaconService{
                                 scanRet.add(aw);
                             }
                         }
+
+
+                        //배터리
+
 
 
 
@@ -263,4 +268,5 @@ public class BeaconServiceImpl implements BeaconService{
         }
         return new ResponseEntity<>(ret, HttpStatus.OK);
     }
+
 }

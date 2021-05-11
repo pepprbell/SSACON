@@ -39,4 +39,10 @@ public class alarm {
     public ResponseEntity<AlarmResponse> deleteAlarm(@PathVariable("userId") String userId, @PathVariable("alarmId") Long alarmId){
         return alarmService.deleteAlarm(userId, alarmId);
     }
+
+    @ApiOperation(value = "관리자 알람 확인", notes = "")
+    @GetMapping("/admin/{userId}")
+    public ResponseEntity<AlarmResponse> getAdminAlarm(@PathVariable("userId") String userId){
+        return alarmService.getAdminAlarm(userId);
+    }
 }

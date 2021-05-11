@@ -1,6 +1,7 @@
 package com.ssafy.edu.service.alarm;
 
 
+import com.amazonaws.services.apigateway.model.Op;
 import com.ssafy.edu.model.Alarm.Alarm;
 import com.ssafy.edu.model.Alarm.AlarmResponse;
 import com.ssafy.edu.model.Alarm.AlarmResultResponse;
@@ -99,6 +100,49 @@ public class AlarmServiceImpl implements AlarmService{
         else{
             ret.status = false;
         }
+        return new ResponseEntity<>(ret, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<AlarmResponse> getAdminAlarm(String userId){
+        AlarmResponse ret = new AlarmResponse();
+        Optional<User> userOpt = userRepository.findByUserId(userId);
+        if(userOpt.isPresent()){
+            if(userOpt.get().isAdmin()){
+                List<Alarm> alarms = alarmRepository.findByUserId(userId);
+                List<AlarmResultResponse> alarmResult = new ArrayList<>();
+                for(Alarm i: alarms){
+                    if(!i.isReceive()) {
+                        i.setReceive(true);
+                        alarmRepository.save(i);
+                        AlarmResultResponse tmp = new AlarmResultResponse();
+                        tmp.setId(i.getId());
+                        tmp.setType(i.getType());
+                        tmp.setLine(i.getLine());
+                        tmp.setEquipment(i.getEquipment());
+                        tmp.setWriter(i.getWriter());
+                        tmp.setDescription(i.getDescription());
+                        tmp.setTime(i.getTime());
+                        tmp.setProperBeaconId(i.getProperBeaconId());
+                        tmp.setSubmissionBeaconId(i.getSubmissionBeaconId());
+                        tmp.setMinProperHumidity(i.getMinProperHumidity());
+                        tmp.setMaxProperHumidity(i.getMaxProperHumidity());
+                        tmp.setMinProperTemperature(i.getMinProperTemperature());
+                        tmp.setMaxProperTemperature(i.getMaxProperTemperature());
+                        tmp.setNowHumidity(i.getNowHumidity());
+                        tmp.setNowTemperature(i.getNowTemperature());
+                        tmp.setSession(i.getSession());
+                        tmp.setBattery(i.getBattery());
+                        alarmResult.add(tmp);
+                    }
+                }
+                ret.data = alarmResult;
+                ret.status = true;
+
+            }
+            ret.status = false;
+        }
+        ret.status = false;
         return new ResponseEntity<>(ret, HttpStatus.OK);
     }
 }
