@@ -1,0 +1,141 @@
+/* Bordered form */
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+:root {
+  --cyan: #00bcd4;
+  --purple: #ab47bc;
+  --black: #212121;
+  --grey: #616161;
+  --white: #ffffff;
+  --roboto: "Roboto", sans-serif;
+}
+html body {
+  margin: 0;
+  padding: 0;
+}
+main {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #f3f6fa;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+form {
+  width: 80%;
+  height: 100%;
+  margin: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+}
+header {
+  display: flex;
+  width: 100%;
+  height: 5%;
+  justify-content: space-between;
+  background-color: white;
+}
+/* Full-width inputs */
+input[type="text"],
+input[type="password"] {
+  width: 90%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  background-color: #e5e5e5;
+  border-radius: 10px;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #3f72be;
+  color: white;
+  font-weight: bolder;
+  font-size: 4vw;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 90%;
+  border-radius: 10px;
+}
+
+/* Avatar image */
+img.avatar {
+  width: 10%;
+  margin: 1%;
+}
+
+.enabled {
+  display: block;
+}
+/* modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal__overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal__content {
+  width: 80%;
+  color: #3f72be;
+  background-color: white;
+  text-align: center;
+  padding: 5% 10%;
+  position: relative;
+  border-radius: 10px;
+  top: 0px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+h1 {
+  margin: 0;
+}
+.hidden {
+  display: none;
+}
+.red {
+  color: red;
+}
+
+.modal__content {
+  animation: fadein 2s;
+  /* -webkit-animation: fadein 1s; */
+} /* 모달 콘텐츠 반동 효과로 나타나기 */
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* @-webkit-keyframes fadein { */
+/* Safari and Chrome */
+/* from { */
+/* opacity: 0; */
+/* } */
+/* to { */
+/* opacity: 1; */
+/* } */
+/* } */
