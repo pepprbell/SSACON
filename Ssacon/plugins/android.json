@@ -10,10 +10,16 @@
     "cordova-custom-config": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
+    "cordova-plugin-androidx-adapter": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
     "cordova-plugin-background-mode": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-plugin-ble-central": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-local-notification": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-plugin-whitelist": {
@@ -22,6 +28,9 @@
   },
   "dependent_plugins": {
     "cordova-plugin-device": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-badge": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   }

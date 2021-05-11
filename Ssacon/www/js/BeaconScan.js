@@ -93,6 +93,7 @@ const beaconScan = {
              return response.json();
          })
          .then((result) => {
+              // 여기다 실시간 알림 로직 넣기
              console.log(result)
              this.beaconList = {}
          })
