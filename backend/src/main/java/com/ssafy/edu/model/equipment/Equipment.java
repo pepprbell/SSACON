@@ -22,11 +22,5 @@ public class Equipment {
 
     private String equipmentName;
 
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "equipment")
-    private Line line;
-
-    @OneToOne(mappedBy = "Equipment")
-    Beacon beacon;
+    private String lineId;
 }

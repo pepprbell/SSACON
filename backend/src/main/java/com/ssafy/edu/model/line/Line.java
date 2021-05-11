@@ -23,8 +23,4 @@ public class Line {
     private String lineId;
 
     private String lineName;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "line", cascade = {CascadeType.ALL})
-    List<Equipment> equipment = new ArrayList<>();
 }

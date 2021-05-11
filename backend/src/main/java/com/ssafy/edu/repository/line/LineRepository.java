@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface LineRepository extends JpaRepository<Line, String> {
-    public List<Line> findAll();
+    public Optional<Line> findByLineId(String id);
 }

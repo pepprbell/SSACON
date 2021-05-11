@@ -19,6 +19,8 @@ public class Beacon {
     @Id
     private String beaconId;
 
+    private String line;
+    private String equipment;
     private String beaconName;
     private double tempMax;
     private double tempMin;
@@ -31,7 +33,4 @@ public class Beacon {
     @JsonManagedReference
     @OneToMany(mappedBy = "beacon", cascade = {CascadeType.ALL})
     List<BeaconUsers> users = new ArrayList<>();
-
-    @OneToOne(mappedBy = "beacon")
-    Equipment equipment;
 }

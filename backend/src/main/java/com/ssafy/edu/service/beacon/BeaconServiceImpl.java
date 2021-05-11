@@ -44,26 +44,26 @@ public class BeaconServiceImpl implements BeaconService{
         BeaconList beaconList = new BeaconList();
         LineInfo lines = new LineInfo();
         List<String> beaconMonitorResponses = new ArrayList<>();
+        List<String> l1 = new ArrayList<>();
+        List<String> l2 = new ArrayList<>();
         for(Beacon i:beacons){
             String tmp = i.getBeaconId();
             beaconMonitorResponses.add(tmp);
         }
         beaconList.setBeacon_id(beaconMonitorResponses);
-        List<Line> allLine = lineRepository.findAll();
-        for(Line i: allLine){
-            String tmp = i.getLineName();
-            List<String> equips = new ArrayList<>();
-            List<Equipment> e = i.getEquipment();
-            for(Equipment j:e){
-                equips.add(j.getEquipmentName());
+        List<Equipment> allequips = equipmentRepository.findAll();
+        for(Equipment i: allequips){
+            String tmp = i.getLineId();
+            Optional<Line> line = lineRepository.findByLineId(tmp);
+            if(line.get().getLineName() == "line_name1"){
+                l1.add(tmp);
             }
-            if(tmp == "line_name1"){
-                lines.setLine_name1(equips);
-            }
-            else if(tmp == "line_name2"){
-                lines.setLine_name2(equips);
+            else if(line.get().getLineName() == "line_name2"){
+                l2.add(tmp);
             }
         }
+        lines.setLine_name1(l1);
+        lines.setLine_name2(l2);
         beaconList.setBeacon_id(beaconMonitorResponses);
         beaconList.setLine_equipment(lines);
         ret.data = beaconList;
@@ -76,6 +76,8 @@ public class BeaconServiceImpl implements BeaconService{
         BeaconResponse ret = new BeaconResponse();
         Beacon tmp = Beacon.builder()
                 .beaconId(id)
+                .line(beaconCreateRequest.getLine())
+                .equipment(beaconCreateRequest.getEquipment())
                 .beaconName(beaconCreateRequest.getName())
                 .tempMax(beaconCreateRequest.getTemperatureMax())
                 .tempMin(beaconCreateRequest.getTemperatureMin())
@@ -86,8 +88,6 @@ public class BeaconServiceImpl implements BeaconService{
                 .beaconBattery(beaconCreateRequest.getVbatt())
                 .build();
         Beacon t = beaconRepository.save(tmp);
-        Optional<Equipment> equipment = equipmentRepository.findByEquipmentId(beaconCreateRequest.getEquipment_id());
-        t.setEquipment(equipment.get());
         ret.data = t.getBeaconId();
         ret.status = true;
         return new ResponseEntity<>(ret, HttpStatus.OK);
