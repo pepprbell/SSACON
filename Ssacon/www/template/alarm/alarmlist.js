@@ -19,15 +19,6 @@ let alarmlist = [
         "time": "2020-05-14 16:43:22",
     },
     {
-        "id": 2,
-        "type": "checksheet",
-        "line": "line1",
-        "equipment": "D2",
-        "properLocation": "D4",
-        "submissionLocation": "D4",
-        "time": "2020-05-14 16:43:22",
-    },
-    {
         "id": 3,
         "type": "warning",
         "line": "line1",
@@ -46,6 +37,15 @@ let alarmlist = [
         "type": "attendance",
         "line": "line1",
         "session": "정기 안전교육",
+        "time": "2020-05-14 16:43:22",
+    },
+    {
+        "id": 5,
+        "type": "battery",
+        "line": "line1",
+        "location": "F2",
+        "equipment": "D2",
+        "battery": 32.5,
         "time": "2020-05-14 16:43:22",
     },
 ]
@@ -167,6 +167,24 @@ alarmlist.forEach((alarm) => {
         right.appendChild(description)
         
     }
+    else if(alarm.type == "battery") {
+        let icon = document.createElement("img")
+        icon.src="./icons/danger.png"
+        icon.className="icon"
+        left.appendChild(icon)
+
+        let type = document.createElement("div")
+        type.className ="type"
+        type.innerHTML= "비콘 배터리 잔량 부족"
+        right.appendChild(type)
+
+        let description = document.createElement("div")
+        description.className ="description"
+        description.innerHTML= alarm.line+ " " + alarm.location + " 위치 " + 
+        alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + 
+        "%입니다. 점검해주세요." 
+        right.appendChild(description)
+    }
 
     let time = document.createElement("div")
     time.className = "time"
@@ -175,6 +193,10 @@ alarmlist.forEach((alarm) => {
 
     item.appendChild(left)
     item.appendChild(right)
+    
+    item.addEventListener('click', () => {
+        window.location.href="file:///android_asset/www/template/alarm/alarmdetail.html?" + "?id=" + alarm.id ;
+    })
 
     body.appendChild(item)
     
