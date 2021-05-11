@@ -1,5 +1,22 @@
 const content = document.querySelector(".content")
-console.log(content)
+const alarmId = window.location.href.split("?")[1].split("=")[1]
+const yesButton =  document.querySelector(".check")
+
+yesButton.addEventListener('click', () => {
+    window.location = "./alarmlist.html"
+})
+
+
+// fetch(`http://k4b101.p.ssafy.io/api/alarm/${alarmId}`, {method:'GET',})
+    // .then((response) => {
+    //     return response.json();
+    // })
+    // .then((result) => {
+    //     alarm = result
+    // })
+    // .catch((error) => {
+    //     console.error(error)
+    // })
 
 // 얘는 그 리스트에서 클릭햇을 때 데이터 받은애
 alarm = {
@@ -77,6 +94,19 @@ else if(alarm.type == "attendance") {
     description.innerHTML= alarm.session + " 출석 확인"
     content.appendChild(description)
     
+}
+else if(alarm.type == "battery") {
+    let type = document.createElement("div")
+    type.className ="type"
+    type.innerHTML= "비콘 배터리 잔량 부족"
+    content.appendChild(type)
+
+    let description = document.createElement("div")
+    description.className ="description"
+    description.innerHTML= alarm.line+ " " + alarm.location + " 위치 " + 
+    alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + 
+    "%입니다. 점검해주세요." 
+    content.appendChild(description)
 }
 
 let time = document.createElement("div")

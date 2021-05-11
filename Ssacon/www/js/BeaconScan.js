@@ -105,7 +105,46 @@ var app = {
          })
          .then((result) => {
               // 여기다 실시간 알림 로직 넣기
-             console.log(result)
+            //   // result에 실시간 알림 정보가 들어온다.
+              let alarmlist = result.data;
+              let items = []
+              // description 만들기
+              alarmlist.forEach((alarm) => {
+                item = {}
+                let title;
+                let description;
+                if(alarm.type == "takeover") {
+                    title = "인수 인계"
+                    description = alarm.line+ " " + alarm.equipment+ " " + alarm.description + " - " + alarm.writer
+                }
+                else if(alarm.type == "checksheet") {
+                    if(alarm.properLocation == alarm.submissionLocation) {
+                        // 잘 제출 한 경우
+                        title = "체크시트 제출 확인"
+                        description = alarm.submissionLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+                    }
+                    else {
+                        title = "잘못된 위치에서 체크시트 제출"
+                        description = alarm.submissionLocation + " 위치에서 " + alarm.properLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+                    }
+                }
+                else if(alarm.type == "warning") {
+                    title = "위험"
+                    description = alarm.location + " 위치의 " + alarm.equipment + "설비 온도가 적정범위를 벗어났습니다. 점검해주세요" 
+                }
+                else if(alarm.type == "attendance") {
+                    title= "출석 확인"
+                    description = alarm.session + " 출석 확인"
+                }
+                item["id"] = alarm.id
+                item["title"] = title
+                item["text"] = description
+                items.push(item)
+            })
+            // 이제 알람 띄움
+            cordova.plugins.notification.local.schedule(items)
+
+            //  console.log(result)
              this.beaconList = {}
          })
          .catch((error) => {
