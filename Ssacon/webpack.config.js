@@ -10,11 +10,16 @@ const CORDOVA_BUNDLE = 'buildthing.ble.cordova.js'
 
 
 module.exports = {
-  entry: ['./www/js/BeaconScan'],
+  entry: {
+    BeaconScan: './www/js/BeaconScan',
+    BeaconAdd: './www/js/BeaconAdd',
+  },
+  // entry: ['./www/js/BeaconAdd'],
   module: {},
   output: {
 		chunkFilename: '[name].js',
-		filename: 'bundle.js',
+		filename: '[name]_bundle.js',
+		// filename: 'bundle.js',
 		path: path.resolve(__dirname, './www/dist/js')
 	},
   resolve: {
