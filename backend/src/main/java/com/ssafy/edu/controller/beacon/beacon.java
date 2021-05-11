@@ -39,7 +39,7 @@ public class beacon {
     }
 
     @ApiOperation(value = "현재 스캔된 비콘 정보", notes = "")
-    @PostMapping("/{userid}/scan")
+    @PostMapping("/scanInfo/{userid}")
     public ResponseEntity<BeaconResponse> ScanBeacon(@PathVariable("userid") String userid,@RequestBody List<BeaconContent> beaconScanList){
         return beaconService.scanBeacons(beaconScanList, userid);
     }

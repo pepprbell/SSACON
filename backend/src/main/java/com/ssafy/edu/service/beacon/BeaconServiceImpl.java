@@ -1,16 +1,24 @@
 package com.ssafy.edu.service.beacon;
 
 
+import com.ssafy.edu.model.Alarm.Alarm;
+import com.ssafy.edu.model.Alarm.AlarmResultResponse;
 import com.ssafy.edu.model.beacon.*;
+import com.ssafy.edu.model.education.Education;
+import com.ssafy.edu.model.education.EducationUser;
 import com.ssafy.edu.model.equipment.Equipment;
 import com.ssafy.edu.model.line.Line;
 import com.ssafy.edu.model.line.LineInfo;
-import com.ssafy.edu.model.monitoring.BeaconMonitorResponse;
+import com.ssafy.edu.model.message.Message;
 import com.ssafy.edu.model.user.User;
+import com.ssafy.edu.repository.alarm.AlarmRepository;
 import com.ssafy.edu.repository.beacon.BeaconRepository;
-import com.ssafy.edu.repository.blockusers.BeaconUsersRepository;
+import com.ssafy.edu.repository.beaconusers.BeaconUsersRepository;
+import com.ssafy.edu.repository.education.EducationRepository;
+import com.ssafy.edu.repository.educationusers.EducationUsersRepository;
 import com.ssafy.edu.repository.equipment.EquipmentRepository;
 import com.ssafy.edu.repository.line.LineRepository;
+import com.ssafy.edu.repository.message.MessageRepository;
 import com.ssafy.edu.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +44,18 @@ public class BeaconServiceImpl implements BeaconService{
 
     @Autowired
     EquipmentRepository equipmentRepository;
+
+    @Autowired
+    EducationUsersRepository educationUsersRepository;
+
+    @Autowired
+    EducationRepository educationRepository;
+
+    @Autowired
+    AlarmRepository alarmRepository;
+
+    @Autowired
+    MessageRepository messageRepository;
 
     @Override
     public ResponseEntity<BeaconResponse> getBeaconAll(){
@@ -96,10 +116,13 @@ public class BeaconServiceImpl implements BeaconService{
     @Override
     public ResponseEntity<BeaconResponse> scanBeacons(List<BeaconContent> beaconScanList, String userid){
         BeaconResponse ret = new BeaconResponse();
-        List<String> ids = new ArrayList<>();
+
+        List<AlarmResultResponse> scanRet = new ArrayList<>();
+
         Optional<User> userOpt = userRepository.findByUserId(userid);
         if(userOpt.isPresent()) {
-            userOpt.get().setLastSignal(Date.from(Instant.now()));
+            Date now = Date.from(Instant.now());
+            userOpt.get().setLastSignal(now);
             userRepository.save(userOpt.get());
             List<BeaconUsers> beaconUsersOptU = beaconUsersRepository.findByUser(userOpt.get());
             if(!beaconUsersOptU.isEmpty()) {
@@ -107,8 +130,10 @@ public class BeaconServiceImpl implements BeaconService{
                     beaconUsersRepository.delete(i);
                 }
             }
+            String educationBeacon = "edu";
             List<String> tmpset = new ArrayList<>();
             Collections.reverse(beaconScanList);
+            List<Education> edus = educationRepository.findAll();
             for (BeaconContent i : beaconScanList) {
                 String id = i.getBeacon_id();
                 Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(id);
@@ -124,7 +149,105 @@ public class BeaconServiceImpl implements BeaconService{
                         beaconOpt.get().setBeaconMoisture(i.getHumidity());
                         beaconOpt.get().setBeaconBattery(i.getVbatt());
                         beaconRepository.save(beaconOpt.get());
-                        ids.add(id);
+
+                        // 교육장 출석
+                        if(beaconOpt.get().getBeaconId().equals(educationBeacon)){
+                            for(Education e:edus){
+                                if(e.isOnclass()){
+                                    Optional<EducationUser> tmpAttendence = educationUsersRepository.findByUserAndEducation(userOpt.get(), e);
+                                    if(tmpAttendence.isEmpty()){
+                                        EducationUser curAttendence = EducationUser.builder()
+                                                .education(e)
+                                                .user(userOpt.get())
+                                                .build();
+                                        educationUsersRepository.save(curAttendence);
+                                        Alarm tmpAttend = Alarm.builder()
+                                                .type("attendance")
+                                                .line(beaconOpt.get().getLine())
+                                                .session(e.getSession())
+                                                .time(now)
+                                                .build();
+                                        Alarm l = alarmRepository.save(tmpAttend);
+                                        AlarmResultResponse k = new AlarmResultResponse();
+                                        k.setId(l.getId());
+                                        k.setType(l.getType());
+                                        k.setLine(l.getLine());
+                                        k.setSession(l.getSession());
+                                        k.setTime(now);
+                                        scanRet.add(k);
+                                    }
+                                }
+                            }
+                        }
+
+                        // 경고
+                        Beacon wBeacon = beaconOpt.get();
+                        List<Alarm> beaconAlarm = alarmRepository.findByTypeAndBeaconId("warning", wBeacon.getBeaconId());
+                        Alarm last = beaconAlarm.get(beaconAlarm.size() - 1);
+                        List<User> allusers = userRepository.findAll();
+                        List<User> admins = new ArrayList<>();
+                        for(User tmpu: allusers){
+                            if(tmpu.isAdmin()){
+                                admins.add(tmpu);
+                            }
+                        }
+                        if((i.getHumidity() < wBeacon.getHumidtyMin() || i.getHumidity() > wBeacon.getHumidtyMax())
+                                || (i.getTemperature() < wBeacon.getTempMax() || i.getTemperature() > wBeacon.getTempMax())) {
+                            if (now.getTime() - last.getTime().getTime() < 600000){
+                                Alarm w = Alarm.builder()
+                                        .type("warning")
+                                        .line(wBeacon.getLine())
+                                        .equipment(wBeacon.getEquipment())
+                                        .minProperHumidity(wBeacon.getHumidtyMin())
+                                        .maxProperHumidity(wBeacon.getHumidtyMax())
+                                        .minProperTemperature(wBeacon.getTempMin())
+                                        .maxProperTemperature(wBeacon.getTempMax())
+                                        .nowHumidity(wBeacon.getBeaconMoisture())
+                                        .nowTemperature(wBeacon.getBeaconTemperature())
+                                        .time(now)
+                                        .userId(userOpt.get().getUserId())
+                                        .beaconId(wBeacon.getBeaconId())
+                                        .build();
+                                Alarm tmpw = alarmRepository.save(w);
+                                for (User admin : admins) {
+                                    Alarm wadmin = Alarm.builder()
+                                            .type("warning")
+                                            .line(wBeacon.getLine())
+                                            .equipment(wBeacon.getEquipment())
+                                            .minProperHumidity(wBeacon.getHumidtyMin())
+                                            .maxProperHumidity(wBeacon.getHumidtyMax())
+                                            .minProperTemperature(wBeacon.getTempMin())
+                                            .maxProperTemperature(wBeacon.getTempMax())
+                                            .nowHumidity(wBeacon.getBeaconMoisture())
+                                            .nowTemperature(wBeacon.getBeaconTemperature())
+                                            .time(now)
+                                            .userId(admin.getUserId())
+                                            .beaconId(wBeacon.getBeaconId())
+                                            .build();
+                                    alarmRepository.save(wadmin);
+                                }
+                                AlarmResultResponse aw = new AlarmResultResponse();
+                                aw.setId(tmpw.getId());
+                                aw.setType(tmpw.getType());
+                                aw.setLine(tmpw.getLine());
+                                aw.setEquipment(tmpw.getEquipment());
+                                aw.setMinProperHumidity(tmpw.getMinProperHumidity());
+                                aw.setMaxProperHumidity(tmpw.getMaxProperHumidity());
+                                aw.setMinProperTemperature(tmpw.getMinProperTemperature());
+                                aw.setMaxProperTemperature(tmpw.getMaxProperTemperature());
+                                aw.setNowHumidity(tmpw.getNowHumidity());
+                                aw.setNowTemperature(tmpw.getNowTemperature());
+                                aw.setTime(now);
+                                scanRet.add(aw);
+                            }
+                        }
+
+
+
+
+
+
+
                     }
                 }
                 else{
@@ -132,7 +255,7 @@ public class BeaconServiceImpl implements BeaconService{
                     return new ResponseEntity<>(ret, HttpStatus.OK);
                 }
             }
-            ret.data = ids;
+            ret.data = scanRet;
             ret.status = true;
         }
         else{

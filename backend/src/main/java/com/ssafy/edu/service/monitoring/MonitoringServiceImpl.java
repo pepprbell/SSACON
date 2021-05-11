@@ -6,7 +6,7 @@ import com.ssafy.edu.model.monitoring.BeaconMonitoring;
 import com.ssafy.edu.model.monitoring.MonitoringResponse;
 import com.ssafy.edu.model.user.User;
 import com.ssafy.edu.repository.beacon.BeaconRepository;
-import com.ssafy.edu.repository.blockusers.BeaconUsersRepository;
+import com.ssafy.edu.repository.beaconusers.BeaconUsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
