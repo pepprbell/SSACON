@@ -8,14 +8,17 @@ import lombok.Setter;
 @Setter
 public class BeaconCreateRequest {
     String equipment_id;
-    String name;
+//    String name;
     String line;
     String equipment;
     double temperatureMax;
     double temperatureMin;
     double humidityMax;
     double humidityMin;
-    double temperature;
-    double humidity;
-    double vbatt;
+//    double temperature;
+//    double humidity;
+//    double vbatt;
+    int signalPower;
+    double sensing;
+    double adv;
 }

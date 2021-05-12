@@ -43,4 +43,10 @@ public class beacon {
     public ResponseEntity<BeaconResponse> ScanBeacon(@PathVariable("userid") String userid,@RequestBody List<BeaconContent> beaconScanList){
         return beaconService.scanBeacons(beaconScanList, userid);
     }
+
+    @ApiOperation(value = "비콘 삭제", notes = "")
+    @DeleteMapping("/delete/{beaconId}")
+    public ResponseEntity<BeaconResponse> DeleteBeacon(@PathVariable("beaconId") String beaconId){
+        return beaconService.deleteBeacon(beaconId);
+    }
 }

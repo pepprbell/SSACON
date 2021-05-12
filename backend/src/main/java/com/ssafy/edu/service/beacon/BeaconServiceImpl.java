@@ -98,14 +98,17 @@ public class BeaconServiceImpl implements BeaconService{
                 .beaconId(id)
                 .line(beaconCreateRequest.getLine())
                 .equipment(beaconCreateRequest.getEquipment())
-                .beaconName(beaconCreateRequest.getName())
+                .beaconName(beaconCreateRequest.getLine() + "_" + beaconCreateRequest.getEquipment())
                 .tempMax(beaconCreateRequest.getTemperatureMax())
                 .tempMin(beaconCreateRequest.getTemperatureMin())
                 .humidtyMax(beaconCreateRequest.getHumidityMax())
                 .humidtyMin(beaconCreateRequest.getHumidityMin())
-                .beaconMoisture(beaconCreateRequest.getHumidity())
-                .beaconTemperature(beaconCreateRequest.getTemperature())
-                .beaconBattery(beaconCreateRequest.getVbatt())
+                .beaconMoisture((beaconCreateRequest.getHumidityMin()+beaconCreateRequest.getHumidityMax())/2)
+                .beaconTemperature((beaconCreateRequest.getTemperatureMax()+beaconCreateRequest.getTemperatureMin())/2)
+                .beaconBattery(100)
+                .adv(beaconCreateRequest.getAdv())
+                .sensing(beaconCreateRequest.getSensing())
+                .signalPower(beaconCreateRequest.getSignalPower())
                 .build();
         Beacon t = beaconRepository.save(tmp);
         ret.data = t.getBeaconId();
@@ -223,7 +226,6 @@ public class BeaconServiceImpl implements BeaconService{
                                             .time(now)
                                             .userId(admin.getUserId())
                                             .beaconId(wBeacon.getBeaconId())
-                                            .receive(false)
                                             .build();
                                     alarmRepository.save(wadmin);
                                 }
@@ -247,17 +249,67 @@ public class BeaconServiceImpl implements BeaconService{
                         Alarm lastB = beaconB.get(beaconB.size() - 1);
                         if(i.getVbatt() < 5.0){
                             if (now.getTime() - lastB.getTime().getTime() < 3600000){
-
+                                Alarm B = Alarm.builder()
+                                        .type("battery")
+                                        .line(wBeacon.getLine())
+                                        .beaconId(wBeacon.getBeaconId())
+                                        .equipment(wBeacon.getEquipment())
+                                        .battery(wBeacon.getBeaconBattery())
+                                        .time(now)
+                                        .userId(userOpt.get().getUserId())
+                                        .build();
+                                Alarm tmpB = alarmRepository.save(B);
+                                for(User admin: admins){
+                                    Alarm adminB =  Alarm.builder()
+                                            .type("battery")
+                                            .line(wBeacon.getLine())
+                                            .beaconId(wBeacon.getBeaconId())
+                                            .equipment(wBeacon.getEquipment())
+                                            .battery(wBeacon.getBeaconBattery())
+                                            .time(now)
+                                            .userId(admin.getUserId())
+                                            .build();
+                                    alarmRepository.save(adminB);
+                                }
+                                AlarmResultResponse ab = new AlarmResultResponse();
+                                ab.setId(tmpB.getId());
+                                ab.setType(tmpB.getType());
+                                ab.setLine(tmpB.getLine());
+                                ab.setBeaconId(tmpB.getBeaconId());
+                                ab.setEquipment(tmpB.getEquipment());
+                                ab.setBattery(tmpB.getBattery());
+                                ab.setTime(tmpB.getTime());
+                                scanRet.add(ab);
                             }
                         }
 
-
-
-
-
-
-
-
+                        // 인수인계
+                        List<Message> messageList = messageRepository.findByBeaconId(wBeacon.getBeaconId());
+                        for(Message message: messageList){
+                            if(!message.isReseive()){
+                                message.setReseive(true);
+                                messageRepository.save(message);
+                                Optional<User> writer = userRepository.findByUserId(message.getUserId());
+                                Alarm am = Alarm.builder()
+                                        .type("takeover")
+                                        .line(wBeacon.getLine())
+                                        .equipment(wBeacon.getEquipment())
+                                        .writer(writer.get().getUserName())
+                                        .description(message.getContent())
+                                        .time(now)
+                                        .build();
+                                Alarm tmpm = alarmRepository.save(am);
+                                AlarmResultResponse tmpam = new AlarmResultResponse();
+                                tmpam.setId(tmpm.getId());
+                                tmpam.setType(tmpm.getType());
+                                tmpam.setLine(tmpm.getLine());
+                                tmpam.setEquipment(tmpm.getEquipment());
+                                tmpam.setWriter(tmpm.getWriter());
+                                tmpam.setDescription(tmpm.getDescription());
+                                tmpam.setTime(tmpm.getTime());
+                                scanRet.add(tmpam);
+                            }
+                        }
                     }
                 }
                 else{
@@ -267,6 +319,22 @@ public class BeaconServiceImpl implements BeaconService{
             }
             ret.data = scanRet;
             ret.status = true;
+        }
+        else{
+            ret.status = false;
+        }
+        return new ResponseEntity<>(ret, HttpStatus.OK);
+    }
+
+
+    @Override
+    public ResponseEntity<BeaconResponse> deleteBeacon(String beaconId){
+        BeaconResponse ret = new BeaconResponse();
+        Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(beaconId);
+        if(beaconOpt.isPresent()){
+            ret.data = beaconOpt.get().getBeaconId();
+            ret.status = true;
+            beaconRepository.delete(beaconOpt.get());
         }
         else{
             ret.status = false;

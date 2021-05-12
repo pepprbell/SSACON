@@ -4,6 +4,7 @@ package com.ssafy.edu.service.message;
 import com.ssafy.edu.model.Alarm.Alarm;
 import com.ssafy.edu.model.beacon.Beacon;
 import com.ssafy.edu.model.beacon.BeaconUsers;
+import com.ssafy.edu.model.message.Message;
 import com.ssafy.edu.model.message.MessageBeacon;
 import com.ssafy.edu.model.message.MessageCreateForm;
 import com.ssafy.edu.model.message.MessageResponse;
@@ -48,21 +49,18 @@ public class MessageServiceImpl implements MessageService{
         Optional<User> userOpt = userRepository.findByUserId(messageCreateForm.getUserId());
         Date now = Date.from(Instant.now());
         if(beaconOpt.isPresent() && userOpt.isPresent()){
-            Alarm newMessage = Alarm.builder()
-                    .type("takeover")
-                    .line(beaconOpt.get().getLine())
-                    .equipment(beaconOpt.get().getEquipment())
-                    .writer(userOpt.get().getUserName())
-                    .description(messageCreateForm.getMessage())
+            Message nM = Message.builder()
                     .beaconId(messageCreateForm.getBeaconId())
-                    .time(now)
-                    .receive(false)
+                    .content(messageCreateForm.getMessage())
+                    .userId(messageCreateForm.getUserId())
+                    .reseive(false)
                     .build();
-            Alarm tmp = alarmRepository.save(newMessage);
+            messageRepository.save(nM);
+
             MessageCreateForm r = new MessageCreateForm();
-            r.setMessage(tmp.getDescription());
-            r.setBeaconId(tmp.getBeaconId());
-            r.setUserId(tmp.getUserId());
+            r.setMessage(nM.getContent());
+            r.setBeaconId(nM.getBeaconId());
+            r.setUserId(nM.getUserId());
             ret.data = r;
             ret.status = true;
         }

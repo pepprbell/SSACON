@@ -13,6 +13,7 @@ public class AlarmResultResponse {
     String type;
     String line;
     String equipment;
+    String beaconId;
     String writer;
     String description;
     Date time;
