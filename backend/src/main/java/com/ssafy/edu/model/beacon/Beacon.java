@@ -30,8 +30,8 @@ public class Beacon {
     private double beaconTemperature;
     private double beaconBattery;
     private int signalPower;
-    private double sensing;
-    private double adv;
+    private int sensing;
+    private int adv;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "beacon", cascade = {CascadeType.ALL})

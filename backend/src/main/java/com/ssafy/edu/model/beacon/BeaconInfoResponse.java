@@ -14,6 +14,6 @@ public class BeaconInfoResponse {
     double humidityMax;
     double humidityMin;
     int signalPower;
-    double sensing;
-    double adv;
+    int sensing;
+    int adv;
 }

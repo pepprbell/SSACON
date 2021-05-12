@@ -19,6 +19,6 @@ public class BeaconCreateRequest {
 //    double humidity;
 //    double vbatt;
     int signalPower;
-    double sensing;
-    double adv;
+    int sensing;
+    int adv;
 }
