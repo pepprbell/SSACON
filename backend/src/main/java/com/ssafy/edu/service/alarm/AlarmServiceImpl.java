@@ -138,7 +138,7 @@ public class AlarmServiceImpl implements AlarmService{
                 }
                 ret.data = alarmResult;
                 ret.status = true;
-
+                return new ResponseEntity<>(ret, HttpStatus.OK);
             }
             ret.status = false;
         }
