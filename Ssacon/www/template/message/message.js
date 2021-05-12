@@ -1,78 +1,69 @@
 document.getElementById("closeMessage").addEventListener("click", closeModal)
-document.getElementById("submitMessage").addEventListener("click", sendMessage)
 document.getElementById("seeAll").addEventListener("click", seeAll)
+document.getElementById("submitMessage").addEventListener("click", function(){sendMessage()})
+
+// userInfo = window.localStorage.getItem("userInfo")
+// console.log(JSON.parse(userInfo))
+// userInfo = JSON.parse(userInfo)
+// console.log(userInfo.data.userId)
+// console.log(userInfo["data"])
+// userId = userInfo.data.userId
 
 let beaconHere = [
   {
-    "beaconName" : "#11"
+    "beaconName" : "#11",
+    "beaconId": "11-id",
   },
   {
-    "beaconName" : "#22"
-  },
-]
-
-let beaconAll = [
-  {
-    "beaconName": "#1",
-  },
-  {
-    "beaconName": "#2",
-  },
-  {
-    "beaconName": "#3",
-  },
-  {
-    "beaconName": "#4",
-  },
-  {
-    "beaconName": "#5",
-  },
-  {
-    "beaconName": "#6",
-  },
-  {
-    "beaconName": "#7",
-  },
-  {
-    "beaconName": "#8",
+    "beaconName" : "#22",
+    "beaconId": "22-id",
   },
 ]
 
 const viewHere = document.getElementById('beaconHere')
 const viewAll = document.getElementById('beaconAll')
 
-// fetch ("http://k4b101.p.ssafy.io/api/message/beacon/{}", {method: "GET",})
+// 현재 위치의 비콘 검색 및 아이콘 생성
+// fetch ("http://k4b101.p.ssafy.io/api/message/beacon/{$userId}", {method: "GET",})
 // .then((res) => res.json())
 // .then((result => {
-//   console.log(result)
+//   console.log(result.data)
 //   beaconHere = result.data
+  beaconHere.forEach.call(beaconHere, function(beacon) {
+    let item = document.createElement("div")
+    item.className = "item"
+    item.innerHTML = beacon.beaconName
+    item.addEventListener("click", function(){openModal(beacon.beaconName, beacon.beaconId)})
+    viewHere.appendChild(item)
+  })
 // }))
 // .catch((err) => console.log(err))
 
-beaconHere.forEach(function(beacon) {
-  let item = document.createElement("div")
-  item.className = "item"
-  item.innerHTML = beacon.beaconName
-  item.addEventListener("click", function(){openModal(beacon.beaconName)})
-  viewHere.appendChild(item)
+// 모든 위치의 비콘 검색 및 아이콘 생성
+fetch("http://k4b101.p.ssafy.io/api/monitoring/beacon", {method: "GET",})
+.then((res) => res.json())
+.then((result) => {
+  console.log("connected! - all")
+  beaconAll = result.data
+  beaconAll.forEach.call(beaconAll, function(beacon) {
+    let item = document.createElement("div")
+    item.className = "item"
+    item.innerHTML = beacon.beaconName
+    item.addEventListener("click", function(){openModal(beacon.beaconName, beacon.beaconId)})
+    viewAll.appendChild(item)
+  })
 })
+.catch((err) => console.log(err))
 
-// fetch("http://k4b101.p.ssafy.io/api/beacon/list", {method: "GET",})
-// .then((res) => res.json())
-// .then((result) => {
-//   console.log(result)
-//   // beaconAll = result.data
+
+// beaconAll.forEach(function(beacon) {
+//   let item = document.createElement("div")
+//   item.className = "item"
+//   item.id = beacon.beaconName
+//   item.innerHTML = beacon.beaconName
+//   item.addEventListener("click", function(){openModal(beacon.beaconName)})
+//   viewAll.appendChild(item)
 // })
-// .catch((err) => console.log(err))
-
-beaconAll.forEach(function(beacon) {
-  let item = document.createElement("div")
-  item.className = "item"
-  item.id = beacon.beaconName
-  item.innerHTML = beacon.beaconName
-  item.addEventListener("click", function(){openModal(beacon.beaconName)})
-  viewAll.appendChild(item)
-})
 
 let everyBeacon = true
 
@@ -92,12 +83,13 @@ function seeAll() {
   }
 }
 
-function openModal(beaconName) {
-  console.log('open')
+function openModal(beaconName, beaconId) {
   let modal = document.getElementById("modal")
   let name = document.getElementById("beaconName")
+  let textarea = document.getElementById("message")
   modal.classList.add("m-show-modal")
   name.innerHTML = beaconName
+  textarea.name = beaconId
 }
 
 function closeModal() {
@@ -111,12 +103,15 @@ window.addEventListener('click', (e) => {
 })
 
 function sendMessage() {
-  let message = document.getElementById("message").value
-  console.log(message)
+  let message = document.getElementById("message")
+  console.log(message.value)
+  console.log(message.name)
   // fetch("http://k4b101.p.ssafy.io/api/message/", {
   //   method: "POST",
   //   body: {
-  //     "message": message
+  //     "beaconId": beaconId,
+  //     "message": message.value,
+  //     "userId": message.name,
   //   }
   // }) 
   // .then((res) => res.json())
