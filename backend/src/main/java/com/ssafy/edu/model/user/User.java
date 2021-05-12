@@ -28,6 +28,8 @@ public class User {
 
     private Date lastSignal;
 
+    private boolean isLogin;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     List<BeaconUsers> beacons = new ArrayList<>();

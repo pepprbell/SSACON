@@ -27,4 +27,10 @@ public class user {
     public ResponseEntity<UserResponse> Login(@ModelAttribute LoginRequest loginInfo){
         return userService.login(loginInfo);
     }
+
+    @ApiOperation(value = "로그아웃", notes = "")
+    @PostMapping("/logout/{userId}")
+    public ResponseEntity<UserResponse> Logout(@PathVariable("userId") String userId){
+        return userService.logout(userId);
+    }
 }

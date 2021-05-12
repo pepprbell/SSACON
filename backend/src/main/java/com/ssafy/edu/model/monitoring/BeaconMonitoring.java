@@ -21,5 +21,7 @@ public class BeaconMonitoring {
 
     double beaconBattery;
 
-    List<User> workers;
+    List<User> connectWorkers;
+
+    List<User> nonConnectWorkers;
 }

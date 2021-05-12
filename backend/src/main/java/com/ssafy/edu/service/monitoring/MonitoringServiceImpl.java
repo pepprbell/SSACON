@@ -35,12 +35,16 @@ public class MonitoringServiceImpl implements MonitoringService{
             BeaconMonitoring tmp = new BeaconMonitoring();
             List<BeaconUsers> beaconUsers = beaconUsersRepository.findByBeacon(i);
             List<User> tmp1 = new ArrayList<>();
+            List<User> tmp2 = new ArrayList<>();
             if(!beaconUsers.isEmpty()){
                 for(BeaconUsers j: beaconUsers){
                     Date tmptime = j.getUser().getLastSignal();
                     Date timeNow = Date.from(Instant.now());
                     if(timeNow.getTime() - tmptime.getTime() < 300000){
                         tmp1.add(j.getUser());
+                    }
+                    else if(j.getUser().isLogin()){
+                        tmp2.add(j.getUser());
                     }
                 }
             }
@@ -49,7 +53,8 @@ public class MonitoringServiceImpl implements MonitoringService{
             tmp.setBeaconMoisture(i.getBeaconMoisture());
             tmp.setBeaconTemperature(i.getBeaconTemperature());
             tmp.setBeaconBattery(i.getBeaconBattery());
-            tmp.setWorkers(tmp1);
+            tmp.setConnectWorkers(tmp1);
+            tmp.setNonConnectWorkers(tmp2);
             finRet.add(tmp);
         }
         ret.data = finRet;

@@ -29,6 +29,8 @@ public class UserServiceImpl implements UserService{
             if(tmppw.equals(tmppw1)){
                 re.setAdmin(tmp.get().isAdmin());
                 re.setUserId(tmp.get().getUserId());
+                tmp.get().setLogin(true);
+                userRepository.save(tmp.get());
                 ret.status = true;
                 ret.data = re;
                 return new ResponseEntity<>(ret, HttpStatus.OK);
@@ -44,5 +46,20 @@ public class UserServiceImpl implements UserService{
             ret.data = re;
             return new ResponseEntity<>(ret, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Override
+    public ResponseEntity<UserResponse> logout(String userId){
+        UserResponse ret = new UserResponse();
+        Optional<User> tmp = userRepository.findByUserId(userId);
+        if(tmp.isPresent() && tmp.get().isLogin()){
+            tmp.get().setLogin(false);
+            userRepository.save(tmp.get());
+            ret.status = true;
+        }
+        else{
+            ret.status = false;
+        }
+        return new ResponseEntity<>(ret, HttpStatus.OK);
     }
 }
