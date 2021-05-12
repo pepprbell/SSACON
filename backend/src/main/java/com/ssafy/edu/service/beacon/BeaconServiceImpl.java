@@ -230,6 +230,9 @@ public class BeaconServiceImpl implements BeaconService{
                                             .build();
                                     Alarm tmpw = alarmRepository.save(w);
                                     for (User admin : admins) {
+                                        if(admin.equals(userOpt.get())){
+                                            continue;
+                                        }
                                         Alarm wadmin = Alarm.builder()
                                                 .type("warning")
                                                 .line(wBeacon.getLine())
@@ -281,6 +284,9 @@ public class BeaconServiceImpl implements BeaconService{
                                         .build();
                                 Alarm tmpw = alarmRepository.save(w);
                                 for (User admin : admins) {
+                                    if(admin.equals(userOpt.get())){
+                                        continue;
+                                    }
                                     Alarm wadmin = Alarm.builder()
                                             .type("warning")
                                             .line(wBeacon.getLine())
@@ -329,6 +335,9 @@ public class BeaconServiceImpl implements BeaconService{
                                             .build();
                                     Alarm tmpB = alarmRepository.save(B);
                                     for (User admin : admins) {
+                                        if(admin.equals(userOpt.get())){
+                                            continue;
+                                        }
                                         Alarm adminB = Alarm.builder()
                                                 .type("battery")
                                                 .line(wBeacon.getLine())
@@ -365,6 +374,9 @@ public class BeaconServiceImpl implements BeaconService{
                                         .build();
                                 Alarm tmpB = alarmRepository.save(B);
                                 for (User admin : admins) {
+                                    if(admin.equals(userOpt.get())){
+                                        continue;
+                                    }
                                     Alarm adminB = Alarm.builder()
                                             .type("battery")
                                             .line(wBeacon.getLine())
