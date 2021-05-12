@@ -66,9 +66,23 @@ public class BeaconServiceImpl implements BeaconService{
         List<String> beaconMonitorResponses = new ArrayList<>();
         List<String> l1 = new ArrayList<>();
         List<String> l2 = new ArrayList<>();
+
+        List<BeaconInfoResponse> beaconInfoResponses = new ArrayList<>();
         for(Beacon i:beacons){
             String tmp = i.getBeaconId();
             beaconMonitorResponses.add(tmp);
+            BeaconInfoResponse tb = new BeaconInfoResponse();
+            tb.setBeacon_id(i.getBeaconId());
+            tb.setLine(i.getLine());
+            tb.setEquipment(i.getEquipment());
+            tb.setTemperatureMax(i.getTempMax());
+            tb.setTemperatureMin(i.getTempMin());
+            tb.setHumidityMax(i.getHumidtyMax());
+            tb.setHumidityMin(i.getHumidtyMin());
+            tb.setSignalPower(i.getSignalPower());
+            tb.setSensing(i.getSensing());
+            tb.setAdv(i.getAdv());
+            beaconInfoResponses.add(tb);
         }
         beaconList.setBeacon_id(beaconMonitorResponses);
         List<Equipment> allequips = equipmentRepository.findAll();
@@ -86,6 +100,7 @@ public class BeaconServiceImpl implements BeaconService{
         lines.setLine_name2(l2);
         beaconList.setBeacon_id(beaconMonitorResponses);
         beaconList.setLine_equipment(lines);
+        beaconList.setBeacon_info(beaconInfoResponses);
         ret.data = beaconList;
         ret.status = true;
         return new ResponseEntity<>(ret, HttpStatus.OK);

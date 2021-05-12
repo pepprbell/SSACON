@@ -11,5 +11,6 @@ import java.util.List;
 @Setter
 public class BeaconList {
     List<String> beacon_id;
+    List<BeaconInfoResponse> beacon_info;
     LineInfo line_equipment;
 }
