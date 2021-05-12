@@ -54,6 +54,7 @@ header {
 }
 
 .loading {
+  position: relative;
   margin-left: 100%;
   width: 1px;
   height: 1px;

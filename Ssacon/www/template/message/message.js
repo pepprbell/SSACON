@@ -3,12 +3,17 @@ document.getElementById("submitMessage").addEventListener("click", sendMessage)
 document.getElementById("seeAll").addEventListener("click", seeAll)
 
 let beaconHere = [
-  { "beaconName" : "#1" },
+  {
+    "beaconName" : "#11"
+  },
+  {
+    "beaconName" : "#22"
+  },
 ]
 
 let beaconAll = [
   {
-    "beaconName": "#11",
+    "beaconName": "#1",
   },
   {
     "beaconName": "#2",
