@@ -54,12 +54,14 @@ header {
 }
 
 .loading {
-  margin-left: 100%;
+  position: absolute;
+  margin-left: 30%;
   width: 1px;
   height: 1px;
 }
 
 .loading .circle {
+  position: fixed;
   display: inline-block;
   width:0.5rem; 
   height:0.5rem; 
@@ -101,12 +103,13 @@ header {
 .beacon-div {
   margin-top: 4vw;
   width: inherit;
+  height: 74%;
   display: grid;
-  grid-template-rows: repeat(2, 20vw);  /* 세로 높이 */
   grid-template-columns: repeat(4, 1fr);  /* 한 줄에 갯수 */
-  grid-auto-rows: 100px;
+  grid-auto-rows: 24vw;
   place-items: center;
   position: absolute;
+  overflow: auto;
 }
 
 .item {
