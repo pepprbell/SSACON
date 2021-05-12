@@ -84,7 +84,6 @@ public class BeaconServiceImpl implements BeaconService{
             tb.setAdv(i.getAdv());
             beaconInfoResponses.add(tb);
         }
-        beaconList.setBeacon_id(beaconMonitorResponses);
         List<Equipment> allequips = equipmentRepository.findAll();
         for(Equipment i: allequips){
             String tmp = i.getLineId();
@@ -449,9 +448,33 @@ public class BeaconServiceImpl implements BeaconService{
         BeaconResponse ret = new BeaconResponse();
         Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(beaconId);
         if(beaconOpt.isPresent()){
-            ret.data = beaconOpt.get().getBeaconId();
-            ret.status = true;
             beaconRepository.delete(beaconOpt.get());
+
+            List<Beacon> beacons = beaconRepository.findAll();
+            BeaconDeleteResponse beaconList = new BeaconDeleteResponse();
+            List<BeaconInfoResponse> beaconInfoResponses = new ArrayList<>();
+            List<String> beaconIds = new ArrayList<>();
+            for(Beacon i:beacons){
+                String tmp = i.getBeaconId();
+                beaconIds.add(tmp);
+                BeaconInfoResponse tb = new BeaconInfoResponse();
+                tb.setBeacon_id(i.getBeaconId());
+                tb.setLine(i.getLine());
+                tb.setEquipment(i.getEquipment());
+                tb.setTemperatureMax(i.getTempMax());
+                tb.setTemperatureMin(i.getTempMin());
+                tb.setHumidityMax(i.getHumidtyMax());
+                tb.setHumidityMin(i.getHumidtyMin());
+                tb.setSignalPower(i.getSignalPower());
+                tb.setSensing(i.getSensing());
+                tb.setAdv(i.getAdv());
+                beaconInfoResponses.add(tb);
+            }
+
+            beaconList.setBeacon_id(beaconIds);
+            beaconList.setBeacon_info(beaconInfoResponses);
+            ret.data = beaconList;
+            ret.status = true;
         }
         else{
             ret.status = false;

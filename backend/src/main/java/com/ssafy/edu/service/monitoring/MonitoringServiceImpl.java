@@ -1,12 +1,15 @@
 package com.ssafy.edu.service.monitoring;
 
+import com.amazonaws.services.dynamodbv2.xspec.M;
 import com.ssafy.edu.model.beacon.Beacon;
 import com.ssafy.edu.model.beacon.BeaconUsers;
 import com.ssafy.edu.model.monitoring.BeaconMonitoring;
 import com.ssafy.edu.model.monitoring.MonitoringResponse;
+import com.ssafy.edu.model.monitoring.WorkerMonitoring;
 import com.ssafy.edu.model.user.User;
 import com.ssafy.edu.repository.beacon.BeaconRepository;
 import com.ssafy.edu.repository.beaconusers.BeaconUsersRepository;
+import com.ssafy.edu.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +28,11 @@ public class MonitoringServiceImpl implements MonitoringService{
     @Autowired
     BeaconUsersRepository beaconUsersRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public ResponseEntity<MonitoringResponse> getBeaconAll(){
-        ResponseEntity response;
         MonitoringResponse ret = new MonitoringResponse();
         List<Beacon> beacons = beaconRepository.findAll();
         List<BeaconMonitoring> finRet = new ArrayList<>();
@@ -59,7 +64,39 @@ public class MonitoringServiceImpl implements MonitoringService{
         }
         ret.data = finRet;
         ret.status = true;
-        response = new ResponseEntity<>(ret, HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(ret, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<MonitoringResponse> getWorkerstatus(){
+        MonitoringResponse ret = new MonitoringResponse();
+        List<User> allusers = userRepository.findAll();
+        WorkerMonitoring total = new WorkerMonitoring();
+
+        List<String> totalworker = new ArrayList<>();
+        List<String> onSignal = new ArrayList<>();
+        List<String> nonSignal = new ArrayList<>();
+
+        Date now = Date.from(Instant.now());
+
+        for(User u:allusers){
+            if(u.isLogin()){
+                totalworker.add(u.getUserId());
+                if(now.getTime() - u.getLastSignal().getTime() < 300000){
+                    onSignal.add(u.getUserId());
+                }
+                else{
+                    nonSignal.add(u.getUserId());
+                }
+            }
+        }
+
+        total.setTotalLoginWorker(totalworker);
+        total.setOnSignalWorker(onSignal);
+        total.setNonSignalWorker(nonSignal);
+
+        ret.data = total;
+        ret.status = true;
+        return new ResponseEntity<>(ret, HttpStatus.OK);
     }
 }

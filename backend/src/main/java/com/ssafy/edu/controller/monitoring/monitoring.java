@@ -28,4 +28,8 @@ public class monitoring {
     @ApiOperation(value = "비콘 전체 목록 불러오기", notes = "")
     @GetMapping("/beacon")
     public ResponseEntity<MonitoringResponse> GetBeaconAll(){return monitoringService.getBeaconAll();}
+
+    @ApiOperation(value = "근무자 현황 불러오기", notes = "")
+    @GetMapping("/workerstatus")
+    public ResponseEntity<MonitoringResponse> GetWorkers(){return monitoringService.getWorkerstatus();}
 }

@@ -5,4 +5,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface MonitoringService {
     public ResponseEntity<MonitoringResponse> getBeaconAll();
+    public ResponseEntity<MonitoringResponse> getWorkerstatus();
 }
