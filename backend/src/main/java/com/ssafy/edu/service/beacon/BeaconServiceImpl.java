@@ -185,35 +185,20 @@ public class BeaconServiceImpl implements BeaconService{
 
                         // 경고 & 배터리
                         Beacon wBeacon = beaconOpt.get();
-                        List<Alarm> beaconAlarm = alarmRepository.findByTypeAndBeaconId("warning", wBeacon.getBeaconId());
-                        Alarm last = beaconAlarm.get(beaconAlarm.size() - 1);
                         List<User> allusers = userRepository.findAll();
                         List<User> admins = new ArrayList<>();
-                        for(User tmpu: allusers){
-                            if(tmpu.isAdmin()){
+                        for (User tmpu : allusers) {
+                            if (tmpu.isAdmin()) {
                                 admins.add(tmpu);
                             }
                         }
-                        if((i.getHumidity() < wBeacon.getHumidtyMin() || i.getHumidity() > wBeacon.getHumidtyMax())
-                                || (i.getTemperature() < wBeacon.getTempMax() || i.getTemperature() > wBeacon.getTempMax())) {
-                            if (now.getTime() - last.getTime().getTime() < 600000){
-                                Alarm w = Alarm.builder()
-                                        .type("warning")
-                                        .line(wBeacon.getLine())
-                                        .equipment(wBeacon.getEquipment())
-                                        .minProperHumidity(wBeacon.getHumidtyMin())
-                                        .maxProperHumidity(wBeacon.getHumidtyMax())
-                                        .minProperTemperature(wBeacon.getTempMin())
-                                        .maxProperTemperature(wBeacon.getTempMax())
-                                        .nowHumidity(wBeacon.getBeaconMoisture())
-                                        .nowTemperature(wBeacon.getBeaconTemperature())
-                                        .time(now)
-                                        .userId(userOpt.get().getUserId())
-                                        .beaconId(wBeacon.getBeaconId())
-                                        .build();
-                                Alarm tmpw = alarmRepository.save(w);
-                                for (User admin : admins) {
-                                    Alarm wadmin = Alarm.builder()
+                        List<Alarm> beaconAlarm = alarmRepository.findByTypeAndBeaconId("warning", wBeacon.getBeaconId());
+                        if(!beaconAlarm.isEmpty()) {
+                            Alarm last = beaconAlarm.get(beaconAlarm.size() - 1);
+                            if ((i.getHumidity() < wBeacon.getHumidtyMin() || i.getHumidity() > wBeacon.getHumidtyMax())
+                                    || (i.getTemperature() < wBeacon.getTempMax() || i.getTemperature() > wBeacon.getTempMax())) {
+                                if (now.getTime() - last.getTime().getTime() < 600000) {
+                                    Alarm w = Alarm.builder()
                                             .type("warning")
                                             .line(wBeacon.getLine())
                                             .equipment(wBeacon.getEquipment())
@@ -224,62 +209,81 @@ public class BeaconServiceImpl implements BeaconService{
                                             .nowHumidity(wBeacon.getBeaconMoisture())
                                             .nowTemperature(wBeacon.getBeaconTemperature())
                                             .time(now)
-                                            .userId(admin.getUserId())
+                                            .userId(userOpt.get().getUserId())
                                             .beaconId(wBeacon.getBeaconId())
                                             .build();
-                                    alarmRepository.save(wadmin);
+                                    Alarm tmpw = alarmRepository.save(w);
+                                    for (User admin : admins) {
+                                        Alarm wadmin = Alarm.builder()
+                                                .type("warning")
+                                                .line(wBeacon.getLine())
+                                                .equipment(wBeacon.getEquipment())
+                                                .minProperHumidity(wBeacon.getHumidtyMin())
+                                                .maxProperHumidity(wBeacon.getHumidtyMax())
+                                                .minProperTemperature(wBeacon.getTempMin())
+                                                .maxProperTemperature(wBeacon.getTempMax())
+                                                .nowHumidity(wBeacon.getBeaconMoisture())
+                                                .nowTemperature(wBeacon.getBeaconTemperature())
+                                                .time(now)
+                                                .userId(admin.getUserId())
+                                                .beaconId(wBeacon.getBeaconId())
+                                                .build();
+                                        alarmRepository.save(wadmin);
+                                    }
+                                    AlarmResultResponse aw = new AlarmResultResponse();
+                                    aw.setId(tmpw.getId());
+                                    aw.setType(tmpw.getType());
+                                    aw.setLine(tmpw.getLine());
+                                    aw.setEquipment(tmpw.getEquipment());
+                                    aw.setMinProperHumidity(tmpw.getMinProperHumidity());
+                                    aw.setMaxProperHumidity(tmpw.getMaxProperHumidity());
+                                    aw.setMinProperTemperature(tmpw.getMinProperTemperature());
+                                    aw.setMaxProperTemperature(tmpw.getMaxProperTemperature());
+                                    aw.setNowHumidity(tmpw.getNowHumidity());
+                                    aw.setNowTemperature(tmpw.getNowTemperature());
+                                    aw.setTime(now);
+                                    scanRet.add(aw);
                                 }
-                                AlarmResultResponse aw = new AlarmResultResponse();
-                                aw.setId(tmpw.getId());
-                                aw.setType(tmpw.getType());
-                                aw.setLine(tmpw.getLine());
-                                aw.setEquipment(tmpw.getEquipment());
-                                aw.setMinProperHumidity(tmpw.getMinProperHumidity());
-                                aw.setMaxProperHumidity(tmpw.getMaxProperHumidity());
-                                aw.setMinProperTemperature(tmpw.getMinProperTemperature());
-                                aw.setMaxProperTemperature(tmpw.getMaxProperTemperature());
-                                aw.setNowHumidity(tmpw.getNowHumidity());
-                                aw.setNowTemperature(tmpw.getNowTemperature());
-                                aw.setTime(now);
-                                scanRet.add(aw);
                             }
                         }
                         //배터리
                         List<Alarm> beaconB = alarmRepository.findByTypeAndBeaconId("battery", wBeacon.getBeaconId());
-                        Alarm lastB = beaconB.get(beaconB.size() - 1);
-                        if(i.getVbatt() < 5.0){
-                            if (now.getTime() - lastB.getTime().getTime() < 3600000){
-                                Alarm B = Alarm.builder()
-                                        .type("battery")
-                                        .line(wBeacon.getLine())
-                                        .beaconId(wBeacon.getBeaconId())
-                                        .equipment(wBeacon.getEquipment())
-                                        .battery(wBeacon.getBeaconBattery())
-                                        .time(now)
-                                        .userId(userOpt.get().getUserId())
-                                        .build();
-                                Alarm tmpB = alarmRepository.save(B);
-                                for(User admin: admins){
-                                    Alarm adminB =  Alarm.builder()
+                        if(!beaconB.isEmpty()) {
+                            Alarm lastB = beaconB.get(beaconB.size() - 1);
+                            if (i.getVbatt() < 5.0) {
+                                if (now.getTime() - lastB.getTime().getTime() < 3600000) {
+                                    Alarm B = Alarm.builder()
                                             .type("battery")
                                             .line(wBeacon.getLine())
                                             .beaconId(wBeacon.getBeaconId())
                                             .equipment(wBeacon.getEquipment())
                                             .battery(wBeacon.getBeaconBattery())
                                             .time(now)
-                                            .userId(admin.getUserId())
+                                            .userId(userOpt.get().getUserId())
                                             .build();
-                                    alarmRepository.save(adminB);
+                                    Alarm tmpB = alarmRepository.save(B);
+                                    for (User admin : admins) {
+                                        Alarm adminB = Alarm.builder()
+                                                .type("battery")
+                                                .line(wBeacon.getLine())
+                                                .beaconId(wBeacon.getBeaconId())
+                                                .equipment(wBeacon.getEquipment())
+                                                .battery(wBeacon.getBeaconBattery())
+                                                .time(now)
+                                                .userId(admin.getUserId())
+                                                .build();
+                                        alarmRepository.save(adminB);
+                                    }
+                                    AlarmResultResponse ab = new AlarmResultResponse();
+                                    ab.setId(tmpB.getId());
+                                    ab.setType(tmpB.getType());
+                                    ab.setLine(tmpB.getLine());
+                                    ab.setBeaconId(tmpB.getBeaconId());
+                                    ab.setEquipment(tmpB.getEquipment());
+                                    ab.setBattery(tmpB.getBattery());
+                                    ab.setTime(tmpB.getTime());
+                                    scanRet.add(ab);
                                 }
-                                AlarmResultResponse ab = new AlarmResultResponse();
-                                ab.setId(tmpB.getId());
-                                ab.setType(tmpB.getType());
-                                ab.setLine(tmpB.getLine());
-                                ab.setBeaconId(tmpB.getBeaconId());
-                                ab.setEquipment(tmpB.getEquipment());
-                                ab.setBattery(tmpB.getBattery());
-                                ab.setTime(tmpB.getTime());
-                                scanRet.add(ab);
                             }
                         }
 
