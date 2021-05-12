@@ -180,7 +180,7 @@ public class BeaconServiceImpl implements BeaconService{
                             }
                         }
 
-                        // 경고
+                        // 경고 & 배터리
                         Beacon wBeacon = beaconOpt.get();
                         List<Alarm> beaconAlarm = alarmRepository.findByTypeAndBeaconId("warning", wBeacon.getBeaconId());
                         Alarm last = beaconAlarm.get(beaconAlarm.size() - 1);
@@ -242,9 +242,14 @@ public class BeaconServiceImpl implements BeaconService{
                                 scanRet.add(aw);
                             }
                         }
-
-
                         //배터리
+                        List<Alarm> beaconB = alarmRepository.findByTypeAndBeaconId("battery", wBeacon.getBeaconId());
+                        Alarm lastB = beaconB.get(beaconB.size() - 1);
+                        if(i.getVbatt() < 5.0){
+                            if (now.getTime() - lastB.getTime().getTime() < 3600000){
+
+                            }
+                        }
 
 
 
