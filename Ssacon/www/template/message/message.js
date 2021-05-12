@@ -36,7 +36,7 @@ let beaconAll = [
 const viewHere = document.getElementById('beaconHere')
 const viewAll = document.getElementById('beaconAll')
 
-// fetch ("http://k4b101.p.ssafy.io/api/beacon/ {    } ", {method: "GET",})
+// fetch ("http://k4b101.p.ssafy.io/api/message/beacon/{}", {method: "GET",})
 // .then((res) => res.json())
 // .then((result => {
 //   console.log(result)
@@ -46,9 +46,9 @@ const viewAll = document.getElementById('beaconAll')
 
 beaconHere.forEach(function(beacon) {
   let item = document.createElement("div")
-  item.id = beacon.beaconName
   item.className = "item"
   item.innerHTML = beacon.beaconName
+  item.addEventListener("click", function(){openModal(beacon.beaconName)})
   viewHere.appendChild(item)
 })
 
@@ -65,6 +65,7 @@ beaconAll.forEach(function(beacon) {
   item.className = "item"
   item.id = beacon.beaconName
   item.innerHTML = beacon.beaconName
+  item.addEventListener("click", function(){openModal(beacon.beaconName)})
   viewAll.appendChild(item)
 })
 
@@ -87,6 +88,7 @@ function seeAll() {
 }
 
 function openModal(beaconName) {
+  console.log('open')
   let modal = document.getElementById("modal")
   let name = document.getElementById("beaconName")
   modal.classList.add("m-show-modal")
