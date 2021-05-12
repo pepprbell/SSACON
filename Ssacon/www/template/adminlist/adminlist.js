@@ -18,25 +18,25 @@ WorkerCheckSheet.addEventListener("click", moveWorkerCheckSheet);
 WorkerMessage.addEventListener("click", moveWorkerMessage);
 
 function moveCheckSheet() {
-  console.log(CheckSheet);
+  window.location = "../checklist/checklist.html";
 }
 function moveCheckSheetList() {
-  console.log(CheckSheetList);
+  window.location = "../seeChecklist/seeChecklist.html";
 }
 function moveBeaconMornitor() {
-  console.log(BeaconMornitor);
+  window.location = "../beaconMonitor/beaconMonitor.html";
 }
 function moveAreaManagement() {
-  console.log(AreaManagement);
+  console.log('이거 삭제');
 }
 function moveBeaconManagement() {
-  console.log(BeaconManagement);
+  window.location = "../beacon/beacon_crud/beacon_crud.html";
 }
 function moveWorkerCheckSheet() {
-  console.log(WorkerCheckSheet);
+  window.location = "../checklist/checklist.html";
 }
 function moveWorkerMessage() {
-  console.log(WorkerMessage);
+  window.location = "../message/message.html";
 }
 
 function load() {

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="beacon_crud.css">
+  <title>비콘 추가</title>
+</head>
+<body>
+  <div class="title">
+    <div class="back_btn"></div>
+    <div class="title_content">
+      <div class="title_content_1">비콘 리스트</div>
+      <div class="title_content_2">
+        스캔중
+        <div class="loader"></div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div id="beacon_c_container">
+    <!-- <div class="beacon_card_body">
+      <div class="top">
+        <div class="left">
+          <div class="beacon_img"></div>
+          <img src="../../../image/beacon_logo.jpg" alt="비콘이미지">
+        </div>
+  
+        <div class="center">
+          <div class="beacon_title">Undefined</div>
+          <div>
+            <span class="beacon_opthion_name">RSSI</span>
+            <span id="${beacon.id}_rssi" class="beacon_opthion_value">-23dBm</span>
+          </div>
+          <div>
+            <span class="beacon_opthion_name">Adv. 주기</span>
+            <span id="${beacon.id}_advertising" class="beacon_opthion_value">3sec</span>
+          </div>
+          <div>
+            <span class="beacon_opthion_name">센싱 주기</span>
+            <span id="${beacon.id}_sensing" class="beacon_opthion_value">3sec</span>
+          </div>
+        </div>
+  
+        <div class="right">
+          <div id="${beacon.id}_vbatt" class="beacon_vbatt">90%</div>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class=beacon_add_butt value="${beacon.id}" type="button">비콘 추가</div>
+      </div>
+    </div> -->
+  </div>
+    
+  <!-- <div class="modal_body">
+    <div class="modal-bg bg-active" id="modal_container">
+      <div class="modal">
+
+        <div class="wrapper">
+          <div  class="input-data">
+            <div class="two-ele">
+              <label for="line">라인</label>
+              <span>* 필수항목</span>
+            </div>
+            <select name="line" id="beacon_line">
+              <option value="nothing">----------</option>
+              <option value="line1">line1</option>
+              <option value="lin2">lin2</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="wrapper">
+          <div  class="input-data">
+            <div class="two-ele">
+              <label for="equipment">설비</label>
+              <span>* 필수항목</span>
+            </div>
+            <select name="equipment" id="beacon_equipment">
+              <option value="">----------</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="wrapper">
+          <div  class="input-data">
+            <div class="two-ele">
+              <label for="temperature">온도 범위</label>
+              <span>* 필수항목</span>
+            </div>
+            <input id="beacon_temperatureMin" type="number" name="temperatureMin" class="towInput">
+            <span>~</span>
+            <input id="beacon_temperatureMax" type="number" name="temperatureMax" class="towInput">
+          </div>
+        </div>
+  
+        <div class="wrapper">
+          <div  class="input-data">
+            <div class="two-ele">
+              <label for="humidity">습도 범위</label>
+              <span>* 필수항목</span>
+            </div>
+            <input id="beacon_humidityMin" type="number" name="humidityMin" class="towInput">
+            <span> ~ </span>
+            <input id="beacon_humidityMax" type="number" name="humidityMax" class="towInput">
+          </div>
+        </div>
+        
+        <div class="wrapper">
+          <div  class="input-data">
+            <div class="two-ele">
+              <label for="signalPower">신호 세기</label>
+              <span>단위:dbm</span>
+            </div>
+            <input id="beacon_signalPower" type="number" name="signalPower" class="input">
+            <div class="underline"></div>
+          </div>
+        </div>
+  
+        <div class="wrapper">
+          <div  class="input-data">
+            <div class="two-ele">
+              <label for="sensing">센싱 주기</label>
+              <span>단위:sec</span>
+            </div>
+            <input id="beacon_sensing" type="number" name="sensing" class="input">
+            <div class="underline"></div>
+          </div>
+        </div>
+  
+        <div class="wrapper">
+          <div  class="input-data">
+            <div class="two-ele">
+              <label for="adv">Adv. 주기</label>
+              <span>단위:sec</span>
+            </div>
+            <input id="beacon_adv" type="number" name="adv" class="input">
+            <div class="underline"></div>
+          </div>
+        </div>
+  
+        <button class="beaconUpdate">추가하기</button>
+  
+        <span id="beaconModalClose" class="modal-close">x</span>
+      </div>
+    </div>
+  </div> -->
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="../../cordova.js"></script>
+  <script src="../../dist/js/BeaconAdd_bundle.js"></script>
+</body>
+</html>
