@@ -81,7 +81,6 @@ public class BeaconServiceImpl implements BeaconService{
             tb.setHumidityMin(i.getHumidtyMin());
             tb.setSignalPower(i.getSignalPower());
             tb.setSensing(i.getSensing());
-            tb.setAdv(i.getAdv());
             beaconInfoResponses.add(tb);
         }
         List<Equipment> allequips = equipmentRepository.findAll();
