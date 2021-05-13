@@ -451,6 +451,24 @@ public class BeaconServiceImpl implements BeaconService{
                                 scanRet.add(tmpam);
                             }
                         }
+
+                        // 체크리스트 제출 알림
+                        List<Alarm> checksheets = alarmRepository.findByTypeAndUserId("checksheet", wBeacon.getBeaconId());
+                        for(Alarm ac: checksheets){
+                            if(!ac.isReceive()){
+                                ac.setReceive(true);
+                                alarmRepository.save(ac);
+                                AlarmResultResponse tmpc = new AlarmResultResponse();
+                                tmpc.setId(ac.getId());
+                                tmpc.setType(ac.getType());
+                                tmpc.setLine(ac.getLine());
+                                tmpc.setEquipment(ac.getEquipment());
+                                tmpc.setProperBeaconId(ac.getProperBeaconId());
+                                tmpc.setSubmissionBeaconId(ac.getSubmissionBeaconId());
+                                tmpc.setTime(ac.getTime());
+                                scanRet.add(tmpc);
+                            }
+                        }
                     }
                 }
                 else{

@@ -1,8 +1,10 @@
 package com.ssafy.edu.service.checksheet;
 
+import com.ssafy.edu.model.Alarm.Alarm;
 import com.ssafy.edu.model.beacon.Beacon;
 import com.ssafy.edu.model.checksheet.*;
 import com.ssafy.edu.model.user.User;
+import com.ssafy.edu.repository.alarm.AlarmRepository;
 import com.ssafy.edu.repository.beacon.BeaconRepository;
 import com.ssafy.edu.repository.checksheet.ChecksheetRepository;
 import com.ssafy.edu.repository.user.UserRepository;
@@ -11,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,10 +30,14 @@ public class ChecksheetServiceImpl implements ChecksheetService{
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    AlarmRepository alarmRepository;
+
     @Override
     public ResponseEntity<ChecksheetResponse> sendChecksheet(ChecksheetRequest checksheet){
         ChecksheetResponse ret = new ChecksheetResponse();
         Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(checksheet.getBeaconId());
+        Date now = Date.from(Instant.now());
         if(beaconOpt.isPresent()) {
             Checksheet tmp = Checksheet.builder()
                     .beaconId(checksheet.getBeaconId())
@@ -37,6 +45,18 @@ public class ChecksheetServiceImpl implements ChecksheetService{
                     .equipmentName(checksheet.getEquipment())
                     .build();
             checksheetRepository.save(tmp);
+            Alarm aCheck = Alarm.builder()
+                    .type("checksheet")
+                    .line(beaconOpt.get().getLine())
+                    .equipment(beaconOpt.get().getEquipment())
+                    .submissionBeaconId(beaconOpt.get().getBeaconId())
+                    .time(now)
+                    .userId(checksheet.getUserId())
+                    .properBeaconId(checksheet.getProperBeaconId())
+                    .receive(false)
+                    .build();
+            alarmRepository.save(aCheck);
+
             Check r = new Check();
             r.setBeaconName(beaconOpt.get().getBeaconName());
             ret.data = r;

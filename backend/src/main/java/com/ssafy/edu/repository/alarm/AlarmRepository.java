@@ -14,4 +14,5 @@ public interface AlarmRepository extends JpaRepository<Alarm, String> {
     public List<Alarm> findByUserId(String id);
     public Optional<Alarm> findById(Long id);
     public List<Alarm> findByTypeAndBeaconId(String type, String beaconId);
+    public List<Alarm> findByTypeAndUserId(String type, String userId);
 }

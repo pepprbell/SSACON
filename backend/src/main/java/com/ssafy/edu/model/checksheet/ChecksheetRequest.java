@@ -10,4 +10,6 @@ public class ChecksheetRequest {
     String equipment;
     String checkName;
     String beaconId;
+    String properBeaconId;
+    String userId;
 }
