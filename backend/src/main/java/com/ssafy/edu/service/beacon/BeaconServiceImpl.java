@@ -172,7 +172,7 @@ public class BeaconServiceImpl implements BeaconService{
                     beaconUsersRepository.delete(i);
                 }
             }
-            String educationBeacon = "safasdfasfasd";
+            String educationBeacon = "E3:2F:4B:F3:F2:77";
             List<String> tmpset = new ArrayList<>();
             Collections.reverse(beaconScanList);
             List<Education> edus = educationRepository.findAll();
