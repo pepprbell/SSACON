@@ -42,7 +42,27 @@
   "cordova-plugin-androidx-adapter": {
     "source": {
       "type": "registry",
+<<<<<<< HEAD
       "id": "cordova-plugin-androidx-adapter"
+=======
+      "id": "cordova-plugin-androidx-adapter@^1.1.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-badge": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-badge@>=0.8.5"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-local-notification": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-local-notification"
+>>>>>>> 6f85f910adca08d8921f4d833010f49a10c33b40
     },
     "is_top_level": true,
     "variables": {}

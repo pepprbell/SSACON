@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="beacon_c.css">
+  <title>beaconAdd</title>
+</head>
+<body>
+  <div class="beacon_c_body">
+    <div class="beacon_c_navbar">
+      <button id="beaconBackBtt">뒤로가기</button>
+    </div>
+
+    <br>
+
+    <div id="beacon_c_container">
+
+    </div>
+
+
+    <div class="modal-bg">
+      <div class="modal">
+        <h2>비콘 추가</h2>
+  
+        <label for="line">라인</label>
+        <input type="text" name="email">
+  
+        <label for="equipment">설비</label>
+        <input type="text" name="equipment">
+  
+        <label for="temperature">온도 범위</label>
+        <input type="text" name="temperature">
+  
+        <label for="humidity">습도 범위</label>
+        <input type="text" name="humidity">
+  
+        <button id="beaconCreate">추가하기</button>
+        <span id="beaconModalClose" class="modal-close">x</span>
+  
+      </div>
+    </div>
+
+
+
+  </div>
+
+  
+
+
+
+  <script type="text/javascript" src="../../../cordova.js"></script>
+  <script src="../../../dist/js/BeaconAdd_bundle.js"></script>
+</body>
+</html>
