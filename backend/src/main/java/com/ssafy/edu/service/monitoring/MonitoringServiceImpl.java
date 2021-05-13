@@ -82,7 +82,7 @@ public class MonitoringServiceImpl implements MonitoringService{
         for(User u:allusers){
             if(u.isLogin()){
                 totalworker.add(u.getUserId());
-                if(now.getTime() - u.getLastSignal().getTime() < 300000){
+                if(u.getLastSignal() != null && now.getTime() - u.getLastSignal().getTime() < 300000){
                     onSignal.add(u.getUserId());
                 }
                 else{
