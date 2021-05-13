@@ -13,6 +13,5 @@ import java.util.Optional;
 public interface AlarmRepository extends JpaRepository<Alarm, String> {
     public List<Alarm> findByUserId(String id);
     public Optional<Alarm> findById(Long id);
-    public List<Alarm> findByType(String type);
     public List<Alarm> findByTypeAndBeaconId(String type, String beaconId);
 }

@@ -433,6 +433,13 @@ public class BeaconServiceImpl implements BeaconService{
                     return new ResponseEntity<>(ret, HttpStatus.OK);
                 }
             }
+            //24시간이 지나면 알림 자동 삭제
+            List<Alarm> userAlarms = alarmRepository.findByUserId(userOpt.get().getUserId());
+            for(Alarm a:userAlarms){
+                if(now.getTime() - a.getTime().getTime() > 86400000){
+                    alarmRepository.delete(a);
+                }
+            }
             ret.data = scanRet;
             ret.status = true;
         }
