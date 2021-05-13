@@ -14,6 +14,14 @@ const beaconScan = {
        document.getElementById("startScanBtn").addEventListener("click", this.startScan.bind(this))
        document.getElementById("stopScanBtn").addEventListener("click", this.stopScan.bind(this))
        document.getElementById("sendBeaconInfo").addEventListener("click", this.sendBeacon.bind(this))
+<<<<<<< HEAD
+       document.getElementById("checkAttendance").addEventListener("click", this.eduCheckAttendance.bind(this))
+
+       
+       
+       document.getElementById("addBeacon").addEventListener("click", this.callBeaconListDB.bind(this))
+=======
+>>>>>>> 6f85f910adca08d8921f4d833010f49a10c33b40
    },
 
    onDeviceReady: function() {
@@ -70,6 +78,111 @@ const beaconScan = {
    stopScan: function() {
     this.bleManager.stopScan()
     },
+<<<<<<< HEAD
+
+   startScan: function() {
+     if(this.isBlePoweredOn === true) {
+        this.bleManager.setBackgroundBetweenScanPeriod(0)
+        this.bleManager.setBackgroundScanPeriod(2000)
+        this.bleManager.setForegroundBetweenScanPeriod(0)
+        this.bleManager.setForegroundScanPeriod(2000)
+        this.bleManager.updateScanPeriod()
+        this.bleManager.startScan()
+     }
+     else {
+        alert('블루투스 기능이 꺼져 있습니다.')
+     }
+   },
+
+   sendBeacon: function() {
+    if(this.isBlePoweredOn === true) {
+       this.bleManager.setBackgroundBetweenScanPeriod(0)
+       this.bleManager.setBackgroundScanPeriod(2000)
+       this.bleManager.setForegroundBetweenScanPeriod(0)
+       this.bleManager.setForegroundScanPeriod(2000)
+       this.bleManager.updateScanPeriod()
+       this.bleManager.startScan()
+       user_name = document.getElementById("username").value
+       
+       setInterval(() => {
+         fetch(`http://k4b101.p.ssafy.io/api/beacon/${user_name}/scan`, {
+           method:'POST',
+           headers: {
+            'Content-Type': 'application/json',
+            // Accept: 'application/json',
+          },
+           body: JSON.stringify(beaconList),
+          //  body: beaconList,
+         })
+         .then((response) => {
+             return response.json();
+         })
+         .then((result) => {
+             console.log(result)
+             this.beaconList = {}
+         })
+         .catch((error) => {
+         console.error(error)
+         })
+       }, 10000);
+    }
+    else {
+       alert('블루투스 기능이 꺼져 있습니다.')
+    }
+  },
+
+  eduCheckAttendance: function() {
+    if(this.isBlePoweredOn === true) {
+      this.bleManager.setBackgroundBetweenScanPeriod(0)
+      this.bleManager.setBackgroundScanPeriod(2000)
+      this.bleManager.setForegroundBetweenScanPeriod(0)
+      this.bleManager.setForegroundScanPeriod(2000)
+      this.bleManager.updateScanPeriod()
+      this.bleManager.startScan()
+      setInterval(() => {
+        console.log(beaconList);
+        beaconList = []
+        // fetch('http://k4b101.p.ssafy.io/api/test/2000', {
+        //   method:'POST',
+      //     body: JSON.stringify(this.beaconList),
+      //   })
+      //   .then((response) => {
+      //       return response.json();
+      //   })
+      //   .then((result) => {
+      //       console.log(result)
+      //       this.beaconList = {}
+      //   })
+      //   .catch((error) => {
+      //   console.error(error)
+      //   })
+      }, 4000);
+   }
+   else {
+      alert('블루투스 기능이 꺼져 있습니다.')
+   }
+  },
+
+    callBeaconListDB: function() {
+      fetch('http://k4b101.p.ssafy.io/api/beacon/', {
+        method: 'GET',
+      })
+      .then((response) => {
+          return response.json();
+      })
+      .then((result) => {
+          this.beaconListDB = state === result.data
+      })
+      .catch((error) => {
+          console.error(error)
+      })
+    },
+};
+
+
+app.initialize()
+window.app = app // 디버그 용
+=======
 
    sendBeacon: function() {
     if(this.isBlePoweredOn === true) {
@@ -150,3 +263,4 @@ const beaconScan = {
 
 beaconScan.initialize()
 window.beaconScan = beaconScan // 디버그 용
+>>>>>>> 6f85f910adca08d8921f4d833010f49a10c33b40

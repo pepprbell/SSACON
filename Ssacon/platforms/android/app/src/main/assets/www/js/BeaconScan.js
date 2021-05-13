@@ -14,6 +14,11 @@ const beaconScan = {
        document.getElementById("startScanBtn").addEventListener("click", this.startScan.bind(this))
        document.getElementById("stopScanBtn").addEventListener("click", this.stopScan.bind(this))
        document.getElementById("sendBeaconInfo").addEventListener("click", this.sendBeacon.bind(this))
+       document.getElementById("checkAttendance").addEventListener("click", this.eduCheckAttendance.bind(this))
+
+       
+       
+       document.getElementById("addBeacon").addEventListener("click", this.callBeaconListDB.bind(this))
    },
 
    onDeviceReady: function() {

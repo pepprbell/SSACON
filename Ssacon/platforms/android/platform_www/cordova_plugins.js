@@ -67,7 +67,8 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-background-mode": "0.7.3",
     "cordova-plugin-badge": "0.8.8",
     "cordova-plugin-ble-central": "1.3.1",
+    "cordova-plugin-whitelist": "1.3.4",
+    "cordova-plugin-androidx-adapter": "1.1.3",
     "cordova-plugin-local-notification": "0.9.0-beta.2",
-    "cordova-plugin-whitelist": "1.3.4"
   };
 });

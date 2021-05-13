@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+var app = {
+    initialize: function() {
+        this.bindEvents();
+    },
+=======
 // var app = {
 //     initialize: function() {
 //         this.bindEvents();
@@ -24,10 +30,30 @@
 
 // app.initialize()
 document.addEventListener('deviceready', onDeviceReady, false);
+>>>>>>> 6f85f910adca08d8921f4d833010f49a10c33b40
 
-function onDeviceReady() {
-    // Cordova is now initialized. Have fun!
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false)
+        document.getElementById("worker").addEventListener("click", this.goWorkerPage.bind(this))
+        document.getElementById("manager").addEventListener("click", this.goManagerPage.bind(this))
+    },
 
+<<<<<<< HEAD
+    onDeviceReady: function() {
+        console.log('firstPage');
+    },
+
+    goWorkerPage: function() {
+        window.location = "./template/testrouter/testrouter.html";
+    },
+
+    goManagerPage: function() {
+        window.location = "./template/monitor/monitor.html";
+    }
+}
+
+app.initialize()
+=======
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
     // document.getElementById('deviceready').classList.add('ready');
 
@@ -173,3 +199,4 @@ function onDeviceReady() {
      });
     
 }
+>>>>>>> 6f85f910adca08d8921f4d833010f49a10c33b40
