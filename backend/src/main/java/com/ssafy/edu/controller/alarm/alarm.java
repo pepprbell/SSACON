@@ -29,7 +29,7 @@ public class alarm {
     }
 
     @ApiOperation(value = "알람 1개 불러오기", notes = "")
-    @GetMapping("/{alarmId}")
+    @GetMapping("one/{alarmId}")
     public ResponseEntity<AlarmResponse> getAlarmOne(@PathVariable("alarmId") Long alarmId){
         return alarmService.getAlarmOne(alarmId);
     }
