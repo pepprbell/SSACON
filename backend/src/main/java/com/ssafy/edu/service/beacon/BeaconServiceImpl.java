@@ -427,8 +427,8 @@ public class BeaconServiceImpl implements BeaconService{
                         // 인수인계
                         List<Message> messageList = messageRepository.findByBeaconId(wBeacon.getBeaconId());
                         for(Message message: messageList){
-                            if(!message.isReseive() && !userOpt.get().getUserId().equals(message.getUserId())){
-                                message.setReseive(true);
+                            if(!message.isReceive() && !userOpt.get().getUserId().equals(message.getUserId())){
+                                message.setReceive(true);
                                 messageRepository.save(message);
                                 Optional<User> writer = userRepository.findByUserId(message.getUserId());
                                 Alarm am = Alarm.builder()

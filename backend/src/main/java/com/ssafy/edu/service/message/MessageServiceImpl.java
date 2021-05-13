@@ -53,7 +53,7 @@ public class MessageServiceImpl implements MessageService{
                     .beaconId(messageCreateForm.getBeaconId())
                     .content(messageCreateForm.getMessage())
                     .userId(messageCreateForm.getUserId())
-                    .reseive(false)
+                    .receive(false)
                     .build();
             messageRepository.save(nM);
 

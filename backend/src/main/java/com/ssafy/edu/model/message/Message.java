@@ -23,5 +23,5 @@ public class Message {
 
     private String content;
 
-    private boolean reseive;
+    private boolean receive;
 }
