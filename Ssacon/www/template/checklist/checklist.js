@@ -1,61 +1,68 @@
 document.getElementById("checkSubmit").addEventListener("click",checkSubmit)
 
+// test parameters
 let checkName = "조작장치가 정상적으로 작동하는가?"
-let equipment = "음극분체호퍼"
+let machine = "음극분체호퍼"
 let beaconId = "sampleId"
 let beaconName = "sampleName"
+let properbeaconId = "properbeaconId"
+let userId = "3"
 
-// 비콘 위치 조회를 위한 userId 불러오기
-userInfo = window.localStorage.getItem("userInfo")
-console.log(JSON.parse(userInfo))
-userInfo = JSON.parse(userInfo)
-userId = userInfo.data.userId
+// change innerHTML
+document.getElementById("machineName").innerHTML = machine
 
-// 비콘 조회
+// load userId for beacon scanning
+// userInfo = window.localStorage.getItem("userInfo")
+// console.log(JSON.parse(userInfo))
+// userInfo = JSON.parse(userInfo)
+// userId = userInfo.data.userId
+
+// beacon scanning
 function getBeacon() {
-  fetch("http://k4b101.p.ssafy.io/api/message/beacon/1", {
+  fetch("http://k4b101.p.ssafy.io/api/message/beacon/" + userId, {
     method: "GET",
-    body: {
-      "userId": userId,
-    }
   })
   .then((res) => res.json())
   .then((result) => {
-    console.log(result)
-    beaconId = result.data.beaconId
-    beaconName = result.data.beaconName
+    console.log(result.data)
+    beaconId = result.data[0].beaconId
+    beaconName = result.data[0].beaconName
     document.getElementById("beaconName").innerHTML = beaconName
   })
   // testcode
   // document.getElementById("beaconName").innerHTML = Date()
 }
 
-// 3초마다 비콘 조회
+// beacon scanning - initially 0s, interval 3s
 setTimeout(getBeacon, 0)
-setInterval(getBeacon, 3000)
+// setInterval(getBeacon, 3000)
 
 function checkSubmit() {
   // let options = document.querySelector('input[name=cRadio]:checked').value
   // console.log(options)
-  console.log(beaconName)
+  let submitContent = {
+    "machine": machine,
+    "checkName": checkName,
+    "beaconId": beaconId,
+    "properbeaconId": properbeaconId,
+    "userId": userId,
+  }
 
   fetch("http://k4b101.p.ssafy.io/api/checksheet/", {
     method: "POST",
-    body: {
-      "beaconId": beaconId,
-      "checkName": checkName,
-      "equipment": equipment,
-    }
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(submitContent),
   })
   .then((res) => res.json())
   .then((result) => {
     console.log(result)
     data = result.data
-    console.log(data)
-    return data;
+    if (result.status == 200) {
+      alert("제출이 완료되었습니다.")
+      window.location = "../sheetlist/sheetlist.html"
+    }
   })
   .catch((err) => console.log(err))
-
-  alert("제출이 완료되었습니다.")
-  window.location = "../sheetlist/sheetlist.html"
 }
