@@ -30,7 +30,7 @@ function moveAreaManagement() {
   console.log('이거 삭제');
 }
 function moveBeaconManagement() {
-  window.location = "../beacon/beacon_crud/beacon_crud.html";
+  window.location = "../beacon_crud/beacon_crud.html";
 }
 function moveWorkerCheckSheet() {
   window.location = "../checklist/checklist.html";

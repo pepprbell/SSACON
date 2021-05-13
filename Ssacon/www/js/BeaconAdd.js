@@ -7,7 +7,7 @@ let beaconUpdateInfo = null;
 let beaconAllInfo = [];
 let lineEquipment = {line1: ['e1', 'e2', 'e3'], line2: ['e3', 'e4', 'e5'],};
 
-const beaconAdd = {
+var beaconAdd = {
    initialize: function() {
     this.bleManager = null;
     this.beaconListDB = new Array();
@@ -70,7 +70,7 @@ const beaconAdd = {
       // 오래동안 upgrade 못하면 dom, object delete 로직
       for (let key in beaconScanList) {
         let calTime = today - beaconScanList[key].scanTime
-        if (calTime > 15000) {
+        if (calTime > 30000) {
           delete beaconScanList[key];
           const el = document.getElementById(`${key}`);
           if (el) {
@@ -96,14 +96,6 @@ const beaconAdd = {
    onlyStopScan: function() {
     this.bleManager.stopScan();
    },
-
-  // beaconAddModalOpen: function (e) {
-    
-  // },
-  
-  // beaconUpdateModalOpen: function (e) {
-    
-  // },
 
    beaconAddModalClose: function() {
     document.getElementById('modal_container').remove();
@@ -237,17 +229,17 @@ const beaconAdd = {
 
 
 function createNewBeaconCard(beacon) {
+
   let cardContainer = document.createElement("div");
 
   cardContainer.id = `${beacon.id}`
   cardContainer.className = "beacon_card_body"
 
   const cardContainerContentCreate = `
-    <div class="beacon_card_body">
       <div class="top">
         <div class="left">
           <div class="beacon_img"></div>
-          <img src="../../../image/beacon_logo.jpg" alt="비콘이미지">
+          <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
         </div>
 
         <div class="center">
@@ -258,86 +250,87 @@ function createNewBeaconCard(beacon) {
           </div>
           <div>
             <span class="beacon_opthion_name">Adv. 주기</span>
-            <span id="${beacon.id}_advertising" class="beacon_opthion_value">${beacon.intervalOfAdvertising / 10}sec</span>
+            <span id="${beacon.id}_advertising" class="beacon_opthion_value">${beacon.intervalOfAdvertising.value / 10}sec</span>
           </div>
           <div>
             <span class="beacon_opthion_name">센싱 주기</span>
-            <span id="${beacon.id}_sensing" class="beacon_opthion_value">${beacon.intervalOfSensing}sec</span>
+            <span id="${beacon.id}_sensing" class="beacon_opthion_value">${beacon.intervalOfSensing.value}sec</span>
           </div>
         </div>
 
         <div class="right">
-          <div id="${beacon.id}_vbatt" class="beacon_vbatt">90%</div>
+          <div id="${beacon.id}_vbatt" class="beacon_vbatt">${Math.round(beacon.vbatt.percentage.value)}%</div>
         </div>
       </div>
       <div class="bottom">
-        <div class=beacon_add_butt value="${beacon.id}">비콘 추가</div>
+        <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
       </div>
-    </div>
   `;
 
   const cardContainerContentUpdate = `
-    <div class="beacon_card_body">
       <div class="top">
         <div class="left">
           <div class="beacon_img"></div>
-          <img src="../../../image/beacon_logo.jpg" alt="비콘이미지">
+          <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
         </div>
 
         <div class="center">
-          <div class="beacon_title">${beacon.name}</div>
+          <div id="${beacon.id}_name" class="beacon_title">${beacon.name}</div>
           <div>
             <span class="beacon_opthion_name">RSSI</span>
             <span id="${beacon.id}_rssi" class="beacon_opthion_value">${beacon.rssi}dBm</span>
           </div>
           <div>
             <span class="beacon_opthion_name">Adv. 주기</span>
-            <span id="${beacon.id}_advertising" class="beacon_opthion_value">${beacon.intervalOfAdvertising / 10}sec</span>
+            <span id="${beacon.id}_advertising" class="beacon_opthion_value">${beacon.intervalOfAdvertising.value / 10}sec</span>
           </div>
           <div>
             <span class="beacon_opthion_name">센싱 주기</span>
-            <span id="${beacon.id}_sensing" class="beacon_opthion_value">${beacon.intervalOfSensing}sec</span>
+            <span id="${beacon.id}_sensing" class="beacon_opthion_value">${beacon.intervalOfSensing.value}sec</span>
           </div>
         </div>
 
         <div class="right">
-          <div id="${beacon.id}_vbatt" class="beacon_vbatt">90%</div>
+          <div id="${beacon.id}_vbatt" class="beacon_vbatt">${Math.round(beacon.vbatt.percentage.value)}%</div>
         </div>
       </div>
       <div class="bottom">
-        <div class=beacon_update_butt value="${beacon.id}">비콘 수정</div>
+        <button type="button" class=beacon_update_butt value="${beacon.id}">비콘 수정</button>
       </div>
-    </div>
   `
 
   if (beaconListDBfront.includes(beacon.id)) {
     cardContainer.innerHTML = cardContainerContentUpdate
-    cardContainer.addEventListener("click", beaconUpdateModalOpen());
+    cardContainer.addEventListener("click", beaconUpdateModalOpen);
     document.getElementById("beacon_c_container").appendChild(cardContainer);
   } else {
     cardContainer.innerHTML = cardContainerContentCreate
-    cardContainer.addEventListener("click", beaconAddModalOpen());
+    cardContainer.addEventListener("click", beaconAddModalOpen);
     document.getElementById("beacon_c_container").appendChild(cardContainer);
   }
 }
 
 function updateBeaconCard(beacon) {
-  const new_adv = beacon.intervalOfAdvertising / 10
+  console.log(beacon.intervalOfSensing.value);
+  console.log(beacon.vbatt.percentage.value);
+  const new_adv = beacon.intervalOfAdvertising.value / 10
   document.getElementById(`${beacon.id}_name`).innerText = `${beacon.name}`
-  document.getElementById(`${beacon.id}_rssi`).innerText = `${beacon.rssi}`
-  document.getElementById(`${beacon.id}_advertising`).innerText = `${new_adv}`
-  document.getElementById(`${beacon.id}_sensing`).innerText = `${beacon.intervalOfSensing}`
-  document.getElementById(`${beacon.id}_vbatt`).innerText = `${beacon.vbatt.percentage.value}%`
+  document.getElementById(`${beacon.id}_rssi`).innerText = `${beacon.rssi}dBm`
+  document.getElementById(`${beacon.id}_advertising`).innerText = `${new_adv}sec`
+  document.getElementById(`${beacon.id}_sensing`).innerText = `${beacon.intervalOfSensing.value}sec`
+  document.getElementById(`${beacon.id}_vbatt`).innerText = `${Math.round(beacon.vbatt.percentage.value)}%`
 }
 
 function beaconAddModalOpen(e) {
+  console.log(e.target.value);
   beaconAdd.onlyStopScan()
 
   let connection_beacon = beaconScanList[e.target.value];
-  delete connection_beacon[scanTime];
+  console.log('connection_beacon', connection_beacon);
+  delete connection_beacon.scanTime;
   beaconAddInfo = connection_beacon
 
-  const body = document.querySelector('modal_body')
+  const body = document.querySelector('.modal_body')
 
   const modal = `
     <div class="modal-bg bg-active" id="modal_container">
@@ -433,8 +426,10 @@ function beaconAddModalOpen(e) {
       </div>
     </div>
   `
-
+  
   body.innerHTML = modal
+  const modalClose = document.querySelector('.modal-close')
+  modalClose.addEventListener('click', beaconAdd.beaconAddModalClose())
   document.querySelector('.beaconCreate').addEventListener("click", beaconAdd.beaconCreate());
   document.getElementById('beacon_line').addEventListener("change", line_option);
 
@@ -546,8 +541,10 @@ function beaconUpdateModalOpen(e) {
           </div>
         </div>
       `
-
+      
       body.innerHTML = modal
+      const modalClose = document.querySelector('.modal-close')
+      modalClose.addEventListener('click', beaconAdd.beaconAddModalClose)
       document.querySelector('.beaconUpdate').addEventListener("click", beaconAdd.beaconCreate());
       document.querySelector('.beaconDelete').addEventListener("click", beaconAdd.beaconDelete());
       document.getElementById('beacon_line').addEventListener("change", line_option);
