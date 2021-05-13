@@ -237,7 +237,7 @@ public class BeaconServiceImpl implements BeaconService{
                             if ((i.getHumidity() < wBeacon.getHumidtyMin() || i.getHumidity() > wBeacon.getHumidtyMax())
                                     || (i.getTemperature() < wBeacon.getTempMax() || i.getTemperature() > wBeacon.getTempMax())) {
 
-                                if (now.getTime() - last.getTime().getTime() < 600000) {
+                                if (now.getTime() - last.getTime().getTime() > 600000) {
                                     Alarm w = Alarm.builder()
                                             .type("warning")
                                             .line(wBeacon.getLine())
@@ -347,7 +347,7 @@ public class BeaconServiceImpl implements BeaconService{
                         if(!beaconB.isEmpty()) {
                             Alarm lastB = beaconB.get(beaconB.size() - 1);
                             if (wBeacon.getBeaconBattery() < 5.0) {
-                                if (now.getTime() - lastB.getTime().getTime() < 3600000) {
+                                if (now.getTime() - lastB.getTime().getTime() > 3600000) {
                                     Alarm B = Alarm.builder()
                                             .type("battery")
                                             .line(wBeacon.getLine())
