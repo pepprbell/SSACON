@@ -87,11 +87,11 @@ public class BeaconServiceImpl implements BeaconService{
         for(Equipment i: allequips){
             String tmp = i.getLineId();
             Optional<Line> line = lineRepository.findByLineId(tmp);
-            if(line.get().getLineName() == "line_name1"){
-                l1.add(tmp);
+            if(line.get().getLineName().equals("line1")){
+                l1.add(i.getEquipmentName());
             }
-            else if(line.get().getLineName() == "line_name2"){
-                l2.add(tmp);
+            else if(line.get().getLineName().equals("line2")){
+                l2.add(i.getEquipmentName());
             }
         }
         lines.setLine_name1(l1);
