@@ -131,6 +131,31 @@ public class BeaconServiceImpl implements BeaconService{
     }
 
     @Override
+    public ResponseEntity<BeaconResponse> updateBeacon(String id, BeaconCreateRequest beaconCreateRequest) {
+        BeaconResponse ret = new BeaconResponse();
+        Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(id);
+        if(beaconOpt.isPresent()) {
+            beaconOpt.get().setLine(beaconCreateRequest.getLine());
+            beaconOpt.get().setEquipment(beaconCreateRequest.getEquipment());
+            beaconOpt.get().setBeaconName(beaconCreateRequest.getLine() + "_" + beaconCreateRequest.getEquipment());
+            beaconOpt.get().setTempMax(beaconCreateRequest.getTemperatureMax());
+            beaconOpt.get().setTempMin(beaconCreateRequest.getTemperatureMin());
+            beaconOpt.get().setHumidtyMax(beaconCreateRequest.getHumidityMax());
+            beaconOpt.get().setHumidtyMin(beaconCreateRequest.getHumidityMin());
+            beaconOpt.get().setAdv(beaconCreateRequest.getAdv());
+            beaconOpt.get().setSensing(beaconCreateRequest.getSensing());
+            beaconOpt.get().setSignalPower(beaconCreateRequest.getSignalPower());
+            beaconRepository.save(beaconOpt.get());
+            ret.status = true;
+            ret.data = beaconOpt.get().getBeaconId();
+        }
+        else{
+            ret.status = false;
+        }
+        return new ResponseEntity<>(ret, HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<BeaconResponse> scanBeacons(List<BeaconContent> beaconScanList, String userid){
         BeaconResponse ret = new BeaconResponse();
 

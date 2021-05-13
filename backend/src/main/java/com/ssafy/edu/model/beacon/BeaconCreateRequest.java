@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BeaconCreateRequest {
-    String equipment_id;
+//    String equipment_id;
 //    String name;
     String line;
     String equipment;

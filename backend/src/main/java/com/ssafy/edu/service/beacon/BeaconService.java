@@ -12,4 +12,5 @@ public interface BeaconService {
     public ResponseEntity<BeaconResponse> createBeacon(String id, BeaconCreateRequest beaconCreateRequest);
     public ResponseEntity<BeaconResponse> scanBeacons(List<BeaconContent> beaconScanList, String userid);
     public ResponseEntity<BeaconResponse> deleteBeacon(String beaconId);
+    public ResponseEntity<BeaconResponse> updateBeacon(String id, BeaconCreateRequest beaconCreateRequest);
 }
