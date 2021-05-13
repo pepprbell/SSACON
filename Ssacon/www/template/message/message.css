@@ -110,6 +110,7 @@ header {
   place-items: center;
   position: absolute;
   overflow: auto;
+  word-break: break-all;
 }
 
 .item {
@@ -127,6 +128,10 @@ header {
   height: 16vw;
   }
 
+  .smallLetter {
+    font-size: 0.8rem
+  }
+
 .m-modal {
   background-color: rgba(0,0,0,0.3);
   width: 100%;
@@ -141,6 +146,7 @@ header {
   display: none;
   font-size: 2vw;
 }
+
 
 .m-show-modal {
   display: flex;
