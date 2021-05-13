@@ -1,5 +1,6 @@
 .subm-n {
   font-weight: bold;
+  padding-left: 5%;
 }
 
 .subm-highlight {
@@ -9,7 +10,7 @@
 .subm-container {
   text-align: center;
   margin: 0 auto;
-  width: 100%;
+  width: 90%;
   font-size: 2vw;
 }
 
