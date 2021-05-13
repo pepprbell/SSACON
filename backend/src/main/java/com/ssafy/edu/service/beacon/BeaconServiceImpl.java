@@ -120,7 +120,6 @@ public class BeaconServiceImpl implements BeaconService{
                 .beaconMoisture((beaconCreateRequest.getHumidityMin()+beaconCreateRequest.getHumidityMax())/2)
                 .beaconTemperature((beaconCreateRequest.getTemperatureMax()+beaconCreateRequest.getTemperatureMin())/2)
                 .beaconBattery(100)
-                .adv(beaconCreateRequest.getAdv())
                 .sensing(beaconCreateRequest.getSensing())
                 .signalPower(beaconCreateRequest.getSignalPower())
                 .build();
@@ -142,7 +141,6 @@ public class BeaconServiceImpl implements BeaconService{
             beaconOpt.get().setTempMin(beaconCreateRequest.getTemperatureMin());
             beaconOpt.get().setHumidtyMax(beaconCreateRequest.getHumidityMax());
             beaconOpt.get().setHumidtyMin(beaconCreateRequest.getHumidityMin());
-            beaconOpt.get().setAdv(beaconCreateRequest.getAdv());
             beaconOpt.get().setSensing(beaconCreateRequest.getSensing());
             beaconOpt.get().setSignalPower(beaconCreateRequest.getSignalPower());
             beaconRepository.save(beaconOpt.get());
@@ -517,7 +515,6 @@ public class BeaconServiceImpl implements BeaconService{
                 tb.setHumidityMin(i.getHumidtyMin());
                 tb.setSignalPower(i.getSignalPower());
                 tb.setSensing(i.getSensing());
-                tb.setAdv(i.getAdv());
                 beaconInfoResponses.add(tb);
             }
 
