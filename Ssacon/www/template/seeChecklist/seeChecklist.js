@@ -1,15 +1,13 @@
 window.onload = init();
 
-function init() {
-  fetch("http://k4b101.p.ssafy.io/api/monitoring/beacon/", {method: "GET",})
-  .then((res) => res.json())
-  .then((result) => {
-    console.log(result)
-    data = result.data
-    console.log(data)
-  })
-  .catch((err) => console.log(err))
-}
+fetch("http://k4b101.p.ssafy.io/api/monitoring/beacon/", {method: "GET",})
+.then((res) => res.json())
+.then((result) => {
+  console.log(result)
+  data = result.data
+  console.log(data)
+})
+.catch((err) => console.log(err))
 
 const container = document.getElementById('container')
 
