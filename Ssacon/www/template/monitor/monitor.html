@@ -10,6 +10,9 @@
   <body>
     <header class="header"><h2>Monitor</h2></header>
     <main>
+      <div>
+        <canvas id="myCanvas" width="100" height="100"></canvas>
+      </div>
       <div class="BeaconList">
         <h1>비콘 목록</h1>
         <div id="BeaconList"></div>
@@ -21,5 +24,40 @@
     </main>
     <footer></footer>
     <script src="./BeaconList.js"></script>
+    <script src="./rpie.js"></script>
+    <script type="text/javascript">
+      // function getWorkerStatusData() {
+      //   fetch(
+      //     "http://k4b101.p.ssafy.io/api/monitoring/workerstatus",
+      //     requestOptions
+      //   )
+      //     .then((response) => response.json())
+      //     .then((result) => {
+      //       console.log("statusresult  : ", result);
+      //       // data = result.data;
+      //       console.log("statusfetch data  :", data);
+      //       // return data;
+      //     });
+      // }
+      // async function load() {
+      //   getWorkerStatusData();
+      //   // getBeacon(data);
+      // }
+
+      // window.onload = load;
+      // var obj = {
+      //   values: [17, 3],
+      //   colors: ["#4CAF50", "#00BCD4", "#E91E63", "#FFC107", "#9E9E9E"],
+      //   animation: true,
+      //   animationSpeed: 0,
+      //   fillTextData: true,
+      //   fillTextColor: "#fff",
+      //   fillTextPosition: "inner",
+      //   doughnutHoleSize: null,
+      //   doughnutHoleColor: "#fff",
+      //   offset: 0,
+      // };
+      // generatePieGraph("myCanvas", obj);
+    </script>
   </body>
 </html>
