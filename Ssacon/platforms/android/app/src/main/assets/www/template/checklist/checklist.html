@@ -8,10 +8,12 @@
   <title>Checklist</title>
 </head>
 <body>
-  <!-- input값은 라디오버튼(OK, NG)으로만 input하도록 넣어둠 -->
-  <!-- 사용된 ID 목록 | 라디오버튼OK : radioOk | 라디오버튼NG : radioNg | 제출용 버튼 : checkSubmit -->
+  <header class="header">
+    <i class="fas fa-chevron-left"></i>
+    <p class="pageName">Check Sheet 작성</p>
+    <p> </p>
+  </header>
   <div class="check-container">
-    <h3>Check Sheet 입력</h3>
     <div class="c-table">
     <ul>
       <li class="c-head">No. 1</li>
@@ -37,7 +39,7 @@
       <li class="c-head">점검 결과</li>
       <li>
         <label for="radioOk">OK</label>
-        <input id="radioOk" name="cRadio" type="radio" value="OK">
+        <input id="radioOk" name="cRadio" type="radio" value="OK" checked="true">
         <label for="radioNg">NG</label>
         <input id="radioNg" name="cRadio" type="radio" value="NG">
       </li>
@@ -50,10 +52,12 @@
       <li class="c-head">점검할 위치</li>
       <li>설비비콘명</li>
       <li class="c-head">현재 위치</li>
-      <li>설비비콘명</li>
+      <li id="beaconName">설비비콘명</li>
     </ul>
   </div>
     <button id="checkSubmit" class="c-btn">테스트용 제출 버튼</button>
   </div>
+
+  <script type="text/javascript" src="checklist.js"></script>
 </body>
 </html>
