@@ -453,7 +453,7 @@ public class BeaconServiceImpl implements BeaconService{
                         }
 
                         // 체크리스트 제출 알림
-                        List<Alarm> checksheets = alarmRepository.findByTypeAndUserId("checksheet", wBeacon.getBeaconId());
+                        List<Alarm> checksheets = alarmRepository.findByTypeAndUserId("checksheet", userOpt.get().getUserId());
                         for(Alarm ac: checksheets){
                             if(!ac.isReceive()){
                                 ac.setReceive(true);

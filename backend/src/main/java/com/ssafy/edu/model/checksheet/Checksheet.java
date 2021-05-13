@@ -3,8 +3,7 @@ package com.ssafy.edu.model.checksheet;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
@@ -13,7 +12,10 @@ import javax.persistence.Id;
 @Getter
 @Setter
 public class Checksheet {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "checksheet_id")
     private Long id;
 
     private String beaconId;

@@ -45,6 +45,7 @@ public class ChecksheetServiceImpl implements ChecksheetService{
                     .equipmentName(checksheet.getEquipment())
                     .build();
             checksheetRepository.save(tmp);
+
             Alarm aCheck = Alarm.builder()
                     .type("checksheet")
                     .line(beaconOpt.get().getLine())
