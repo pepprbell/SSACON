@@ -232,7 +232,7 @@ public class BeaconServiceImpl implements BeaconService{
                         if(!beaconAlarm.isEmpty()) {
                             Alarm last = beaconAlarm.get(beaconAlarm.size() - 1);
                             if ((i.getHumidity() < wBeacon.getHumidtyMin() || i.getHumidity() > wBeacon.getHumidtyMax())
-                                    || (i.getTemperature() < wBeacon.getTempMax() || i.getTemperature() > wBeacon.getTempMax())) {
+                                    || (i.getTemperature() < wBeacon.getTempMin() || i.getTemperature() > wBeacon.getTempMax())) {
 
                                 if (now.getTime() - last.getTime().getTime() > 600000) {
                                     Alarm w = Alarm.builder()
