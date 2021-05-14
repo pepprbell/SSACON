@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="title">
-    <div class="back_btn"></div>
+    <div class="crud_btn" id="beaconBackBtt">뒤로 가기</div>
     <div class="title_content">
       <div class="title_content_1">비콘 리스트</div>
       <div class="title_content_2">
@@ -18,6 +18,7 @@
       </div>
     </div>
   </div>
+  <div class="title_div"></div>
 
   <br>
 
@@ -56,8 +57,9 @@
   </div>
     
   <div class="modal_body">
-    <!-- <div class="modal-bg bg-active" id="modal_container">
+    <div class="modal-bg" id="modal_container">
       <div class="modal">
+        <img src="beacon_logo.jpg" alt="비콘이미지">
 
         <div class="wrapper">
           <div  class="input-data">
@@ -66,9 +68,7 @@
               <span>* 필수항목</span>
             </div>
             <select name="line" id="beacon_line">
-              <option value="nothing">----------</option>
-              <option value="line1">line1</option>
-              <option value="lin2">lin2</option>
+              <option value="">----------</option>
             </select>
           </div>
         </div>
@@ -89,19 +89,19 @@
           <div  class="input-data">
             <div class="two-ele">
               <label for="temperature">온도 범위</label>
-              <span>* 필수항목</span>
+              <span>최소 ~ 최대</span>
             </div>
             <input id="beacon_temperatureMin" type="number" name="temperatureMin" class="towInput">
             <span>~</span>
             <input id="beacon_temperatureMax" type="number" name="temperatureMax" class="towInput">
           </div>
         </div>
-  
+
         <div class="wrapper">
           <div  class="input-data">
             <div class="two-ele">
               <label for="humidity">습도 범위</label>
-              <span>* 필수항목</span>
+              <span>최소 ~ 최대</span>
             </div>
             <input id="beacon_humidityMin" type="number" name="humidityMin" class="towInput">
             <span> ~ </span>
@@ -113,47 +113,40 @@
           <div  class="input-data">
             <div class="two-ele">
               <label for="signalPower">신호 세기</label>
-              <span>단위:dbm</span>
+              <span>단위:dBm</span>
             </div>
-            <input id="beacon_signalPower" type="number" name="signalPower" class="input">
-            <div class="underline"></div>
+            <select name="signalPower" id="beacon_signalPower">
+              <option value="4">4 dBm [20m ~ 32m]</option>
+              <option value="0" selected>0 dBm [6m ~ 8n]</option>
+              <option value="-4">-4 dBm [3m ~ 6m]</option>
+              <option value="-8">-8 dBm [2m ~ 4m]</option>
+              <option value="-12">-12 dBm [1m ~ 2m]</option>
+              <option value="-16">-16 dBm [1m]</option>
+              <option value="-20">20 dBm [1m 이하]</option>
+            </select>
           </div>
         </div>
-  
+
         <div class="wrapper">
           <div  class="input-data">
             <div class="two-ele">
-              <label for="sensing">센싱 주기</label>
+              <label for="sensing">신호 주기</label>
               <span>단위:sec</span>
             </div>
             <input id="beacon_sensing" type="number" name="sensing" class="input">
-            <div class="underline"></div>
           </div>
         </div>
-  
-        <div class="wrapper">
-          <div  class="input-data">
-            <div class="two-ele">
-              <label for="adv">Adv. 주기</label>
-              <span>단위:sec</span>
-            </div>
-            <input id="beacon_adv" type="number" name="adv" class="input">
-            <div class="underline"></div>
-          </div>
+        <div>
+          <button id="cu_btn" class="beaconCreateBtn" type="button">추가하기</button>
+          <!-- <button id="cu_btn" class="beaconUpdateBtn" type="button">수정하기</button> -->
+          <button id="d_btn" class="beaconDeleteBtn" type="button">삭제하기</button>
         </div>
-  
-        <button class="beaconUpdate">추가하기</button>
-  
-        <span id="beaconModalClose" class="modal-close">x</span>
-      </div> -->
+
+        <button type="button" id="beaconModalClose" class="modal-close">x</button>
+      </div>
     </div>
   </div> 
   
-
-
-  
-
-
 
   <script type="text/javascript" src="../../cordova.js"></script>
   <script src="../../dist/js/BeaconAdd_bundle.js"></script>

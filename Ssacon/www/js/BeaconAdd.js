@@ -17,7 +17,8 @@ var beaconAdd = {
    bindEvents: function() {
     document.addEventListener('deviceready', this.onDeviceReady.bind(this), false)
     document.getElementById("beaconBackBtt").addEventListener("click", this.stopScan.bind(this))
-    document.getElementById("beaconCreate").addEventListener("click", this.beaconCreate.bind(this))
+    document.getElementById("cu_btn").addEventListener("click", this.beaconCreate.bind(this))
+    document.getElementById("d_btn").addEventListener("click", this.beaconDelete.bind(this))
     document.getElementById("beaconModalClose").addEventListener("click", this.beaconAddModalClose.bind(this))
    },
 
@@ -32,6 +33,7 @@ var beaconAdd = {
       beaconListDBfront = result.data.beacon_id
       beaconAllInfo = result.data.beacon_info
       lineEquipment = result.data.line_equipment
+      console.log(result.data);
     })
     .catch((error) => {
         console.error(error)
@@ -98,27 +100,30 @@ var beaconAdd = {
    },
 
    beaconAddModalClose: function() {
-    document.getElementById('modal_container').remove();
+    const btn = document.getElementById('cu_btn');
+    btn.className = 'nothing'
     beaconAddInfo = null;
     beaconUpdateInfo = null;
     this.bleManager.startScan()
+    const modalBg = document.querySelector('.modal-bg')
+    modalBg.classList.remove('bg-active')
    },
 
    beaconCreate: function(e) {
-    console.log(e);
-    e.preventdefault()
+    // console.log(e);
+    // e.preventdefault()
+    const className = document.getElementById('cu_btn').className
 
     const values = {
       beacon_id: beaconAddInfo.id,
       line : document.getElementById('beacon_line').value || null,
       equipment: document.getElementById('beacon_equipment').value || null,
-      temperatureMin: (document.getElementById('beacon_temperatureMin').value * 0.1) || null,
-      temperatureMax: (document.getElementById('beacon_temperatureMax').value * 0.1) || null,
-      humidityMin: (document.getElementById('beacon_humidityMin').value * 0.1) || null,
-      humidityMax: (document.getElementById('beacon_humidityMax').value * 0.1) || null,
+      temperatureMin: (document.getElementById('beacon_temperatureMin').value * 1.0) || null,
+      temperatureMax: (document.getElementById('beacon_temperatureMax').value * 1.0) || null,
+      humidityMin: (document.getElementById('beacon_humidityMin').value * 1.0) || null,
+      humidityMax: (document.getElementById('beacon_humidityMax').value * 1.0) || null,
       signalPower: document.getElementById('beacon_signalPower').value || null,
       sensing: document.getElementById('beacon_sensing').value || null,
-      adv: document.getElementById('beacon_adv').value || null,
     }
 
     // 모든창에 데이터가 잘 나왔는지 확인
@@ -144,10 +149,7 @@ var beaconAdd = {
       alert('신호 세기를 다시 확인해 주세요')
       return
     } else if (!values.sensing) {
-      alert('센싱 주기를 다시 확인해 주세요')
-      return
-    } else if (!values.adv) {
-      alert('Advertising 주기를 다시 확인해 주세요')
+      alert('신호 주기를 다시 확인해 주세요')
       return
     } else if ((values.temperatureMax - values.temperatureMin) < 0) {
       alert('온도 최소 범위를 다시 확인해 주세요')
@@ -155,62 +157,97 @@ var beaconAdd = {
     } else if ((values.humidityMax - values.humidityMin) < 0) {
       alert('온도 최소 범위를 다시 확인해 주세요')
       return
-    } else if (values.signalPower < 2) {
-      alert('센싱 주기의 최소 값은 2sec 입니다.')
+    } else if (values.sensing < 2) {
+      alert('신호 주기의 최소 값은 2sec 입니다.')
       return
-    } else if (values.adv < 1) {
-      alert('Advertising 주기의 최소 값은 1sec 입니다.')
-      return
-    }
+    } 
 
     // Connection
-    console.log(beaconAddInfo);
-    var connection = new Connection(beaconAddInfo);
     const TxPower = [false, -20, -16, -12, -8, -4, 0, 4]
+    var connection = new Connection(beaconAddInfo);
+    connection.connect()
 
-    connection.on('connect', async function (beacon) {
+    connection.on('connect', async function (beaconAddInfo) {
       // await connection.changeMode('' + BeaconModeValue[changedBeaconMode])
-      await connection.changeName(values.line + '-' + values.temperatureMin)
       await connection.changeTxPower(TxPower.indexOf(values.signalPower))
       await connection.changeSensorInterval(values.sensing)
-      await connection.changeAdvertisingInterval(values.adv * 100)
+      await connection.changeName(values.line + '-' + values.equipment)
       connection.disconnect() // mode 변경 요청 이후, 연결 해제 (연결이 해제 되어야만 다시 스캔이 됩니다.)
+
+      if (className === 'beaconCreateBtn') {
+        fetch(`http://k4b101.p.ssafy.io/api/beacon/add/${beaconAddInfo.id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        })
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          console.log(result.data);
+          beaconListDBfront.push(values.beacon_id)
+          beaconAllInfo.push(values)
+          document.getElementById(`${values.beacon_id}`).remove()
+          beaconAddInfo = null;
+          this.bleManager.startScan()
+          const btn = document.getElementById('cu_btn');
+          btn.className('nothing')
+          beaconAddInfo = null;
+          beaconUpdateInfo = null;
+          this.bleManager.startScan()
+          const modalBg = document.querySelector('.modal-bg')
+          modalBg.classList.remove('bg-active')
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+      } else {
+        fetch(`http://k4b101.p.ssafy.io/api/beacon/update/${beaconAddInfo.id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        })
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          console.log(result.data);
+          beaconListDBfront.push(values.beacon_id)
+          beaconAllInfo.push(values)
+          document.getElementById(`${values.beacon_id}`).remove()
+          beaconAddInfo = null;
+          this.bleManager.startScan()
+          const btn = document.getElementById('cu_btn');
+          btn.className('nothing')
+          beaconAddInfo = null;
+          beaconUpdateInfo = null;
+          this.bleManager.startScan()
+          const modalBg = document.querySelector('.modal-bg')
+          modalBg.classList.remove('bg-active')
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+      }
     })
-    
-    fetch(`http://k4b101.p.ssafy.io/api/beacon/delete/${beaconAddInfo.id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(values),
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((result) => {
-      console.log(result);
-      beaconListDBfront.push(values.beacon_id)
-      beaconAllInfo.push(values)
-      document.getElementById(`${values.beacon_id}`).remove()
-      document.getElementById('modal_container').remove();
-      beaconAddInfo = null;
-      beaconUpdateInfo = null;
-      this.bleManager.startScan()
-    })
-    .catch((error) => {
-      console.error(error)
+    connection.on('disconnect', function (beaconAddInfo, isTimeout, errorMessage) {
+      console.log('disconnect', isTimeout, errorMessage)
     })
   },
 
   beaconDelete: function () {
-    fetch(`http://k4b101.p.ssafy.io/api/beacon/add/${beaconAddInfo.id}`, {
+    fetch(`http://k4b101.p.ssafy.io/api/beacon/delete/${beaconAddInfo.id}`, {
       method: 'DELETE',
     })
     .then((response) => {
       return response.json();
     })
     .then((result) => {
-      console.log(result);
+      console.log(result.data);
       beaconListDBfront = result.data.beacon_id
       beaconAllInfo = result.data.beacon_info
       document.getElementById(`${values.beacon_id}`).remove()
@@ -311,12 +348,8 @@ function createNewBeaconCard(beacon) {
 }
 
 function updateBeaconCard(beacon) {
-  console.log(beacon.intervalOfSensing.value);
-  console.log(beacon.vbatt.percentage.value);
-  const new_adv = beacon.intervalOfAdvertising.value / 10
   document.getElementById(`${beacon.id}_name`).innerText = `${beacon.name}`
   document.getElementById(`${beacon.id}_rssi`).innerText = `${beacon.rssi}dBm`
-  document.getElementById(`${beacon.id}_advertising`).innerText = `${new_adv}sec`
   document.getElementById(`${beacon.id}_sensing`).innerText = `${beacon.intervalOfSensing.value}sec`
   document.getElementById(`${beacon.id}_vbatt`).innerText = `${Math.round(beacon.vbatt.percentage.value)}%`
 }
@@ -330,224 +363,107 @@ function beaconAddModalOpen(e) {
   delete connection_beacon.scanTime;
   beaconAddInfo = connection_beacon
 
-  const body = document.querySelector('.modal_body')
+  //설비 넣기
+  let line = `<option value="">----------</option>`;
+  for (key in lineEquipment) {
+    line += `<option value="${key}">${key}</option>`
+  }
+  document.getElementById('beacon_line').innerHTML = line
 
-  const modal = `
-    <div class="modal-bg bg-active" id="modal_container">
-      <div class="modal">
+  // line-equ 관계연결
+  const linequ = document.getElementById('beacon_line')
+  linequ.addEventListener("change", line_option);
 
-        <div class="wrapper">
-          <div  class="input-data">
-            <div class="two-ele">
-              <label for="line">라인</label>
-              <span>* 필수항목</span>
-            </div>
-            <select name="line" id="beacon_line">
-              <option value="nothing">----------</option>
-              <option value="${Object.keys(lineEquipment)[0]}">${Object.keys(lineEquipment)[0]}</option>
-              <option value="${Object.keys(lineEquipment)[1]}">${Object.keys(lineEquipment)[1]}</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="wrapper">
-          <div  class="input-data">
-            <div class="two-ele">
-              <label for="equipment">설비</label>
-              <span>* 필수항목</span>
-            </div>
-            <select name="equipment" id="beacon_equipment">
-              <option value="">----------</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="wrapper">
-          <div  class="input-data">
-            <div class="two-ele">
-              <label for="temperature">온도 범위</label>
-              <span>* 필수항목</span>
-            </div>
-            <input id="beacon_temperatureMin" type="number" name="temperatureMin" class="towInput">
-            <span>~</span>
-            <input id="beacon_temperatureMax" type="number" name="temperatureMax" class="towInput">
-          </div>
-        </div>
+  // modal close
+  // const modalClose = document.getElementById('beaconModalClose')
+  // modalClose.addEventListener('click', beaconAdd.beaconAddModalClose())
 
-        <div class="wrapper">
-          <div  class="input-data">
-            <div class="two-ele">
-              <label for="humidity">습도 범위</label>
-              <span>* 필수항목</span>
-            </div>
-            <input id="beacon_humidityMin" type="number" name="humidityMin" class="towInput">
-            <span> ~ </span>
-            <input id="beacon_humidityMax" type="number" name="humidityMax" class="towInput">
-          </div>
-        </div>
-        
-        <div class="wrapper">
-          <div  class="input-data">
-            <div class="two-ele">
-              <label for="signalPower">신호 세기</label>
-              <span>단위:dbm</span>
-            </div>
-            <input id="beacon_signalPower" type="number" name="signalPower" class="input">
-            <div class="underline"></div>
-          </div>
-        </div>
+  // create button
+  const cubtn = document.getElementById('cu_btn')
+  cubtn.className = 'beaconCreateBtn'
+  cubtn.innerText = '추가하기'
+  document.getElementById('d_btn').style.display = 'none'
 
-        <div class="wrapper">
-          <div  class="input-data">
-            <div class="two-ele">
-              <label for="sensing">센싱 주기</label>
-              <span>단위:sec</span>
-            </div>
-            
-            <input id="beacon_sensing" type="number" name="sensing" class="input">
-            <div class="underline"></div>
-          </div>
-        </div>
-
-        <div class="wrapper">
-          <div  class="input-data">
-            <div class="two-ele">
-              <label for="adv">Adv. 주기</label>
-              <span>단위:sec</span>
-            </div>
-            <input id="beacon_adv" type="number" name="adv" class="input">
-            <div class="underline"></div>
-          </div>
-        </div>
-
-        <button class="beaconUpdate">추가하기</button>
-
-        <span id="beaconModalClose" class="modal-close">x</span>
-      </div>
-    </div>
-  `
-  
-  body.innerHTML = modal
-  const modalClose = document.querySelector('.modal-close')
-  modalClose.addEventListener('click', beaconAdd.beaconAddModalClose())
-  document.querySelector('.beaconCreate').addEventListener("click", beaconAdd.beaconCreate());
-  document.getElementById('beacon_line').addEventListener("change", line_option);
-
+  // modal open
+  const modalBtn = document.querySelector('.modal-bg');
+  modalBtn.classList.add('bg-active');
 }
 
 function beaconUpdateModalOpen(e) {
+  console.log(e.target.value);
   beaconAdd.onlyStopScan()
 
   let connection_beacon = beaconScanList[e.target.value];
   delete connection_beacon[scanTime];
   beaconAddInfo = connection_beacon
 
-  const body = document.querySelector('modal_body')
-
   for (let i = 0; i < beaconAllInfo.length; i++) {
     if (beaconAllInfo[i].beacon_id === e.target.value) {
+      console.log(beaconAllInfo[i].beacon_id);
 
-      const modal = `
-        <div class="modal-bg bg-active" id="modal_container">
-          <div class="modal">
+      const values = {
+        beacon_id: beaconAllInfo[i].beacon_id,
+        line: beaconAllInfo[i].line,
+        equipment: beaconAllInfo[i].equipment,
+        temperatureMin: beaconAllInfo[i].temperatureMin,
+        temperatureMax: beaconAllInfo[i].temperatureMax,
+        humidityMin: beaconAllInfo[i].humidityMin,
+        humidityMax: beaconAllInfo[i].humidityMax,
+        signalPower: beaconAllInfo[i].signalPower,
+        sensing: beaconAllInfo[i].sensing,
+      }
+      //설비, 라인 넣기
+      let line = `<option value="">----------</option>`;
+      let equipment = `<option value="">----------</option>`;
+      for (key in lineEquipment) {
+        if (key === values.line) {
+          line += `<option value="${key}" selected>${key}</option>`
+          lineEquipment[key].forEach(e => {
+            if (e === values.equipment) {
+              equipment += `<option value="${key}" selected>${key}</option>`
+            } else {
+              equipment += `<option value="${key}">${key}</option>`
+            }
+          })
+        } else {
+          line += `<option value="${key}">${key}</option>`
+        }
+      }
+      document.getElementById('beacon_line').innerHTML = line
+      document.getElementById('beacon_equipment').innerHTML = equipment
+      //신호 세기 넣기
+      // var signalpower = document.getElementById("beacon_signalPower");
+      // for(var i=0; i<signalpower.length; i++){
+      //   if(signalpower[i].value === values.signalPower) {
+      //     signalpower[i].selected = true;
+      //   }
+      //   else {
+      //     signalpower[i].selected = false;
+      //   }
+      // }
+      // 온도 범위 넣기
+      document.getElementById('beacon_temperatureMin').value = values.temperatureMin
+      document.getElementById('beacon_temperatureMax').value = values.temperatureMax
+      // 습도 범위 넣기
+      document.getElementById('beacon_humidityMin').value = values.humidityMin
+      document.getElementById('beacon_humidityMax').value = values.humidityMax
+      // 신호 주기 넣기
+      document.getElementById('beacon_sensing').value = values.humiditsensingyMax
 
-            <div class="wrapper">
-              <div  class="input-data">
-                <div class="two-ele">
-                  <label for="line">라인</label>
-                  <span>* 필수항목</span>
-                </div>
-                <select name="line" id="beacon_line">
-                  <option value="nothing">----------</option>
-                  <option value="${Object.keys(lineEquipment)[0]}">${Object.keys(lineEquipment)[0]}</option>
-                  <option value="${Object.keys(lineEquipment)[1]}">${Object.keys(lineEquipment)[1]}</option>
-                </select>
-              </div>
-            </div>
-            
-            <div class="wrapper">
-              <div  class="input-data">
-                <div class="two-ele">
-                  <label for="equipment">설비</label>
-                  <span>* 필수항목</span>
-                </div>
-                <select name="equipment" id="beacon_equipment">
-                  <option value="">----------</option>
-                </select>
-              </div>
-            </div>
-            
-            <div class="wrapper">
-              <div  class="input-data">
-                <div class="two-ele">
-                  <label for="temperature">온도 범위</label>
-                  <span>* 필수항목</span>
-                </div>
-                <input id="beacon_temperatureMin" type="number" name="temperatureMin" class="towInput" value="${beaconAllInfo[i].temperatureMax}">
-                <span>~</span>
-                <input id="beacon_temperatureMax" type="number" name="temperatureMax" class="towInput" value="${beaconAllInfo[i].temperatureMin}">
-              </div>
-            </div>
+      // line-equ 관계연결
+      const linequ = document.getElementById('beacon_line')
+      linequ.addEventListener("change", line_option);
 
-            <div class="wrapper">
-              <div  class="input-data">
-                <div class="two-ele">
-                  <label for="humidity">습도 범위</label>
-                  <span>* 필수항목</span>
-                </div>
-                <input id="beacon_humidityMin" type="number" name="humidityMin" class="towInput" value="${beaconAllInfo[i].humidityMax}">
-                <span> ~ </span>
-                <input id="beacon_humidityMax" type="number" name="humidityMax" class="towInput" value="${beaconAllInfo[i].humidityMin}">
-              </div>
-            </div>
-            
-            <div class="wrapper">
-              <div  class="input-data">
-                <div class="two-ele">
-                  <label for="signalPower">신호 세기</label>
-                  <span>단위:dbm</span>
-                </div>
-                <input id="beacon_signalPower" type="number" name="signalPower" class="input" value="${beaconAllInfo[i].signalPower}">
-                <div class="underline"></div>
-              </div>
-            </div>
+      // Update Btn
+      const cubtn = document.getElementById('cu_btn')
+      cubtn.className = 'beaconUpdateBtn'
+      cubtn.innerText = '수정하기'
+      document.getElementById('d_btn').style.display = 'inline-block'
 
-            <div class="wrapper">
-              <div  class="input-data">
-                <div class="two-ele">
-                  <label for="sensing">센싱 주기</label>
-                  <span>단위:sec</span>
-                </div>
-                
-                <input id="beacon_sensing" type="number" name="sensing" class="input" value="${beaconAllInfo[i].sensing}">
-                <div class="underline"></div>
-              </div>
-            </div>
+      // modal open
+      const modalBtn = document.querySelector('.modal-bg');
+      modalBtn.classList.add('bg-active');
 
-            <div class="wrapper">
-              <div  class="input-data">
-                <div class="two-ele">
-                  <label for="adv">Adv. 주기</label>
-                  <span>단위:sec</span>
-                </div>
-                <input id="beacon_adv" type="number" name="adv" class="input" value="${beaconAllInfo[i].adv}">
-                <div class="underline"></div>
-              </div>
-            </div>
-
-            <button class="beaconUpdate">추가하기</button>
-
-            <span id="beaconModalClose" class="modal-close">x</span>
-          </div>
-        </div>
-      `
-      
-      body.innerHTML = modal
-      const modalClose = document.querySelector('.modal-close')
-      modalClose.addEventListener('click', beaconAdd.beaconAddModalClose)
-      document.querySelector('.beaconUpdate').addEventListener("click", beaconAdd.beaconCreate());
-      document.querySelector('.beaconDelete').addEventListener("click", beaconAdd.beaconDelete());
-      document.getElementById('beacon_line').addEventListener("change", line_option);
       break
     }
   }

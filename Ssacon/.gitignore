@@ -7,5 +7,3 @@ node_modules/
 /plugins/
 /platforms/
 
-# webpack file
-/www/dist/js/bundle.js

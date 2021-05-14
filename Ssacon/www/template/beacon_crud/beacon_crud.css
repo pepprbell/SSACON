@@ -10,11 +10,17 @@ body {
   background-color: #f3f6fa;
 }
 
+.title_div {
+  left: 0;
+  top: 0;
+  height: 15vw;
+}
+
 .title {
   display: flex;
   align-items: center;
   /* justify-content: center; */
-  position: static;
+  position: fixed;
   left: 0;
   top: 0;
   height: 15vw;
@@ -50,18 +56,27 @@ body {
   align-items: center;
 }
 
-/* #beacon_c_container {
+#beacon_c_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, auto));
+  /* grid-template-rows: repeat(auto-fill, minmax(720, auto)); */
   text-align: center;
-} */
+}
+
+.card_container {
+  /* width: 100%; */
+  display: inline-flex;
+}
 
 .beacon_card_body {
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
-  width: 660px;
+  width: 270px;
+  /* height: 23vh; */
   margin: auto;
-  margin-top: 4%;
+  margin: 4%;
   padding: 2%;
   background-color: white;
   box-shadow: 3px 4px #e2e2e2;
@@ -75,7 +90,7 @@ body {
 
 .bottom {
   flex-basis: 30%;
-  width: 100%;
+  width: 90%;
   height: 100%;
   text-align: center;
 }
@@ -84,32 +99,34 @@ body {
   display: flex;
   align-items: center;
   justify-content: start;
-  flex-basis: 15%;
+  flex-basis: 30%;
 }
 
 .center {
-  flex-basis: 70%;
-  padding: 1em 1em;
-  padding-left: 2em;
+  justify-self: start;
+  justify-content: left;
+  flex-basis: 55%;
+  padding: 0.2em 0.2em;
+  padding-left: 0em;
 }
 
 .beacon_title {
-  font-size: 2.5vh;
+  font-size: 1em;
   font-weight: bold;
   color: #525151;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.25em;
 }
 
 .beacon_opthion_name {
-  font-size: 1.8vh;
+  font-size: 0.4em;
   color: #807f7f;
   font-weight: 400;
 }
 
 .beacon_opthion_value {
-  font-size: 1.8vh;
+  font-size: 0.4em;
   font-weight: 500;
-  margin-left: 1.7em;
+  margin-left: 0.7em;
   color: #525151;
 }
 
@@ -118,26 +135,40 @@ body {
 }
 
 .beacon_vbatt {
-  font-size: 1.8vh;
+  font-size: 0.3em;
   color: #807f7f;
   font-weight: 400;
   padding: 1em;
 }
 
 .beacon_add_butt {
+  width: 100%;
   background-color: #3f72be;
-  font-size: 2.3vh;
+  font-size: 1em;
   color: white;
-  padding: 0.5em 1em;
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-  margin-top: 0.5em;
+  padding: 0.2em 0.5em;
 }
 
-.modal_body {
+.beacon_update_butt {
+  width: 100%;
+  background-color: #626661;
+  font-size: 1em;
+  color: white;
+  padding: 0.2em 0.5em;
+}
+
+.beaconDeleteBtn {
+  width: 100%;
+  background-color: #626661;
+  font-size: 1em;
+  color: white;
+  padding: 0.2em 0.5em;
+}
+
+/* .modal_body {
   width: 100%;
   height: 100%;
-}
+} */
 
 .modal-bg {
   position: fixed;
@@ -149,7 +180,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  overflow-y: scroll;
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s opacity 0.5s;
@@ -163,9 +194,7 @@ body {
 .modal {
   position: relative;
   background-color: white;
-  width: 650px;
-  height: 90%;
-  overflow-y: scroll;
+  width: 20em;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -173,30 +202,59 @@ body {
   background-color: #f3f6fa;
 }
 
-.modal button {
-  padding: 10px 30px;
+.beaconCreateBtn {
+  display: inline-block;
+  padding: 0.2em 0.3em;
   background-color: #2980b9;
   color: white;
   border: none;
+  margin-top: 2.5%;
+  margin-bottom: 5%;
+  font-size: 0.7em;
+}
+
+.beaconUpdateBtn {
+  padding: 0.2em 0.3em;
+  background-color: #626661;
+  color: white;
+  border: none;
+  margin-top: 2.5%;
+  margin-bottom: 2%;
+  font-size: 0.7em;
+}
+
+.beaconDeleteBtn {
+  padding: 0.2em 0.3em;
+  background-color: #a0512d;
+  color: white;
+  border: none;
+  margin-top: 2.5%;
+  margin-bottom: 2%;
+  font-size: 0.7em;
 }
 
 .modal-close {
   position: absolute;
   top: 10px;
   right: 10px;
+  border: 0;
+  outline: 0;
+  font-size: 1.7em;
+  background-color: #f3f6fa;
 }
 
 .wrapper {
-  width: 500px;
-  height: 9.5vh;
+  width: 15em;
+  height: auto;
   background: #fff;
-  padding: 30px;
+  padding: 0.7em;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 7px;
+  margin: 2%;
 }
 
 .wrapper .input-data {
-  height: 3vh;
+  /* height: 3vh; */
   width: 100%;
   position: relative;
 }
@@ -210,7 +268,7 @@ body {
   height: 100%;
   width: 100%;
   border: none;
-  font-size: 3.5vw;
+  font-size: 0.7em;
   font-weight: 600;
   border-bottom: 2px solid silver;
 }
@@ -219,7 +277,7 @@ body {
   width: 45%;
   height: 100%;
   border: none;
-  font-size: 3.5vw;
+  font-size: 0.7em;
   font-weight: 600;
   border-bottom: 2px solid silver;
 }
@@ -228,29 +286,24 @@ body {
   height: 100%;
   width: 100%;
   border: none;
-  font-size: 3.5vw;
+  font-size: 0.7em;
   font-weight: 600;
   border-bottom: 2px solid silver;
 }
 .wrapper .input-data label {
   color: grey;
-  font-size: 3vw;
+  font-size: 0.7em;
   font-weight: 500;
-  margin-bottom: 1em;
+  margin-bottom: 0.3em;
 }
 .wrapper .input-data span {
   color: grey;
-  font-size: 2.5vw;
+  font-size: 0.7em;
   font-weight: 500;
   /* margin-bottom: 1em; */
   text-align: justify;
 }
-.input-data .underline {
-  position: absolute;
-  height: 2px;
-  width: 100%;
-  bottom: 0;
-}
+
 .input-data .underline:before {
   position: absolute;
   content: "";
