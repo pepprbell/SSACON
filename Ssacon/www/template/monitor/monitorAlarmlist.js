@@ -209,9 +209,11 @@ alarmlist.forEach((alarm) => {
   let timedifference = document.createElement("div");
   time.className = "time";
   timedifference.className = "timechange";
-  time.innerHTML = alarm.time;
+  // time.innerHTML = alarm.time;
+
   let timebewteen = timeForToday(alarm.time);
-  left.innerText = timebewteen;
+  time.innerHTML = timebewteen;
+  // left.innerText = timebewteen;
   right.appendChild(time);
   // left.appendChild(timebewteen);
   item.appendChild(left);
