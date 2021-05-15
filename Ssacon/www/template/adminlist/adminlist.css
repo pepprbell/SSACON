@@ -26,6 +26,7 @@ main {
   background-color: #f3f6fa;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .card {
@@ -104,17 +105,17 @@ view {
   .card {
     background-color: white;
     border-radius: 1vw;
-    height: 20vw;
-    margin: 1%;
-    padding: 1%;
+    height: 15vw;
+    margin: 4%;
+    padding: 4%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   .img {
-    width: 180px;
-    height: 169.863px;
+    width: 100px;
+    height: 80px;
     margin-bottom: 3%;
   }
   view {
@@ -127,11 +128,11 @@ view {
     display: none;
   }
   .text {
-    font-size: 2.5vw;
+    font-size: 1.5vw;
     color: #034ea2;
     font-weight: bolder;
     text-align: center;
-    padding-bottom: 2vw;
+    padding-top: 3vw;
   }
   center {
     display: flex;

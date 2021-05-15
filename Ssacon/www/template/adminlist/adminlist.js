@@ -25,10 +25,10 @@ function moveCheckSheetList() {
   window.location = "../seeChecklist/seeChecklist.html";
 }
 function moveBeaconMornitor() {
-  window.location = "../beaconMonitor/beaconMonitor.html";
+  window.location = "../monitor/monitor.html";
 }
 function moveWorkerAlarm() {
-  console.log(WorkerAlarm);
+  window.location = "../alarm/alarmlist.html";
 }
 function moveBeaconManagement() {
   window.location = "../beacon_crud/beacon_crud.html";
@@ -57,9 +57,6 @@ function load() {
     BeaconMornitor.classList.add("enabled");
     BeaconManagement.classList.add("enabled");
   }
-
-  console.log(userInfo.data.userId);
-  console.log(userInfo["data"]);
 }
 
 window.onload = load;

@@ -117,9 +117,11 @@ function getWorkerStatusData() {
       myDougnutChart.draw();
       total = document.getElementById("total");
       span = document.createElement("span");
+      hr = document.createElement("hr");
       span.className = "total";
       total.appendChild(span);
       total.append(`    TOTAL  =  ${totalLoginWorker} 명 `);
+      total.append(hr);
 
       // return nonSignalWorker, onSignalWorker;
     });

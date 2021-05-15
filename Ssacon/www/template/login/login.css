@@ -172,6 +172,7 @@ button {
   display: none;
 }
 .check_mark {
+  display: block;
 }
 .sa-icon {
   width: 80px;

@@ -18,13 +18,13 @@ main {
   flex-direction: row;
   width: 100vw;
   height: 100vh;
-  background-color: antiquewhite;
+  background-color: #f3f6fa;
 }
 
 .BeaconList {
   width: 40%;
   height: 300px;
-  background-color: white;
+  background-color: #f3f6fa;
 }
 .card {
   border: solid 1px #aaa;
@@ -43,7 +43,7 @@ main {
 .BeaconStatus {
   width: 60%;
   height: 40%;
-  background-color: yellow;
+  background-color: #f3f6fa;
 }
 
 .table {
@@ -111,12 +111,13 @@ main {
   height: 15vw;
 }
 .leftlist {
+  border: 3px solid #3f72be;
   width: 33%;
   height: 100%;
 }
 .leftup {
   width: 100%;
-  height: 40%;
+  height: 35%;
   display: block;
 }
 
@@ -129,3 +130,11 @@ main {
 
 /* @media screen (min-width: 768px) {
 } */
+h2 {
+  color: #3f72be;
+  margin: 0;
+}
+
+hr {
+  border: 1px solid #3f72be;
+}
