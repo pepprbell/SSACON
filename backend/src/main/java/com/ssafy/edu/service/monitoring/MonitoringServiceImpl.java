@@ -45,11 +45,12 @@ public class MonitoringServiceImpl implements MonitoringService{
                 for(BeaconUsers j: beaconUsers){
                     Date tmptime = j.getUser().getLastSignal();
                     Date timeNow = Date.from(Instant.now());
-                    if(timeNow.getTime() - tmptime.getTime() < 300000){
-                        tmp1.add(j.getUser());
-                    }
-                    else if(j.getUser().isLogin()){
-                        tmp2.add(j.getUser());
+                    if(j.getUser().isLogin()) {
+                        if (timeNow.getTime() - tmptime.getTime() < 300000) {
+                            tmp1.add(j.getUser());
+                        } else{
+                            tmp2.add(j.getUser());
+                        }
                     }
                 }
             }
