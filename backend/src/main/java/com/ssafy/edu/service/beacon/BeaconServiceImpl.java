@@ -94,8 +94,8 @@ public class BeaconServiceImpl implements BeaconService{
                 l2.add(i.getEquipmentName());
             }
         }
-        lines.setLine_name1(l1);
-        lines.setLine_name2(l2);
+        lines.setLine1(l1);
+        lines.setLine2(l2);
         beaconList.setBeacon_id(beaconMonitorResponses);
         beaconList.setLine_equipment(lines);
         beaconList.setBeacon_info(beaconInfoResponses);
