@@ -4,7 +4,7 @@
 }
 html body {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -22,7 +22,6 @@ header {
   background-color: white;
   color: #034ea2;
 }
-
 main {
   background-color: #f3f6fa;
   display: flex;
@@ -75,7 +74,7 @@ view {
 @media (min-width: 768px) {
   html body {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -85,8 +84,7 @@ view {
     align-items: center;
   }
   header {
-    /* position: absolute; */
-    position: static;
+    position: absolute;
     top: 0;
     text-align: center;
     width: 100%;

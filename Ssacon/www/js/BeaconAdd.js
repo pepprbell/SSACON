@@ -1,11 +1,13 @@
-const { Manager, } = require('buildthing-ble-sdk')
+const { Manager, Connection } = require('buildthing-ble-sdk')
 
 let beaconScanList = {};
 let beaconListDBfront = [];
-let beaconAddInfo = {};
+let beaconAddInfo = null;
+let beaconUpdateInfo = null;
+let beaconAllInfo = [];
+let lineEquipment = {};
 
-
-const beaconAdd = {
+var beaconAdd = {
    initialize: function() {
     this.bleManager = null;
     this.beaconListDB = new Array();
@@ -15,7 +17,8 @@ const beaconAdd = {
    bindEvents: function() {
     document.addEventListener('deviceready', this.onDeviceReady.bind(this), false)
     document.getElementById("beaconBackBtt").addEventListener("click", this.stopScan.bind(this))
-    document.getElementById("beaconCreate").addEventListener("click", this.beaconCreate.bind(this))
+    document.getElementById("cu_btn").addEventListener("click", this.beaconCreate.bind(this))
+    document.getElementById("d_btn").addEventListener("click", this.beaconDelete.bind(this))
     document.getElementById("beaconModalClose").addEventListener("click", this.beaconAddModalClose.bind(this))
    },
 
@@ -27,7 +30,10 @@ const beaconAdd = {
       return response.json();
     })
     .then((result) => {
-      this.beaconListDB = result.data
+      beaconListDBfront = result.data.beacon_id
+      beaconAllInfo = result.data.beacon_info
+      lineEquipment = result.data.line_equipment
+      console.log(result.data);
     })
     .catch((error) => {
         console.error(error)
@@ -54,37 +60,32 @@ const beaconAdd = {
     this.bleManager.on('discover', function(beacon) {
       let today = new Date();
       
-      if (this.beaconListDB.includes(beacon.id) || beaconListDBfront.includes(beacon.id)) {
-        console.log('이미 등록된 비콘');
+      if (document.getElementById(`${beacon.id}`)) {
+        console.log('업데이트');
+        updateBeaconCard(beacon)
+      } else {
+        // 처음 스캔되면 dom create
+        console.log('처음추가');
+        createNewBeaconCard(beacon)
       }
-      else {
-        if (document.getElementById(`${beacon.id}`)) {
-          console.log('업데이트');
-          updateBeaconCard(beacon)
-        } else {
-          // 처음 스캔되면 dom create
-          console.log('처음추가');
-          createNewBeaconCard(beacon)
-        }
-  
-        // 오래동안 upgrade 못하면 dom, object delete 로직
-        // for (let key in beaconScanList) {
-        //   let calTime = today - beaconScanList[key].scanTime
-        //   if (calTime > 15000) {
-        //     delete beaconScanList[key];
-        //     const el = document.getElementById(`${key}`);
-        //     if (el) {
-        //       console.log('??');
-        //       el.remove();
-        //     }
-        //   }
-        // }
 
-        // 전역변수에 추가
-        beaconScanList[beacon.id] = {
-          scanTime: today,
-          ...beacon
+      // 오래동안 upgrade 못하면 dom, object delete 로직
+      for (let key in beaconScanList) {
+        let calTime = today - beaconScanList[key].scanTime
+        if (calTime > 30000) {
+          delete beaconScanList[key];
+          const el = document.getElementById(`${key}`);
+          if (el) {
+            console.log('??');
+            el.remove();
+          }
         }
+      }
+
+      // 전역변수에 추가
+      beaconScanList[beacon.id] = {
+        scanTime: today,
+        ...beacon
       }
     }.bind(this))
    },
@@ -99,93 +100,386 @@ const beaconAdd = {
    },
 
    beaconAddModalClose: function() {
+    const btn = document.getElementById('cu_btn');
+    btn.className = 'nothing'
+    beaconAddInfo = null;
+    beaconUpdateInfo = null;
+    this.bleManager.startScan()
     const modalBg = document.querySelector('.modal-bg')
     modalBg.classList.remove('bg-active')
-    beaconAddInfo = {};
-    this.bleManager.startScan()
    },
 
    beaconCreate: function(e) {
-     console.log(e);
-    e.preventdefault()
+    // console.log(e);
+    // e.preventdefault()
+    const className = document.getElementById('cu_btn').className
+
+    const values = {
+      beacon_id: beaconAddInfo.id,
+      line : document.getElementById('beacon_line').value || null,
+      equipment: document.getElementById('beacon_equipment').value || null,
+      temperatureMin: (document.getElementById('beacon_temperatureMin').value * 1.0) || null,
+      temperatureMax: (document.getElementById('beacon_temperatureMax').value * 1.0) || null,
+      humidityMin: (document.getElementById('beacon_humidityMin').value * 1.0) || null,
+      humidityMax: (document.getElementById('beacon_humidityMax').value * 1.0) || null,
+      signalPower: document.getElementById('beacon_signalPower').value || null,
+      sensing: document.getElementById('beacon_sensing').value || null,
+    }
 
     // 모든창에 데이터가 잘 나왔는지 확인
+    if (!values.line) {
+      alert('라인을 다시 확인해 주세요')
+      return
+    } else if (!values.equipment) {
+      alert('설비를 다시 확인해 주세요')
+      return
+    } else if (!values.temperatureMin) {
+      alert('온도 최소 범위를 다시 확인해 주세요')
+      return
+    } else if (!values.temperatureMax) {
+      alert('온도 최대 범위를 다시 확인해 주세요')
+      return
+    } else if (!values.humidityMin) {
+      alert('습도 최소 범위를 다시 확인해 주세요')
+      return
+    } else if (!values.humidityMax) {
+      alert('습도 최대 범위를 다시 확인해 주세요')
+      return
+    } else if (!values.signalPower) {
+      alert('신호 세기를 다시 확인해 주세요')
+      return
+    } else if (!values.sensing) {
+      alert('신호 주기를 다시 확인해 주세요')
+      return
+    } else if ((values.temperatureMax - values.temperatureMin) < 0) {
+      alert('온도 최소 범위를 다시 확인해 주세요')
+      return
+    } else if ((values.humidityMax - values.humidityMin) < 0) {
+      alert('온도 최소 범위를 다시 확인해 주세요')
+      return
+    } else if (values.sensing < 2) {
+      alert('신호 주기의 최소 값은 2sec 입니다.')
+      return
+    } 
 
+    // Connection
+    const TxPower = [false, '-20', '-16', '-12', '-8', '-4', '0', '4']
+    var connection = new Connection(beaconAddInfo);
+    connection.connect()
 
-    // 여기다가 추가하기
-    beaconAddInfo[line] = ''
-    beaconAddInfo[equipment] = ''
-    beaconAddInfo[beacon_name] = ''
-    beaconAddInfo[temperatureMax] = ''
-    beaconAddInfo[temperatureMin] = ''
-    beaconAddInfo[humidityMax] = ''
-    beaconAddInfo[humidityMin] = ''
-
+    connection.on('connect', async function (beaconAddInfo) {
+      await connection.changeTxPower(TxPower.indexOf(values.signalPower))
+      await connection.changeSensorInterval(values.sensing)
+      await connection.changeName(values.line + values.equipment)
+      connection.disconnect() // mode 변경 요청 이후, 연결 해제 (연결이 해제 되어야만 다시 스캔이 됩니다.)
     
+      if (className === 'beaconCreateBtn') {
+        console.log('처음만드는거다');
+        fetch(`http://k4b101.p.ssafy.io/api/beacon/add/${beaconAddInfo.id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        })
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          console.log(result.data);
+          beaconListDBfront.push(values.beacon_id)
+          beaconAllInfo.push(values)
+          document.getElementById(`${values.beacon_id}`).remove()
+          const btn = document.getElementById('cu_btn');
+          btn.className('nothing')
+          beaconAddInfo = null;
+          beaconUpdateInfo = null;
+          // 모달끄기
+          const modalBg = document.querySelector('.modal-bg')
+          modalBg.classList.remove('bg-active')
+          this.bleManager.startScan()
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+      } else {
+        console.log('원래있던거 수정하는거다');
+        fetch(`http://k4b101.p.ssafy.io/api/beacon/update/${beaconAddInfo.id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        })
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          console.log(result.data);
+          beaconListDBfront.push(values.beacon_id)
+          beaconAllInfo.push(values)
+          document.getElementById(`${values.beacon_id}`).remove()
+          const btn = document.getElementById('cu_btn');
+          btn.className('nothing')
+          beaconAddInfo = null;
+          beaconUpdateInfo = null;
+          // 모달끄기
+          const modalBg = document.querySelector('.modal-bg')
+          modalBg.classList.remove('bg-active')
+          this.bleManager.startScan()
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+      }
+    })
+    connection.on('disconnect', function (beaconAddInfo, isTimeout, errorMessage) {
+      console.log('disconnect', isTimeout, errorMessage)
+    })
+  },
 
-    fetch(`http://k4b101.p.ssafy.io/api/beacon/add/${beacon_id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(beaconList),
+  beaconDelete: function () {
+    fetch(`http://k4b101.p.ssafy.io/api/beacon/delete/${beaconAddInfo.id}`, {
+      method: 'DELETE',
     })
     .then((response) => {
       return response.json();
     })
     .then((result) => {
-      console.log(result);
+      console.log(result.data);
+      beaconListDBfront = result.data.beacon_id
+      beaconAllInfo = result.data.beacon_info
+      document.getElementById(`${values.beacon_id}`).remove()
+      document.getElementById('modal_container').remove();
+      beaconAddInfo = null;
+      beaconUpdateInfo = null;
+      this.bleManager.startScan()
     })
     .catch((error) => {
-        console.error(error)
+      console.error(error)
     })
-    beaconListDBfront.push(e.target.value)
-    document.getElementById(`${e.target.value}`).remove()
-    this.bleManager.startScan()
-   },
+  },
 };
 
+
+
+
 function createNewBeaconCard(beacon) {
+
   let cardContainer = document.createElement("div");
 
   cardContainer.id = `${beacon.id}`
   cardContainer.className = "beacon_card_body"
 
-  const cardContainerContent = `
-    <div class="beacon_img"/>
-    <div id="${beacon.id}_rssi" class="beacon_rssi">${beacon.rssi}</div>
-    <div id="${beacon.id}_vbatt" class="beacon_vbatt">${beacon.vbatt.percentage.value}%</div>
-    <div class="beacon_vbatt_img"/>
-    <button class=beacon_add_butt value="${beacon.id}" type="button">비콘 추가</button>
+  const cardContainerContentCreate = `
+      <div class="top">
+        <div class="left">
+          <div class="beacon_img"></div>
+          <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
+        </div>
+
+        <div class="center">
+          <div id"${beacon.id}_name" class="beacon_title">${beacon.name}</div>
+          <div>
+            <span class="beacon_opthion_name">RSSI</span>
+            <span id="${beacon.id}_rssi" class="beacon_opthion_value">${beacon.rssi}dBm</span>
+          </div>
+          <div>
+            <span class="beacon_opthion_name">Adv. 주기</span>
+            <span id="${beacon.id}_advertising" class="beacon_opthion_value">${beacon.intervalOfAdvertising.value / 10}sec</span>
+          </div>
+          <div>
+            <span class="beacon_opthion_name">센싱 주기</span>
+            <span id="${beacon.id}_sensing" class="beacon_opthion_value">${beacon.intervalOfSensing.value}sec</span>
+          </div>
+        </div>
+
+        <div class="right">
+          <div id="${beacon.id}_vbatt" class="beacon_vbatt">${Math.round(beacon.vbatt.percentage.value)}%</div>
+        </div>
+      </div>
+      <div class="bottom">
+        <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
+      </div>
   `;
 
-  cardContainer.innerHTML = cardContainerContent
-  cardContainer.addEventListener("click", beaconAddModalOpen);
-  document.getElementById("beacon_c_container").appendChild(cardContainer);
+  const cardContainerContentUpdate = `
+      <div class="top">
+        <div class="left">
+          <div class="beacon_img"></div>
+          <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
+        </div>
+
+        <div class="center">
+          <div id="${beacon.id}_name" class="beacon_title">${beacon.name}</div>
+          <div>
+            <span class="beacon_opthion_name">RSSI</span>
+            <span id="${beacon.id}_rssi" class="beacon_opthion_value">${beacon.rssi}dBm</span>
+          </div>
+          <div>
+            <span class="beacon_opthion_name">Adv. 주기</span>
+            <span id="${beacon.id}_advertising" class="beacon_opthion_value">${beacon.intervalOfAdvertising.value / 10}sec</span>
+          </div>
+          <div>
+            <span class="beacon_opthion_name">센싱 주기</span>
+            <span id="${beacon.id}_sensing" class="beacon_opthion_value">${beacon.intervalOfSensing.value}sec</span>
+          </div>
+        </div>
+
+        <div class="right">
+          <div id="${beacon.id}_vbatt" class="beacon_vbatt">${Math.round(beacon.vbatt.percentage.value)}%</div>
+        </div>
+      </div>
+      <div class="bottom">
+        <button type="button" class=beacon_update_butt value="${beacon.id}">비콘 수정</button>
+      </div>
+  `
+
+  if (beaconListDBfront.includes(beacon.id)) {
+    cardContainer.innerHTML = cardContainerContentUpdate
+    cardContainer.addEventListener("click", beaconUpdateModalOpen);
+    document.getElementById("beacon_c_container").appendChild(cardContainer);
+  } else {
+    cardContainer.innerHTML = cardContainerContentCreate
+    cardContainer.addEventListener("click", beaconAddModalOpen);
+    document.getElementById("beacon_c_container").appendChild(cardContainer);
+  }
 }
 
 function updateBeaconCard(beacon) {
-  document.getElementById(`${beacon.id}_rssi`).innerText = `${beacon.rssi}`
-  document.getElementById(`${beacon.id}_vbatt`).innerText = `${beacon.vbatt.percentage.value}%`
+  document.getElementById(`${beacon.id}_name`).innerText = `${beacon.name}`
+  document.getElementById(`${beacon.id}_rssi`).innerText = `${beacon.rssi}dBm`
+  document.getElementById(`${beacon.id}_sensing`).innerText = `${beacon.intervalOfSensing.value}sec`
+  document.getElementById(`${beacon.id}_vbatt`).innerText = `${Math.round(beacon.vbatt.percentage.value)}%`
 }
 
 function beaconAddModalOpen(e) {
+  console.log(e.target.value);
   beaconAdd.onlyStopScan()
 
-  const modalBg = document.querySelector('.modal-bg')
+  let connection_beacon = beaconScanList[e.target.value];
+  console.log('connection_beacon', connection_beacon);
+  delete connection_beacon.scanTime;
+  beaconAddInfo = connection_beacon
 
-  modalBg.classList.add('bg-active')
+  //설비 넣기
+  let line = `<option value="">----------</option>`;
+  for (key in lineEquipment) {
+    line += `<option value="${key}">${key}</option>`
+  }
+  document.getElementById('beacon_line').innerHTML = line
 
-  beaconAddInfo = beaconScanList[e.target.value]
+  // line-equ 관계연결
+  const linequ = document.getElementById('beacon_line')
+  linequ.addEventListener("change", line_option);
 
-  // beaconAddInfo = {
-  //   temperature: info.sensors[0].data.temperature.value || 0,
-  //   humidity: info.sensors[0].data.humidity.value || 0,
-  //   vbatt: info.vbatt.percentage.value
-  // }
-  // beaconAddInfo[temperature] = info.sensors[0].data.temperature.value || 0
-  // beaconAddInfo[humidity] = info.sensors[0].data.humidity.value || 0
-  // beaconAddInfo[vbatt] = info.vbatt.percentage.value
+  // modal close
+  // const modalClose = document.getElementById('beaconModalClose')
+  // modalClose.addEventListener('click', beaconAdd.beaconAddModalClose())
+
+  // create button
+  const cubtn = document.getElementById('cu_btn')
+  cubtn.className = 'beaconCreateBtn'
+  cubtn.innerText = '추가하기'
+  document.getElementById('d_btn').style.display = 'none'
+
+  // modal open
+  const modalBtn = document.querySelector('.modal-bg');
+  modalBtn.classList.add('bg-active');
+}
+
+function beaconUpdateModalOpen(e) {
+  console.log(e.target.value);
+  beaconAdd.onlyStopScan()
+
+  let connection_beacon = beaconScanList[e.target.value];
+  delete connection_beacon[scanTime];
+  beaconAddInfo = connection_beacon
+
+  for (let i = 0; i < beaconAllInfo.length; i++) {
+    if (beaconAllInfo[i].beacon_id === e.target.value) {
+      console.log(beaconAllInfo[i].beacon_id);
+
+      const values = {
+        beacon_id: beaconAllInfo[i].beacon_id,
+        line: beaconAllInfo[i].line,
+        equipment: beaconAllInfo[i].equipment,
+        temperatureMin: beaconAllInfo[i].temperatureMin,
+        temperatureMax: beaconAllInfo[i].temperatureMax,
+        humidityMin: beaconAllInfo[i].humidityMin,
+        humidityMax: beaconAllInfo[i].humidityMax,
+        signalPower: beaconAllInfo[i].signalPower,
+        sensing: beaconAllInfo[i].sensing,
+      }
+      //설비, 라인 넣기
+      let line = `<option value="">----------</option>`;
+      let equipment = `<option value="">----------</option>`;
+      for (key in lineEquipment) {
+        if (key === values.line) {
+          line += `<option value="${key}" selected>${key}</option>`
+          lineEquipment[key].forEach(e => {
+            if (e === values.equipment) {
+              equipment += `<option value="${key}" selected>${key}</option>`
+            } else {
+              equipment += `<option value="${key}">${key}</option>`
+            }
+          })
+        } else {
+          line += `<option value="${key}">${key}</option>`
+        }
+      }
+      document.getElementById('beacon_line').innerHTML = line
+      document.getElementById('beacon_equipment').innerHTML = equipment
+      //신호 세기 넣기
+      // var signalpower = document.getElementById("beacon_signalPower");
+      // for(var i=0; i<signalpower.length; i++){
+      //   if(signalpower[i].value === values.signalPower) {
+      //     signalpower[i].selected = true;
+      //   }
+      //   else {
+      //     signalpower[i].selected = false;
+      //   }
+      // }
+      // 온도 범위 넣기
+      document.getElementById('beacon_temperatureMin').value = values.temperatureMin
+      document.getElementById('beacon_temperatureMax').value = values.temperatureMax
+      // 습도 범위 넣기
+      document.getElementById('beacon_humidityMin').value = values.humidityMin
+      document.getElementById('beacon_humidityMax').value = values.humidityMax
+      // 신호 주기 넣기
+      document.getElementById('beacon_sensing').value = values.humiditsensingyMax
+
+      // line-equ 관계연결
+      const linequ = document.getElementById('beacon_line')
+      linequ.addEventListener("change", line_option);
+
+      // Update Btn
+      const cubtn = document.getElementById('cu_btn')
+      cubtn.className = 'beaconUpdateBtn'
+      cubtn.innerText = '수정하기'
+      document.getElementById('d_btn').style.display = 'inline-block'
+
+      // modal open
+      const modalBtn = document.querySelector('.modal-bg');
+      modalBtn.classList.add('bg-active');
+
+      break
+    }
+  }
+}
+
+function line_option() {
+  const line = document.getElementById('beacon_line')
+  const option = line.options[line.selectedIndex].value;
+  const new_options = lineEquipment[option]
+  const line2 = document.getElementById('beacon_equipment')
+  let options = ``
+
+  new_options.forEach(e => {
+    options += `<option value="${e}">${e}</option>`
+  });
+
+  line2.innerHTML = options
 }
 
 

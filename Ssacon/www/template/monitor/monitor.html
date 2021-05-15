@@ -5,13 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./monitor.css" />
+    <link rel="stylesheet" href="./monitorAlarmlist.css" />
     <title>Monitor</title>
   </head>
   <body>
     <header class="header"><h2>Monitor</h2></header>
     <main>
       <div>
-        <canvas id="myCanvas" width="100" height="100"></canvas>
+        <canvas id="myCanvas" class="donut"></canvas>
+        <div id="myLegend"></div>
+        <div id="total"></div>
+        <div id="alarmList" class="alarmlist"></div>
       </div>
       <div class="BeaconList">
         <h1>비콘 목록</h1>
@@ -35,40 +39,7 @@
     </main>
     <footer></footer>
     <script src="./BeaconList.js"></script>
-    <script src="./rpie.js"></script>
-    <script type="text/javascript">
-      // function getWorkerStatusData() {
-      //   fetch(
-      //     "http://k4b101.p.ssafy.io/api/monitoring/workerstatus",
-      //     requestOptions
-      //   )
-      //     .then((response) => response.json())
-      //     .then((result) => {
-      //       console.log("statusresult  : ", result);
-      //       // data = result.data;
-      //       console.log("statusfetch data  :", data);
-      //       // return data;
-      //     });
-      // }
-      // async function load() {
-      //   getWorkerStatusData();
-      //   // getBeacon(data);
-      // }
-
-      // window.onload = load;
-      // var obj = {
-      //   values: [17, 3],
-      //   colors: ["#4CAF50", "#00BCD4", "#E91E63", "#FFC107", "#9E9E9E"],
-      //   animation: true,
-      //   animationSpeed: 0,
-      //   fillTextData: true,
-      //   fillTextColor: "#fff",
-      //   fillTextPosition: "inner",
-      //   doughnutHoleSize: null,
-      //   doughnutHoleColor: "#fff",
-      //   offset: 0,
-      // };
-      // generatePieGraph("myCanvas", obj);
-    </script>
+    <script src="./monitorAlarmlist.js"></script>
+    <script type="text/javascript"></script>
   </body>
 </html>
