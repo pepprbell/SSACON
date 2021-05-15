@@ -10,11 +10,35 @@ function getData() {
   fetch("http://k4b101.p.ssafy.io/api/monitoring/beacon", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log("result  : ", result);
-      data = result.data;
-      console.log("fetch data  :", data);
-      return data;
-    })
+      const container = document.getElementById('content')
+      console.log("connected! - all")
+      beaconAll = result.data
+      console.log(beaconAll)
+      beaconAll.forEach.call(beaconAll, function(beacon) {
+        let item = document.createElement("ul")
+
+        let name = document.createElement("li")
+        name.className = "subm-name"
+        name.innerHTML = beacon.beaconName
+        item.appendChild(name)
+      
+        let temp = document.createElement("li")
+        temp.className = "subm-temp"
+        temp.innerHTML = beacon.beaconTemperature
+        item.appendChild(temp)
+      
+        let humi = document.createElement("li")
+        humi.className = "subm-humi"
+        humi.innerHTML = beacon.beaconMoisture
+        item.appendChild(humi)
+      
+        let batt = document.createElement("li")
+        batt.className = "subm-batt"
+        batt.innerHTML = beacon.beaconBattery
+        item.appendChild(batt)
+
+        container.appendChild(item)
+    })})
     .then((data) => {
       getBeacon(data);
     })
