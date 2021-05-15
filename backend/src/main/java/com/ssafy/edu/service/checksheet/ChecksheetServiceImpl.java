@@ -38,6 +38,16 @@ public class ChecksheetServiceImpl implements ChecksheetService{
         ChecksheetResponse ret = new ChecksheetResponse();
         Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(checksheet.getBeaconId());
         Date now = Date.from(Instant.now());
+
+        List<User> admins = new ArrayList<>();
+
+        List<User> all = userRepository.findAll();
+
+        for(User i: all){
+            if(i.isAdmin())
+                admins.add(i);
+        }
+
         if(beaconOpt.isPresent()) {
             Checksheet tmp = Checksheet.builder()
                     .beaconId(checksheet.getBeaconId())
@@ -57,6 +67,20 @@ public class ChecksheetServiceImpl implements ChecksheetService{
                     .receive(false)
                     .build();
             alarmRepository.save(aCheck);
+
+            for(User i: admins){
+                Alarm admincheck = Alarm.builder()
+                        .type("checksheet")
+                        .line(beaconOpt.get().getLine())
+                        .equipment(beaconOpt.get().getEquipment())
+                        .submissionBeaconId(beaconOpt.get().getBeaconId())
+                        .time(now)
+                        .userId(i.getUserId())
+                        .properBeaconId(checksheet.getProperBeaconId())
+                        .receive(false)
+                        .build();
+                alarmRepository.save(admincheck);
+            }
 
             Check r = new Check();
             r.setBeaconName(beaconOpt.get().getBeaconName());

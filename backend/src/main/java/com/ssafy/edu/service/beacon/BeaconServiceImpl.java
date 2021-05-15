@@ -434,6 +434,7 @@ public class BeaconServiceImpl implements BeaconService{
                                         .equipment(wBeacon.getEquipment())
                                         .writer(writer.get().getUserName())
                                         .description(message.getContent())
+                                        .userId(userOpt.get().getUserId())
                                         .time(now)
                                         .build();
                                 Alarm tmpm = alarmRepository.save(am);

@@ -48,6 +48,14 @@ public class MessageServiceImpl implements MessageService{
         Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(messageCreateForm.getBeaconId());
         Optional<User> userOpt = userRepository.findByUserId(messageCreateForm.getUserId());
         Date now = Date.from(Instant.now());
+
+        List<User> admins = new ArrayList<>();
+        List<User> all = userRepository.findAll();
+        for(User i: all){
+            if(i.isAdmin())
+                admins.add(i);
+        }
+
         if(beaconOpt.isPresent() && userOpt.isPresent()){
             Message nM = Message.builder()
                     .beaconId(messageCreateForm.getBeaconId())
@@ -56,6 +64,19 @@ public class MessageServiceImpl implements MessageService{
                     .receive(false)
                     .build();
             messageRepository.save(nM);
+
+            for(User ad:admins) {
+                Alarm malarm = Alarm.builder()
+                        .type("takeover")
+                        .line(beaconOpt.get().getLine())
+                        .equipment(beaconOpt.get().getEquipment())
+                        .writer(userOpt.get().getUserName())
+                        .description(messageCreateForm.getMessage())
+                        .time(now)
+                        .userId(ad.getUserId())
+                        .build();
+                alarmRepository.save(malarm);
+            }
 
             MessageCreateForm r = new MessageCreateForm();
             r.setMessage(nM.getContent());
