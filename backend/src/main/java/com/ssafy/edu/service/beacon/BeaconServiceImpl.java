@@ -111,7 +111,7 @@ public class BeaconServiceImpl implements BeaconService{
                 .beaconId(id)
                 .line(beaconCreateRequest.getLine())
                 .equipment(beaconCreateRequest.getEquipment())
-                .beaconName(beaconCreateRequest.getLine() + "_" + beaconCreateRequest.getEquipment())
+                .beaconName(beaconCreateRequest.getLine() + beaconCreateRequest.getEquipment())
                 .tempMax(beaconCreateRequest.getTemperatureMax())
                 .tempMin(beaconCreateRequest.getTemperatureMin())
                 .humidtyMax(beaconCreateRequest.getHumidityMax())
