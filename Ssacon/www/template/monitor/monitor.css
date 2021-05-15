@@ -16,7 +16,7 @@ header {
 main {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background-color: antiquewhite;
 }
@@ -55,7 +55,7 @@ main {
 }
 
 .subm-highlight {
-  color: #3F72BE;
+  color: #3f72be;
 }
 
 .subm-container {
@@ -80,10 +80,10 @@ main {
 
 .subm-header {
   font-weight: bold;
-  background-color: #3F72BE10;
-  color: #3F72BE;
-  border-top: 2px solid #3F72BE;
-  border-bottom: 2px solid #3F72BE;
+  background-color: #3f72be10;
+  color: #3f72be;
+  border-top: 2px solid #3f72be;
+  border-bottom: 2px solid #3f72be;
 }
 
 .subm-header ul {
@@ -107,8 +107,8 @@ main {
 }
 
 .donut {
-  width: 100%;
-  height: 50%;
+  width: 30vw;
+  height: 15vw;
 }
 .leftlist {
   width: 33%;
@@ -116,5 +116,16 @@ main {
 }
 .leftup {
   width: 100%;
-  height: 30%;
+  height: 40%;
+  display: block;
 }
+
+.total {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: black;
+}
+
+/* @media screen (min-width: 768px) {
+} */

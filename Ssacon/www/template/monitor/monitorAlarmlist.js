@@ -48,6 +48,24 @@ let alarmlist = [
     battery: 32.5,
     time: "2021-05-14 16:43:22",
   },
+  {
+    id: 6,
+    type: "battery",
+    line: "line1",
+    location: "F2",
+    equipment: "D2",
+    battery: 32.5,
+    time: "2021-05-14 16:43:22",
+  },
+  {
+    id: 7,
+    type: "battery",
+    line: "line1",
+    location: "F2",
+    equipment: "D2",
+    battery: 32.5,
+    time: "2021-05-14 16:43:22",
+  },
 ];
 
 const alarmList = document.querySelector("#alarmList");
