@@ -1,0 +1,95 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  min-height: 100%;
+  padding-bottom: 10%;
+  margin: 0;
+  background-color: #f3f6fa;
+}
+.title {
+  /* margin-top: 5%; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: static;
+  left: 0;
+  top: 0;
+  height: 15vw;
+  text-align: center;
+  width: 100%;
+  font-size: 3vw;
+  font-weight: bold;
+  color: #3f72be;
+  background-color: white;
+}
+
+.alarm {
+  border-radius: 5px;
+  width: 90%;
+  margin: auto;
+  margin-top: 3%;
+  /* border: 1px solid #3F72BE; */
+  padding: 2%;
+  background-color: white;
+  box-shadow: 3px 4px #e2e2e2;
+  display: flex;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-size: 1vw;
+  flex-basis: 20%;
+  color: yellow;
+  animation-name: timechange;
+  /* animation-duration: 1s; */
+  animation: timechange 1s infinite;
+}
+
+.right {
+  flex-basis: 85%;
+}
+
+.icon {
+  width: 3vw;
+  height: 3vw;
+}
+
+.type {
+  text-align: left;
+  /* color:#3F72BE; */
+  font-weight: bold;
+  font-size: 1vw;
+}
+
+.description {
+  margin-top: 1%;
+  font-size: 1vw;
+  color: grey;
+}
+
+.time {
+  margin-top: 1%;
+  text-align: left;
+  font-size: 1vw;
+  color: grey;
+}
+
+@keyframes timechange {
+  from {
+    color: yellow;
+  }
+  to {
+    color: red;
+  }
+}
+.alarmlist {
+  overflow: scroll;
+  width: 100%;
+  height: 40%;
+}

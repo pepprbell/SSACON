@@ -5,11 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./monitor.css" />
+    <link rel="stylesheet" href="./monitorAlarmlist.css" />
     <title>Monitor</title>
   </head>
   <body>
     <header class="header"><h2>Monitor</h2></header>
     <main>
+      <div>
+        <canvas id="myCanvas" class="donut"></canvas>
+        <div id="myLegend"></div>
+        <div id="total"></div>
+        <div id="alarmList" class="alarmlist"></div>
+      </div>
       <div class="BeaconList">
         <h1>비콘 목록</h1>
         <div id="BeaconList"></div>
@@ -21,5 +28,7 @@
     </main>
     <footer></footer>
     <script src="./BeaconList.js"></script>
+    <script src="./monitorAlarmlist.js"></script>
+    <script type="text/javascript"></script>
   </body>
 </html>

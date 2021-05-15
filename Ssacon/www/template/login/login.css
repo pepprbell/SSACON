@@ -16,7 +16,7 @@ html body {
 main {
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   box-sizing: border-box;
   background-color: #f3f6fa;
   flex-direction: column;
@@ -25,7 +25,6 @@ main {
 }
 form {
   width: 80%;
-  height: 100%;
   margin: 30%;
   display: flex;
   flex-direction: column;
@@ -37,16 +36,19 @@ form {
 header {
   display: flex;
   width: 100%;
-  height: 5%;
+  height: 2%;
   justify-content: space-between;
   background-color: white;
+}
+h2 {
+  /* margin-bottom: 20%; */
 }
 /* Full-width inputs */
 input[type="text"],
 input[type="password"] {
   width: 90%;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin: 0.5em 0;
   border: 1px solid #ccc;
   box-sizing: border-box;
   background-color: #e5e5e5;
@@ -65,6 +67,7 @@ button {
   cursor: pointer;
   width: 90%;
   border-radius: 10px;
+  margin-bottom: 20%;
 }
 
 /* Avatar image */
@@ -97,7 +100,7 @@ img.avatar {
   align-items: center;
 }
 .modal__content {
-  width: 80%;
+  width: 60%;
   color: #3f72be;
   background-color: white;
   text-align: center;
@@ -119,7 +122,6 @@ h1 {
 
 .modal__content {
   animation: fadein 2s;
-  /* -webkit-animation: fadein 1s; */
 } /* 모달 콘텐츠 반동 효과로 나타나기 */
 
 @keyframes fadein {
@@ -130,12 +132,18 @@ h1 {
     opacity: 1;
   }
 }
-/* @-webkit-keyframes fadein { */
-/* Safari and Chrome */
-/* from { */
-/* opacity: 0; */
-/* } */
-/* to { */
-/* opacity: 1; */
-/* } */
-/* } */
+
+.notification {
+  display: flex;
+  color: black;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.margin_bottom {
+  margin-bottom: 30%;
+}

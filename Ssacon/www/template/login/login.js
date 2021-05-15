@@ -4,6 +4,7 @@ let userName = document.querySelector('input[name="username"]');
 let userPassWord = document.querySelector('input[name="password"]');
 let loginForm = document.getElementById("form");
 const modalLogin = document.getElementById("modal__login");
+const notification = document.getElementById("notification");
 const modal = document.querySelector(".modal");
 //HTML에서의 모달 최상위 요소
 const overlay = document.querySelector(".modal__overlay");
@@ -46,6 +47,7 @@ function userLogin() {
     .then((result) => {
       console.log(result.status);
       if (result.status) {
+        notification.innerHTML = "환영합니다!";
         modalLogin.innerHTML = "로그인 성공";
         openModal();
         window.localStorage.setItem("userInfo", JSON.stringify(result));
