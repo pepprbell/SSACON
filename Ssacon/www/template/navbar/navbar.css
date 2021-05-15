@@ -1,0 +1,57 @@
+.navbar {
+    position: static;
+    width:100vw;
+    top:0;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    color: #034EA2;
+    height: 10vw;
+}
+
+.icon {
+    width: 9vw;
+    height:9vw;
+}
+
+.navbar__backButton {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color:#034EA2;
+    font-size: 5vw;
+    height: 10vw;
+}
+
+.navbar__title {
+    color:#034EA2;
+    font-size: 5vw;
+    height:10vw;
+    line-height: 10vw;
+
+}
+
+.navbar__menuButton {
+    border:none;
+    outline:none;
+    background-color: transparent;
+    color:#034EA2;
+    font-size: 5vw;
+    height: 10vw;
+}
+
+.sidemenu {
+    width: 60vw;
+    position:fixed;
+    z-index: 1000;
+    height: 100vh;
+    background:black;
+    
+}
+
+.sidemenu__close {
+    position:fixed;
+    width: 2vw;
+    height:2vw;
+}
