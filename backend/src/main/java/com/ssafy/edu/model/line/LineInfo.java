@@ -10,6 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 public class LineInfo {
-    List<String> line_name1;
-    List<String> line_name2;
+    List<String> line1;
+    List<String> line2;
 }
