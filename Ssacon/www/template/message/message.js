@@ -45,14 +45,15 @@ function scanBeacon() {
 }
 
 setTimeout(scanBeacon, 0)
-setInterval(scanBeacon, 3000)
+// setInterval(scanBeacon, 3000)
 
 // 모든 위치의 비콘 검색 및 아이콘 생성
-fetch("http://k4b101.p.ssafy.io/api/beacon/list", {method: "GET",})
+fetch("http://k4b101.p.ssafy.io/api/monitoring/beacon", {method: "GET",})
 .then((res) => res.json())
 .then((result) => {
   console.log("connected! - all")
   beaconAll = result.data
+  console.log(beaconAll)
   beaconAll.forEach.call(beaconAll, function(beacon) {
     let item = document.createElement("div")
     item.className = "item"
