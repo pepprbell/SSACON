@@ -116,14 +116,14 @@ function getWorkerStatusData() {
       });
       myDougnutChart.draw();
       total = document.getElementById("total");
-      span = document.createElement("span");
-      hr = document.createElement("hr");
-      span.className = "total";
-      total.appendChild(span);
-      total.append(`    TOTAL  =  ${totalLoginWorker} 명 `);
-      total.append(hr);
-
-      // return nonSignalWorker, onSignalWorker;
+      let totalHTML = "";
+      totalHTML +=
+        "<div><span style='display:inline-block;width:20px;background-color: black" +
+        ";'>&nbsp;</span> " +
+        "TOTAL " +
+        `${totalLoginWorker} 명` +
+        "</div>";
+      total.innerHTML = totalHTML;
     });
 }
 // ------------------------------------------

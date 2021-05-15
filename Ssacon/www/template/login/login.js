@@ -59,7 +59,7 @@ function userLogin() {
         }, 2000);
         setTimeout(() => {
           failmodal.classList.remove("modalenabled");
-        }, 2500);
+        }, 2001);
       } else {
         modalLogin.classList.add("red");
         modalLogin.innerHTML = "로그인 실패";
@@ -71,7 +71,7 @@ function userLogin() {
         }, 2000);
         setTimeout(() => {
           successModal.classList.remove("modalenabled");
-        }, 2500);
+        }, 2001);
       }
     })
     .catch((error) => {
@@ -87,7 +87,7 @@ function userLogin() {
       }, 2000);
       setTimeout(() => {
         successModal.classList.remove("modalenabled");
-      }, 2500);
+      }, 2001);
 
       // loginCheck(!isLogin);
     });

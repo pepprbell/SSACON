@@ -2,13 +2,6 @@
   box-sizing: border-box;
 }
 
-body {
-  width: 100%;
-  min-height: 100%;
-  padding-bottom: 10%;
-  margin: 0;
-  background-color: #f3f6fa;
-}
 .title {
   /* margin-top: 5%; */
   display: flex;
@@ -80,7 +73,7 @@ body {
   color: yellow;
   animation-name: timechange;
   /* animation-duration: 1s; */
-  animation: timechange 1s infinite;
+  animation: timechange 2s infinite;
 }
 
 @keyframes timechange {
@@ -94,5 +87,6 @@ body {
 .alarmlist {
   overflow: scroll;
   width: 100%;
-  height: 50%;
+  margin-top: 1px;
+  flex: 7;
 }
