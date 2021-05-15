@@ -5,7 +5,7 @@ let beaconListDBfront = [];
 let beaconAddInfo = null;
 let beaconUpdateInfo = null;
 let beaconAllInfo = [];
-let lineEquipment = {line1: ['e1', 'e2', 'e3'], line2: ['e3', 'e4', 'e5'],};
+let lineEquipment = {};
 
 var beaconAdd = {
    initialize: function() {
@@ -163,18 +163,18 @@ var beaconAdd = {
     } 
 
     // Connection
-    const TxPower = [false, -20, -16, -12, -8, -4, 0, 4]
+    const TxPower = [false, '-20', '-16', '-12', '-8', '-4', '0', '4']
     var connection = new Connection(beaconAddInfo);
     connection.connect()
 
     connection.on('connect', async function (beaconAddInfo) {
-      // await connection.changeMode('' + BeaconModeValue[changedBeaconMode])
       await connection.changeTxPower(TxPower.indexOf(values.signalPower))
       await connection.changeSensorInterval(values.sensing)
-      await connection.changeName(values.line + '-' + values.equipment)
+      await connection.changeName(values.line + values.equipment)
       connection.disconnect() // mode 변경 요청 이후, 연결 해제 (연결이 해제 되어야만 다시 스캔이 됩니다.)
-
+    
       if (className === 'beaconCreateBtn') {
+        console.log('처음만드는거다');
         fetch(`http://k4b101.p.ssafy.io/api/beacon/add/${beaconAddInfo.id}`, {
           method: 'POST',
           headers: {
@@ -190,20 +190,20 @@ var beaconAdd = {
           beaconListDBfront.push(values.beacon_id)
           beaconAllInfo.push(values)
           document.getElementById(`${values.beacon_id}`).remove()
-          beaconAddInfo = null;
-          this.bleManager.startScan()
           const btn = document.getElementById('cu_btn');
           btn.className('nothing')
           beaconAddInfo = null;
           beaconUpdateInfo = null;
-          this.bleManager.startScan()
+          // 모달끄기
           const modalBg = document.querySelector('.modal-bg')
           modalBg.classList.remove('bg-active')
+          this.bleManager.startScan()
         })
         .catch((error) => {
           console.error(error)
         })
       } else {
+        console.log('원래있던거 수정하는거다');
         fetch(`http://k4b101.p.ssafy.io/api/beacon/update/${beaconAddInfo.id}`, {
           method: 'POST',
           headers: {
@@ -219,15 +219,14 @@ var beaconAdd = {
           beaconListDBfront.push(values.beacon_id)
           beaconAllInfo.push(values)
           document.getElementById(`${values.beacon_id}`).remove()
-          beaconAddInfo = null;
-          this.bleManager.startScan()
           const btn = document.getElementById('cu_btn');
           btn.className('nothing')
           beaconAddInfo = null;
           beaconUpdateInfo = null;
-          this.bleManager.startScan()
+          // 모달끄기
           const modalBg = document.querySelector('.modal-bg')
           modalBg.classList.remove('bg-active')
+          this.bleManager.startScan()
         })
         .catch((error) => {
           console.error(error)
