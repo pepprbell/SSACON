@@ -113,16 +113,19 @@ var beaconAdd = {
     // console.log(e);
     // e.preventdefault()
     const className = document.getElementById('cu_btn').className
+    const line_id = document.getElementById('beacon_line')
+    const equipment_id = document.getElementById('beacon_equipment')
+    const signalPower_id = document.getElementById('beacon_signalPower')
 
     const values = {
       beacon_id: beaconAddInfo.id,
-      line : document.getElementById('beacon_line').value || null,
-      equipment: document.getElementById('beacon_equipment').value || null,
+      line : line_id.options[line_id.selectedIndex].value || null,
+      equipment: equipment_id.options[equipment_id.selectedIndex].value || null,
       temperatureMin: (document.getElementById('beacon_temperatureMin').value * 1.0) || null,
       temperatureMax: (document.getElementById('beacon_temperatureMax').value * 1.0) || null,
       humidityMin: (document.getElementById('beacon_humidityMin').value * 1.0) || null,
       humidityMax: (document.getElementById('beacon_humidityMax').value * 1.0) || null,
-      signalPower: document.getElementById('beacon_signalPower').value || null,
+      signalPower: signalPower_id.options[signalPower_id.selectedIndex].value,
       sensing: document.getElementById('beacon_sensing').value || null,
     }
 
@@ -168,13 +171,12 @@ var beaconAdd = {
     connection.connect()
 
     connection.on('connect', async function (beaconAddInfo) {
+      await connection.changeName(values.equipment)
       await connection.changeTxPower(TxPower.indexOf(values.signalPower))
       await connection.changeSensorInterval(values.sensing)
-      await connection.changeName(values.line + values.equipment)
-      connection.disconnect() // mode 변경 요청 이후, 연결 해제 (연결이 해제 되어야만 다시 스캔이 됩니다.)
+      await connection.disconnect() // mode 변경 요청 이후, 연결 해제 (연결이 해제 되어야만 다시 스캔이 됩니다.)
     
       if (className === 'beaconCreateBtn') {
-        console.log('처음만드는거다');
         fetch(`http://k4b101.p.ssafy.io/api/beacon/add/${beaconAddInfo.id}`, {
           method: 'POST',
           headers: {
@@ -191,19 +193,17 @@ var beaconAdd = {
           beaconAllInfo.push(values)
           document.getElementById(`${values.beacon_id}`).remove()
           const btn = document.getElementById('cu_btn');
-          btn.className('nothing')
+          btn.className = 'nothing'
           beaconAddInfo = null;
           beaconUpdateInfo = null;
           // 모달끄기
           const modalBg = document.querySelector('.modal-bg')
           modalBg.classList.remove('bg-active')
-          this.bleManager.startScan()
         })
         .catch((error) => {
           console.error(error)
         })
       } else {
-        console.log('원래있던거 수정하는거다');
         fetch(`http://k4b101.p.ssafy.io/api/beacon/update/${beaconAddInfo.id}`, {
           method: 'POST',
           headers: {
@@ -220,13 +220,12 @@ var beaconAdd = {
           beaconAllInfo.push(values)
           document.getElementById(`${values.beacon_id}`).remove()
           const btn = document.getElementById('cu_btn');
-          btn.className('nothing')
+          btn.className = 'nothing'
           beaconAddInfo = null;
           beaconUpdateInfo = null;
           // 모달끄기
           const modalBg = document.querySelector('.modal-bg')
           modalBg.classList.remove('bg-active')
-          this.bleManager.startScan()
         })
         .catch((error) => {
           console.error(error)
@@ -235,7 +234,9 @@ var beaconAdd = {
     })
     connection.on('disconnect', function (beaconAddInfo, isTimeout, errorMessage) {
       console.log('disconnect', isTimeout, errorMessage)
+      console.log('isConnected', connection.isConnected)
     })
+    this.bleManager.startScan()
   },
 
   beaconDelete: function () {
@@ -249,15 +250,16 @@ var beaconAdd = {
       console.log(result.data);
       beaconListDBfront = result.data.beacon_id
       beaconAllInfo = result.data.beacon_info
-      document.getElementById(`${values.beacon_id}`).remove()
-      document.getElementById('modal_container').remove();
+      document.getElementById(`${beaconAddInfo.id}`).remove()
+      const modalBg = document.querySelector('.modal-bg')
+          modalBg.classList.remove('bg-active')
       beaconAddInfo = null;
       beaconUpdateInfo = null;
-      this.bleManager.startScan()
     })
     .catch((error) => {
       console.error(error)
     })
+    this.bleManager.startScan()
   },
 };
 
@@ -265,7 +267,6 @@ var beaconAdd = {
 
 
 function createNewBeaconCard(beacon) {
-
   let cardContainer = document.createElement("div");
 
   cardContainer.id = `${beacon.id}`
@@ -279,7 +280,7 @@ function createNewBeaconCard(beacon) {
         </div>
 
         <div class="center">
-          <div id"${beacon.id}_name" class="beacon_title">${beacon.name}</div>
+          <div id="${beacon.id}name" class="beacon_title">${beacon.name}</div>
           <div>
             <span class="beacon_opthion_name">RSSI</span>
             <span id="${beacon.id}_rssi" class="beacon_opthion_value">${beacon.rssi}dBm</span>
@@ -311,7 +312,7 @@ function createNewBeaconCard(beacon) {
         </div>
 
         <div class="center">
-          <div id="${beacon.id}_name" class="beacon_title">${beacon.name}</div>
+          <div id="${beacon.id}name" class="beacon_title">${beacon.name}</div>
           <div>
             <span class="beacon_opthion_name">RSSI</span>
             <span id="${beacon.id}_rssi" class="beacon_opthion_value">${beacon.rssi}dBm</span>
@@ -347,7 +348,7 @@ function createNewBeaconCard(beacon) {
 }
 
 function updateBeaconCard(beacon) {
-  document.getElementById(`${beacon.id}_name`).innerText = `${beacon.name}`
+  document.getElementById(`${beacon.id}name`).innerText = `${beacon.name}`
   document.getElementById(`${beacon.id}_rssi`).innerText = `${beacon.rssi}dBm`
   document.getElementById(`${beacon.id}_sensing`).innerText = `${beacon.intervalOfSensing.value}sec`
   document.getElementById(`${beacon.id}_vbatt`).innerText = `${Math.round(beacon.vbatt.percentage.value)}%`
@@ -359,7 +360,7 @@ function beaconAddModalOpen(e) {
 
   let connection_beacon = beaconScanList[e.target.value];
   console.log('connection_beacon', connection_beacon);
-  delete connection_beacon.scanTime;
+  delete connection_beacon.scanTime;  
   beaconAddInfo = connection_beacon
 
   //설비 넣기
@@ -393,7 +394,8 @@ function beaconUpdateModalOpen(e) {
   beaconAdd.onlyStopScan()
 
   let connection_beacon = beaconScanList[e.target.value];
-  delete connection_beacon[scanTime];
+  console.log(connection_beacon);
+  delete connection_beacon.scanTime; 
   beaconAddInfo = connection_beacon
 
   for (let i = 0; i < beaconAllInfo.length; i++) {
@@ -447,7 +449,7 @@ function beaconUpdateModalOpen(e) {
       document.getElementById('beacon_humidityMin').value = values.humidityMin
       document.getElementById('beacon_humidityMax').value = values.humidityMax
       // 신호 주기 넣기
-      document.getElementById('beacon_sensing').value = values.humiditsensingyMax
+      document.getElementById('beacon_sensing').value = values.sensing
 
       // line-equ 관계연결
       const linequ = document.getElementById('beacon_line')
@@ -456,7 +458,7 @@ function beaconUpdateModalOpen(e) {
       // Update Btn
       const cubtn = document.getElementById('cu_btn')
       cubtn.className = 'beaconUpdateBtn'
-      cubtn.innerText = '수정하기'
+      cubtn.innerText = '수정'
       document.getElementById('d_btn').style.display = 'inline-block'
 
       // modal open
