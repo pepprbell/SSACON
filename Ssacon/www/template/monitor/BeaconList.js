@@ -120,7 +120,7 @@ function getWorkerStatusData() {
       totalHTML +=
         "<div><span style='display:inline-block;width:20px;background-color: black" +
         ";'>&nbsp;</span> " +
-        "TOTAL " +
+        " TOTAL " +
         `${totalLoginWorker} 명` +
         "</div>";
       total.innerHTML = totalHTML;
