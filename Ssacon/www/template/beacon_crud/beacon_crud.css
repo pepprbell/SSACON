@@ -13,27 +13,29 @@ body {
 .title_div {
   left: 0;
   top: 0;
-  height: 15vw;
+  height: 4em;
+  box-shadow: 2px #e2e2e2;
 }
 
 .title {
   display: flex;
   align-items: center;
+  text-align: center;
   /* justify-content: center; */
   position: fixed;
   left: 0;
   top: 0;
-  height: 15vw;
-  text-align: center;
+  height: 4em;
   width: 100%;
-  font-size: 5vw;
+  /* height: 100%; */
   font-weight: bold;
   color: #3f72be;
   background-color: white;
 }
 
 .back_btn {
-  width: 6vw;
+  width: 1.3em;
+  font-size: 20px;
   height: 40%;
   display: inline-block;
   margin-left: 1em;
@@ -42,25 +44,25 @@ body {
   background-size: cover;
 }
 
-.title_content {
-}
-
 .title_content_1 {
-  font-size: 4.5vw;
+  font-size: 1.5em;
 }
 
 .title_content_2 {
-  font-size: 3.5vw;
+  font-size: 1em;
   color: #8faad3;
   text-align: left;
   align-items: center;
 }
 
 #beacon_c_container {
+  width: 95%;
+  max-width: 1240px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, auto));
-  /* grid-template-rows: repeat(auto-fill, minmax(720, auto)); */
-  text-align: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  /* text-align: center; */
 }
 
 .card_container {
@@ -73,10 +75,10 @@ body {
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
-  width: 270px;
-  /* height: 23vh; */
-  margin: auto;
-  margin: 4%;
+  /* width: 20.5em; */
+  margin: 3%;
+  margin-bottom: 0;
+  margin-top: 6%;
   padding: 2%;
   background-color: white;
   box-shadow: 3px 4px #e2e2e2;
@@ -104,27 +106,27 @@ body {
 
 .center {
   justify-self: start;
-  justify-content: left;
   flex-basis: 55%;
   padding: 0.2em 0.2em;
-  padding-left: 0em;
+  padding-left: 1em;
+  text-align: left;
 }
 
 .beacon_title {
-  font-size: 1em;
+  font-size: 24px;
   font-weight: bold;
   color: #525151;
   margin-bottom: 0.25em;
 }
 
 .beacon_opthion_name {
-  font-size: 0.4em;
+  font-size: 15px;
   color: #807f7f;
   font-weight: 400;
 }
 
 .beacon_opthion_value {
-  font-size: 0.4em;
+  font-size: 15px;
   font-weight: 500;
   margin-left: 0.7em;
   color: #525151;
@@ -132,13 +134,15 @@ body {
 
 .right {
   flex-basis: 15%;
+  float: right;
 }
 
 .beacon_vbatt {
-  font-size: 0.3em;
+  font-size: 11px;
   color: #807f7f;
   font-weight: 400;
   padding: 1em;
+  float: right;
 }
 
 .beacon_add_butt {
@@ -146,7 +150,8 @@ body {
   background-color: #3f72be;
   font-size: 1em;
   color: white;
-  padding: 0.2em 0.5em;
+  padding: 0.5em 0.5em;
+  border: 0;
 }
 
 .beacon_update_butt {
@@ -157,100 +162,104 @@ body {
   padding: 0.2em 0.5em;
 }
 
-.beaconDeleteBtn {
-  width: 100%;
-  background-color: #626661;
-  font-size: 1em;
-  color: white;
-  padding: 0.2em 0.5em;
-}
-
-/* .modal_body {
-  width: 100%;
-  height: 100%;
-} */
-
-.modal-bg {
-  position: fixed;
+.modal_body {
   width: 100%;
   height: 100vh;
+  position: fixed;
   top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
+  bottom: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  min-height: 100%;
+  background-color: #f3f6fa;
+}
+
+.modal_body_hide {
+  background-color: transparent !important;
+}
+
+.modal-bg {
+  width: 100%;
+  position: absolute;
+  top: 0;
   justify-content: center;
   align-items: center;
-  overflow-y: scroll;
   visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s opacity 0.5s;
 }
 
 .bg-active {
   visibility: visible;
-  opacity: 1;
+  width: 100%;
+}
+
+.title-modal {
+  z-index: 1;
 }
 
 .modal {
-  position: relative;
-  background-color: white;
-  width: 20em;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
+  width: 95%;
+  max-width: 950px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
   background-color: #f3f6fa;
 }
 
+.btns {
+  flex: 1;
+  padding-right: 0.6em;
+}
+
 .beaconCreateBtn {
-  display: inline-block;
   padding: 0.2em 0.3em;
-  background-color: #2980b9;
-  color: white;
+  background-color: white;
+  color: #2980b9;
   border: none;
-  margin-top: 2.5%;
-  margin-bottom: 5%;
-  font-size: 0.7em;
+  font-size: 1em;
+  float: right;
+  font-weight: 600;
 }
 
 .beaconUpdateBtn {
   padding: 0.2em 0.3em;
-  background-color: #626661;
-  color: white;
+  background-color: white;
+  color: #2980b9;
   border: none;
-  margin-top: 2.5%;
-  margin-bottom: 2%;
-  font-size: 0.7em;
+  font-size: 1em;
+  float: right;
+  font-weight: 600;
 }
 
 .beaconDeleteBtn {
   padding: 0.2em 0.3em;
-  background-color: #a0512d;
-  color: white;
+  background-color: white;
+  color: #2980b9;
   border: none;
-  margin-top: 2.5%;
-  margin-bottom: 2%;
-  font-size: 0.7em;
+  font-size: 1em;
+  float: right;
+  font-weight: 600;
 }
 
 .modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: 0;
-  outline: 0;
-  font-size: 1.7em;
-  background-color: #f3f6fa;
+  border: none;
+  font-size: 1.4em;
+  color: #2980b9;
+  padding: 0.5em 1em;
+  background-color: white;
 }
 
 .wrapper {
-  width: 15em;
-  height: auto;
-  background: #fff;
-  padding: 0.7em;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 7px;
-  margin: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  margin: 3%;
+  margin-bottom: 0;
+  margin-top: 6%;
+  padding: 2%;
+  background-color: white;
+  box-shadow: 3px 4px #e2e2e2;
 }
 
 .wrapper .input-data {
@@ -268,7 +277,7 @@ body {
   height: 100%;
   width: 100%;
   border: none;
-  font-size: 0.7em;
+  font-size: 1.2em;
   font-weight: 600;
   border-bottom: 2px solid silver;
 }
@@ -277,7 +286,7 @@ body {
   width: 45%;
   height: 100%;
   border: none;
-  font-size: 0.7em;
+  font-size: 1.2em;
   font-weight: 600;
   border-bottom: 2px solid silver;
 }
@@ -286,19 +295,19 @@ body {
   height: 100%;
   width: 100%;
   border: none;
-  font-size: 0.7em;
+  font-size: 1.2em;
   font-weight: 600;
   border-bottom: 2px solid silver;
 }
 .wrapper .input-data label {
   color: grey;
-  font-size: 0.7em;
+  font-size: 1.2em;
   font-weight: 500;
   margin-bottom: 0.3em;
 }
 .wrapper .input-data span {
   color: grey;
-  font-size: 0.7em;
+  font-size: 1.2em;
   font-weight: 500;
   /* margin-bottom: 1em; */
   text-align: justify;
@@ -318,7 +327,7 @@ body {
 .loader {
   display: inline-block;
   margin-left: 0.3em;
-  font-size: 3vw;
+  font-size: 1.1em;
   text-indent: -9999em;
   width: 1em;
   height: 1em;
@@ -395,3 +404,132 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.batteryContainer {
+  /* display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  float: right;
+}
+
+.batteryOuter {
+  border-radius: 3px;
+  border: 1px solid #444;
+  padding: 1px;
+  width: 2em;
+  height: 0.7em;
+  margin-top: 0.5em;
+}
+
+.batteryBump {
+  border-radius: 2px;
+  background-color: #444;
+  margin: 0.1em;
+  width: 0.1em;
+  height: 0.2em;
+  margin-top: 0.55em;
+}
+
+#batteryLevel {
+  border-radius: 2px;
+  background-color: #73ad21;
+  width: 22%;
+  height: 0.5em;
+}
+
+@media screen and (max-width: 500px) {
+  #beacon_c_container {
+    grid-template-columns: 1fr;
+  }
+  .modal {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (min-width: 850px) {
+  #beacon_c_container {
+    grid-template-columns: 1fr 1fr;
+  }
+  .modal {
+    grid-template-columns: 1fr;
+  }
+  /* navbar */
+  .title_div {
+    height: 8em;
+  }
+  .title {
+    height: 8em;
+  }
+  .back_btn {
+    width: 1em;
+    font-size: 40px;
+  }
+  .title_content_1 {
+    font-size: 40px;
+  }
+  .title_content_2 {
+    font-size: 33px;
+  }
+  .modal-close {
+    font-size: 55px;
+    padding: 0.5em 0.8em;
+  }
+  /* beacon list */
+  .beacon_title {
+    font-size: 35px;
+  }
+  .beacon_opthion_name {
+    font-size: 22px;
+  }
+  .beacon_opthion_value {
+    font-size: 22px;
+  }
+  .beacon_vbatt {
+    font-size: 20px;
+  }
+  .beacon_add_butt {
+    font-size: 25px;
+  }
+  .beacon_update_butt {
+    font-size: 25px;
+  }
+  /* modal */
+  .beaconCreateBtn {
+    padding: 0.5em 0.5em;
+    font-size: 35px;
+  }
+  .beaconUpdateBtn {
+    padding: 0.5em 0.5em;
+    font-size: 35px;
+  }
+  .beaconDeleteBtn {
+    padding: 0.5em 0.5em;
+    font-size: 35px;
+  }
+  .wrapper .input-data .input {
+    font-size: 30px;
+  }
+  .towInput {
+    font-size: 30px;
+  }
+  .wrapper .input-data select {
+    font-size: 30px;
+  }
+  .wrapper .input-data label {
+    font-size: 30px;
+  }
+  .wrapper .input-data span {
+    font-size: 30px;
+  }
+}
+
+/* @media screen and (min-width: 1100px) {
+  #beacon_c_container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+} */
