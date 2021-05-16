@@ -104,9 +104,12 @@ var beaconAdd = {
     btn.className = 'nothing'
     beaconAddInfo = null;
     beaconUpdateInfo = null;
-    this.bleManager.startScan()
+
+    // modal close
     const modalBg = document.querySelector('.modal-bg')
     modalBg.classList.remove('bg-active')
+    document.querySelector('.modal_body').classList.remove('.modal_body_hide')
+    this.bleManager.startScan()
    },
 
    beaconCreate: function(e) {
@@ -199,6 +202,7 @@ var beaconAdd = {
           // 모달끄기
           const modalBg = document.querySelector('.modal-bg')
           modalBg.classList.remove('bg-active')
+          document.querySelector('.modal_body').classList.remove('.modal_body_hide')
         })
         .catch((error) => {
           console.error(error)
@@ -223,9 +227,11 @@ var beaconAdd = {
           btn.className = 'nothing'
           beaconAddInfo = null;
           beaconUpdateInfo = null;
+
           // 모달끄기
           const modalBg = document.querySelector('.modal-bg')
           modalBg.classList.remove('bg-active')
+          document.querySelector('.modal_body').classList.remove('.modal_body_hide')
         })
         .catch((error) => {
           console.error(error)
@@ -236,6 +242,7 @@ var beaconAdd = {
       console.log('disconnect', isTimeout, errorMessage)
       console.log('isConnected', connection.isConnected)
     })
+    
     this.bleManager.startScan()
   },
 
@@ -275,7 +282,6 @@ function createNewBeaconCard(beacon) {
   const cardContainerContentCreate = `
       <div class="top">
         <div class="left">
-          <div class="beacon_img"></div>
           <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
         </div>
 
@@ -293,9 +299,16 @@ function createNewBeaconCard(beacon) {
             <span class="beacon_opthion_name">센싱 주기</span>
             <span id="${beacon.id}_sensing" class="beacon_opthion_value">${beacon.intervalOfSensing.value}sec</span>
           </div>
+          <br>
         </div>
 
         <div class="right">
+          <div class="batteryContainer">
+            <div class="batteryOuter">
+              <div id="batteryLevel"></div>
+            </div>
+            <div class="batteryBump"></div>
+          </div>
           <div id="${beacon.id}_vbatt" class="beacon_vbatt">${Math.round(beacon.vbatt.percentage.value)}%</div>
         </div>
       </div>
@@ -328,6 +341,12 @@ function createNewBeaconCard(beacon) {
         </div>
 
         <div class="right">
+          <div class="batteryContainer">
+            <div class="batteryOuter">
+              <div id="batteryLevel"></div>
+            </div>
+            <div class="batteryBump"></div>
+          </div>
           <div id="${beacon.id}_vbatt" class="beacon_vbatt">${Math.round(beacon.vbatt.percentage.value)}%</div>
         </div>
       </div>
@@ -374,10 +393,6 @@ function beaconAddModalOpen(e) {
   const linequ = document.getElementById('beacon_line')
   linequ.addEventListener("change", line_option);
 
-  // modal close
-  // const modalClose = document.getElementById('beaconModalClose')
-  // modalClose.addEventListener('click', beaconAdd.beaconAddModalClose())
-
   // create button
   const cubtn = document.getElementById('cu_btn')
   cubtn.className = 'beaconCreateBtn'
@@ -387,6 +402,7 @@ function beaconAddModalOpen(e) {
   // modal open
   const modalBtn = document.querySelector('.modal-bg');
   modalBtn.classList.add('bg-active');
+  document.querySelector('.modal_body').classList.add('.modal_body_hide')
 }
 
 function beaconUpdateModalOpen(e) {
@@ -464,6 +480,7 @@ function beaconUpdateModalOpen(e) {
       // modal open
       const modalBtn = document.querySelector('.modal-bg');
       modalBtn.classList.add('bg-active');
+      document.querySelector('.modal_body').classList.add('.modal_body_hide')
 
       break
     }
