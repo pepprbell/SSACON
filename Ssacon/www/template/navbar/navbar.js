@@ -49,7 +49,7 @@ const navbar__BeaconMonitor = document.createElement("div")
 navbar__BeaconMonitor.innerHTML = "<img class='navbar__menu__icon' src='file:///android_asset/www/template/navbar/icons/monitoring_side.png'>"+ "<div class='navbar__menu__title'>비콘 모니터링</div>"
 navbar__BeaconMonitor.className = "navbar__menu"
 navbar__BeaconMonitor.addEventListener("click", function(){
-    window.location = "file:///android_asset/www/template/beaconMonitor/beaconMonitor.html";
+    window.location = "file:///android_asset/www/template/monitor/monitor.html";
 })
 
 const navbar__BeaconManagement = document.createElement("div")
