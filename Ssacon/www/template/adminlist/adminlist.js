@@ -6,9 +6,9 @@ let BeaconManagement = document.querySelector("#BeaconManagement");
 let WorkerCheckSheet = document.querySelector("#WorkerCheckSheet");
 let WorkerMessage = document.querySelector("#WorkerMessage");
 
-let header = document.querySelector("#header");
-let admin = document.querySelector("#admin");
-let worker = document.querySelector("#worker");
+// let header = document.querySelector("#header");
+// let admin = document.querySelector("#admin");
+// let worker = document.querySelector("#worker");
 let userInfo = null;
 CheckSheet.addEventListener("click", moveCheckSheet);
 CheckSheetList.addEventListener("click", moveCheckSheetList);
@@ -25,15 +25,16 @@ function moveCheckSheetList() {
   window.location = "../seeChecklist/seeChecklist.html";
 }
 function moveBeaconMornitor() {
-  window.location = "../beaconMonitor/beaconMonitor.html";
+  window.location = "../monitor/monitor.html";
 }
 function moveWorkerAlarm() {
-  console.log(WorkerAlarm);
+  window.location = "../alarm/alarmlist.html";
 }
 function moveBeaconManagement() {
   window.location = "../beacon_crud/beacon_crud.html";
 }
 function moveWorkerCheckSheet() {
+  console.log(WorkerCheckSheet);
   window.location = "../checklist/checklist.html";
 }
 function moveWorkerMessage() {
@@ -46,7 +47,6 @@ function load() {
   userInfo = JSON.parse(userInfo);
   // userInfo.data.login = false; //test용
   if (userInfo.data.admin) {
-    // 나중에 여길 근로자로 바꾸자
     header.innerHTML = "관리자 목록 ";
     WorkerCheckSheet.classList.add("enabled");
     WorkerMessage.classList.add("enabled");
@@ -57,9 +57,6 @@ function load() {
     BeaconMornitor.classList.add("enabled");
     BeaconManagement.classList.add("enabled");
   }
-
-  console.log(userInfo.data.userId);
-  console.log(userInfo["data"]);
 }
 
 window.onload = load;

@@ -10,35 +10,36 @@ function getData() {
   fetch("http://k4b101.p.ssafy.io/api/monitoring/beacon", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      const container = document.getElementById('content')
-      console.log("connected! - all")
-      beaconAll = result.data
-      console.log(beaconAll)
-      beaconAll.forEach.call(beaconAll, function(beacon) {
-        let item = document.createElement("ul")
+      const container = document.getElementById("content");
+      console.log("connected! - all");
+      beaconAll = result.data;
+      console.log(beaconAll);
+      beaconAll.forEach.call(beaconAll, function (beacon) {
+        let item = document.createElement("ul");
 
-        let name = document.createElement("li")
-        name.className = "subm-name"
-        name.innerHTML = beacon.beaconName
-        item.appendChild(name)
-      
-        let temp = document.createElement("li")
-        temp.className = "subm-temp"
-        temp.innerHTML = beacon.beaconTemperature
-        item.appendChild(temp)
-      
-        let humi = document.createElement("li")
-        humi.className = "subm-humi"
-        humi.innerHTML = beacon.beaconMoisture
-        item.appendChild(humi)
-      
-        let batt = document.createElement("li")
-        batt.className = "subm-batt"
-        batt.innerHTML = beacon.beaconBattery
-        item.appendChild(batt)
+        let name = document.createElement("li");
+        name.className = "subm-name";
+        name.innerHTML = beacon.beaconName;
+        item.appendChild(name);
 
-        container.appendChild(item)
-    })})
+        let temp = document.createElement("li");
+        temp.className = "subm-temp";
+        temp.innerHTML = beacon.beaconTemperature;
+        item.appendChild(temp);
+
+        let humi = document.createElement("li");
+        humi.className = "subm-humi";
+        humi.innerHTML = beacon.beaconMoisture;
+        item.appendChild(humi);
+
+        let batt = document.createElement("li");
+        batt.className = "subm-batt";
+        batt.innerHTML = beacon.beaconBattery;
+        item.appendChild(batt);
+
+        container.appendChild(item);
+      });
+    })
     .then((data) => {
       getBeacon(data);
     })
@@ -114,10 +115,15 @@ function getWorkerStatusData() {
         legend: myLegend,
       });
       myDougnutChart.draw();
-      account = document.createElement("div");
-      account.append(`TOTAL  =  ${totalLoginWorker} 명 `);
-      total.appendChild(account);
-      // return nonSignalWorker, onSignalWorker;
+      total = document.getElementById("total");
+      let totalHTML = "";
+      totalHTML +=
+        "<div><span style='display:inline-block;width:20px;background-color: black" +
+        ";'>&nbsp;</span> " +
+        "TOTAL " +
+        `${totalLoginWorker} 명` +
+        "</div>";
+      total.innerHTML = totalHTML;
     });
 }
 // ------------------------------------------
@@ -209,16 +215,17 @@ var Piechart = function (options) {
         if (this.options.doughnutHoleSize) {
           var offset = (pieRadius * this.options.doughnutHoleSize) / 2;
           labelX =
+            -15 +
             this.canvas.width / 2 +
             (offset + pieRadius / 2) * Math.cos(start_angle + slice_angle / 2);
           labelY =
-            this.canvas.height / 2 +
+            +this.canvas.height / 2 +
             (offset + pieRadius / 2) * Math.sin(start_angle + slice_angle / 2);
         }
 
         var labelText = Math.round((100 * val) / total_value);
         this.ctx.fillStyle = "white";
-        this.ctx.font = "bold 20px Arial";
+        this.ctx.font = "bold 15px Arial";
         this.ctx.fillText(labelText + "%", labelX, labelY);
         start_angle += slice_angle;
       }
