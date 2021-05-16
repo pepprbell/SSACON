@@ -7,6 +7,7 @@
     "files": {}
   },
   "installed_plugins": {
+<<<<<<< HEAD
     "cordova-plugin-androidx-adapter": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
@@ -17,6 +18,18 @@
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-plugin-ble-central": {
+=======
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-ble-central": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-custom-config": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-background-mode": {
+>>>>>>> af7387a7fcb5690969d2e02fa1dc53336284e099
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-custom-config": {

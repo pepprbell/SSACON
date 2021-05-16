@@ -3,9 +3,12 @@ let successMsg = document.querySelector(".container-modal-content--success");
 let userName = document.querySelector('input[name="username"]');
 let userPassWord = document.querySelector('input[name="password"]');
 let loginForm = document.getElementById("form");
+let successModal = document.querySelector("#check_mark");
+let failmodal = document.querySelector("#fail_mark");
 const modalLogin = document.getElementById("modal__login");
 const notification = document.getElementById("notification");
 const modal = document.querySelector(".modal");
+
 //HTML에서의 모달 최상위 요소
 const overlay = document.querySelector(".modal__overlay");
 //모달창이 활성화되면 흐린 배경을 표현하는 요소
@@ -47,26 +50,45 @@ function userLogin() {
     .then((result) => {
       console.log(result.status);
       if (result.status) {
-        notification.innerHTML = "환영합니다!";
         modalLogin.innerHTML = "로그인 성공";
+        failmodal.classList.add("modalenabled");
         openModal();
         window.localStorage.setItem("userInfo", JSON.stringify(result));
         setTimeout(() => {
           window.location = "../adminlist/adminlist.html";
         }, 2000);
+        setTimeout(() => {
+          failmodal.classList.remove("modalenabled");
+        }, 2001);
       } else {
         modalLogin.classList.add("red");
         modalLogin.innerHTML = "로그인 실패";
+        successModal.classList.add("modalenabled");
         openModal();
         setTimeout(() => {
           closeModal();
           modalLogin.classList.remove("red");
         }, 2000);
+        setTimeout(() => {
+          successModal.classList.remove("modalenabled");
+        }, 2001);
       }
     })
     .catch((error) => {
+      modalLogin.classList.add("red");
       modalLogin.innerHTML = "로그인 실패";
-      console.log("error", error);
+      successModal.classList.add("modalenabled");
+      console.log(error);
+      openModal();
+      setTimeout(() => {
+        closeModal();
+        modalLogin.classList.remove("red");
+        successModal.classList.remove("modalenabled");
+      }, 2000);
+      setTimeout(() => {
+        successModal.classList.remove("modalenabled");
+      }, 2001);
+
       // loginCheck(!isLogin);
     });
   // }
