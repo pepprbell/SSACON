@@ -11,8 +11,8 @@
 }
 
 .icon {
-    width: 9vw;
-    height:9vw;
+    width: 7vw;
+    height:7vw;
 }
 
 .navbar__backButton {
@@ -22,6 +22,7 @@
     color:#034EA2;
     font-size: 5vw;
     height: 10vw;
+    line-height: 5vw;
 }
 
 .navbar__title {
@@ -39,19 +40,128 @@
     color:#034EA2;
     font-size: 5vw;
     height: 10vw;
+    line-height:5vw;
 }
 
 .sidemenu {
     width: 60vw;
+    max-width: 250px;
     position:fixed;
+    top:0;
+    left:-60vw;
     z-index: 1000;
     height: 100vh;
-    background:black;
-    
+    background: #3f72be;
+    transition: all 0.6s;
 }
 
-.sidemenu__close {
-    position:fixed;
-    width: 2vw;
-    height:2vw;
+.line {
+    width: 90%;
+    margin:auto;
+    /* margin-bottom: 5vh; */
+    height: 2px;
+    background-color: white;
+    opacity: 0.3;
 }
+
+.sidemenu__footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-bottom: 3vh;
+}
+
+.navbar__profile {
+    width: 100%;
+    height: 20vh;
+    /* background-image: url(file:///android_asset/www/template/navbar/icons/profile.png); */
+    display: flex;
+    /* flex-direction: column; */
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.navbar__profile__left {
+    flex-basis: 45%;
+    display:flex;
+    justify-content: center;
+}
+
+.navbar__profile__right {
+    flex-basis: 55%;
+}
+
+.navbar__profile__img {
+    width: 10vh;
+    height: 10vh;
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.navbar__profile__name {
+    font-size: 20px;
+    /* margin-top:3vh; */
+    /* margin-left: 5vw; */
+    text-align:left;
+    color: white;
+}
+
+.navbar__profile__description {
+    font-size:14px;
+    text-align:left;
+    color: white;
+    opacity: 0.5;
+}
+
+.navbar__menu {
+    color: white;
+    margin-left: 7vw;
+    margin-top: 3vh;
+    font-size: 20px;
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+}
+
+.navbar__menu__icon {
+    width: 25px;
+    height: 25px;
+}
+
+.navbar__menu__title {
+    justify-content: space-between;
+    margin-left:10px;
+}
+
+.moveleft {
+    transform: translateX(-60vw);
+}
+
+.moveright {
+    transform: translateX(60vw);
+}
+
+.hide {
+    visibility: hidden;
+}
+
+.black__bg {
+    background-color: black;
+    opacity: 0.8;
+    width:100vw;
+    height:100vh;
+    position: fixed;
+    top:0;
+    right:0;
+    z-index:999;
+}
+
+/* .sidemenu__close {
+    position:fixed;
+    width: 10vw;
+    height:10vw;
+    top:2vw;
+    right:-40vw;
+    text-align: center;
+    font-size: 32px;
+} */
