@@ -286,3 +286,18 @@ monitortitle {
   }
 }
 
+.beaconmoving {
+  width: 5vw;
+  z-index: 2;
+  opacity: 1;
+  animation: jump 1.5s linear infinite;
+}
+
+@keyframes jump {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

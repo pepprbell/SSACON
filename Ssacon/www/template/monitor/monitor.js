@@ -1,5 +1,8 @@
 let beacons = [];
-let beaconStatus = document.querySelector("#BeaconStatus");
+let BeaconStatus = document.querySelector("#BeaconStatus");
+let BeaconWorker = document.querySelector("#BeaconWorker");
+let BeaconAnimation = document.querySelector("#BeaconAnimation");
+let BeaconInfo = document.querySelector("#BeaconInfo");
 const beacon__map = document.querySelector(".Beacon__map");
 beacon__map.addEventListener("click", (event) => {
   // 기존 네모 지우기
@@ -30,9 +33,13 @@ beacon__map.addEventListener("click", (event) => {
       if (beacons[i].beaconId == event.target.dataset.id) {
         // 클릭한 비콘의 정보
         console.log(beacons[i]);
-        let content = document.createElement("div");
-        content.innerText = beacons[i];
-        beaconStatus.appendChild(content);
+        let BeaconMovingImg = document.createElement("img");
+        BeaconMovingImg.src = "../../assets/pics/buildthing.png";
+        BeaconMovingImg.className = "beaconmoving";
+        BeaconAnimation.appendChild(BeaconMovingImg);
+        let data = document.createElement("div");
+        data.innerHTML = beacons[i];
+        content.appendChild(data);
         // 오른쪽에 자료를 넣기
 
         break;
