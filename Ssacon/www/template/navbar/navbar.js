@@ -5,6 +5,10 @@ const navbar__backButton = document.createElement("button")
 const navbar__title = document.createElement("div")
 const navbar__menuButton = document.createElement("button")
 
+const blank = document.createElement("div")
+blank.className = "blank"
+navbar__body.appendChild(blank)
+
 const sidemenu = document.createElement("div")
 sidemenu.classList.add("sidemenu")
 sidemenu.classList.add("hide")

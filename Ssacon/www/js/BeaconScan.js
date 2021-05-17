@@ -2,6 +2,7 @@ const { Manager } = require('buildthing-ble-sdk')
 
 let userInfo = window.localStorage.getItem("userInfo");
 const userID = JSON.parse(userInfo).data.userId;
+const userType = JSON.parse(userInfo).data.admin;
 let beaconList = [];
 
 var beaconScan = {
@@ -53,7 +54,9 @@ var beaconScan = {
         })
       }
       console.log(beaconList);
-      alarm();
+      if (!userType) {
+        alarm();
+      }
     })
    },
 
@@ -146,6 +149,13 @@ function alarm() {
           // console.log(notification)
           window.location = "file:///android_asset/www/template/alarm/alarmdetail.html" + "?id=" + notification.id ;
       })
+      if(!cordova.plugins.backgroundMode.isActive()) {
+        if(items.length == 1) {
+          window.location = "file:///android_asset/www/template/alarm/alarmdetail.html" + "?id=" + items[0].id ;
+        } else if(items.length > 1) {
+          window.location = "file:///android_asset/www/template/alarm/alarmlist.html"
+        }
+      }
     }
     beaconList = []
   })

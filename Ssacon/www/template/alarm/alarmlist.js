@@ -50,154 +50,154 @@ let alarmlist = [
     },
 ]
 
+const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
 const body = document.querySelector('body')
 
-// api 요청을 해서 내 알람 리스트를 받아온다.
-// 걔를 body에 추가해준다.
-// fetch(`http://k4b101.p.ssafy.io/api/alarm/${userID}`, {method:'GET',})
-    // .then((response) => {
-    //     return response.json();
-    // })
-    // .then((result) => {
-    //     alarmlist = result
-    // })
-    // .catch((error) => {
-    //     console.error(error)
-    // })
+// 알림 목록 불러오기
+fetch(`http://k4b101.p.ssafy.io/api/alarm/${userInfo}`, {
+    method: 'GET',
+})
+.then((res) => {
+    return res.json();
+})
+.then((result) => {
+    console.log(result.data);
+    showAlarmList(result.data)
+})
+
 
 // 받아온 알람리스트를 화면에 띄운다.
-alarmlist.forEach((alarm) => {
-    let item = document.createElement("div")
-    let left = document.createElement("div")
-    let right = document.createElement("div")
-
-    left.className="left"
-    right.className="right"
-
-    item.className="alarm"
-    if(alarm.type == "takeover") {
-        let icon = document.createElement("img")
-        icon.src="./icons/info.png"
-        icon.className="icon"
-        left.appendChild(icon)
-
-        let type = document.createElement("div")
-        type.className ="type"
-        type.innerHTML="인수 인계"
-        right.appendChild(type)
-
-        // let info = document.createElement("div")
-        // info.className="info"
-        // info.innerHTML= alarm.line + " " + alarm.equipment
-        // item.appendChild(info)
-        
-        let description = document.createElement("div")
-        description.className ="description"
-        description.innerHTML= alarm.line+ " " + alarm.equipment+ " " + alarm.description + " - " + alarm.writer
-        right.appendChild(description)
-    }
-    else if(alarm.type == "checksheet") {
-        if(alarm.properLocation == alarm.submissionLocation) {
-            // 잘 제출 한 경우
-
+function showAlarmList(alarmlist) {
+    console.log(alarmlist);
+    alarmlist.forEach((alarm) => {
+        let item = document.createElement("div")
+        let left = document.createElement("div")
+        let right = document.createElement("div")
+    
+        left.className="left"
+        right.className="right"
+    
+        item.className="alarm"
+        if(alarm.type == "takeover") {
+            let icon = document.createElement("img")
+            icon.src="./icons/info.png"
+            icon.className="icon"
+            left.appendChild(icon)
+    
+            let type = document.createElement("div")
+            type.className ="type"
+            type.innerHTML="인수 인계"
+            right.appendChild(type)
+    
+            // let info = document.createElement("div")
+            // info.className="info"
+            // info.innerHTML= alarm.line + " " + alarm.equipment
+            // item.appendChild(info)
+            
+            let description = document.createElement("div")
+            description.className ="description"
+            description.innerHTML= alarm.line+ " " + alarm.equipment+ " " + alarm.description + " - " + alarm.writer
+            right.appendChild(description)
+        }
+        else if(alarm.type == "checksheet") {
+            if(alarm.properLocation == alarm.submissionLocation) {
+                // 잘 제출 한 경우
+    
+                let icon = document.createElement("img")
+                icon.src="./icons/success.png"
+                icon.className="icon"
+                left.appendChild(icon)
+    
+                let type = document.createElement("div")
+                type.className ="type"
+                type.innerHTML= "체크시트 제출 확인"
+                right.appendChild(type)
+    
+                let description = document.createElement("div")
+                description.className = "description"
+                description.innerHTML = alarm.submissionLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+                right.appendChild(description)
+            }
+            else {
+                let icon = document.createElement("img")
+                icon.src="./icons/warning.png"
+                icon.className="icon"
+                left.appendChild(icon)
+    
+                let type = document.createElement("div")
+                type.className ="type"
+                type.innerHTML= "잘못된 위치에서 체크시트 제출"
+                right.appendChild(type)
+    
+                let description = document.createElement("div")
+                description.className = "description"
+                description.innerHTML = alarm.submissionLocation + " 위치에서 " + alarm.properLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+                right.appendChild(description)
+            }
+        }
+        else if(alarm.type == "warning") {
+            let icon = document.createElement("img")
+            icon.src="./icons/danger.png"
+            icon.className="icon"
+            left.appendChild(icon)
+    
+            let type = document.createElement("div")
+            type.className ="type"
+            type.innerHTML= "위험"
+            right.appendChild(type)
+    
+            let description = document.createElement("div")
+            description.className ="description"
+            description.innerHTML= alarm.location + " 위치의 " + alarm.equipment + "설비 온도가 적정범위를 벗어났습니다. 점검해주세요" 
+            right.appendChild(description)
+        }
+        else if(alarm.type == "attendance") {
             let icon = document.createElement("img")
             icon.src="./icons/success.png"
             icon.className="icon"
             left.appendChild(icon)
-
+    
             let type = document.createElement("div")
             type.className ="type"
-            type.innerHTML= "체크시트 제출 확인"
+            type.innerHTML= "출석 확인"
             right.appendChild(type)
-
+    
             let description = document.createElement("div")
-            description.className = "description"
-            description.innerHTML = alarm.submissionLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+            description.className ="description"
+            description.innerHTML= alarm.session + " 출석 확인"
             right.appendChild(description)
-        }
-        else {
             
-
+        }
+        else if(alarm.type == "battery") {
             let icon = document.createElement("img")
-            icon.src="./icons/warning.png"
+            icon.src="./icons/danger.png"
             icon.className="icon"
             left.appendChild(icon)
-
+    
             let type = document.createElement("div")
             type.className ="type"
-            type.innerHTML= "잘못된 위치에서 체크시트 제출"
+            type.innerHTML= "비콘 배터리 잔량 부족"
             right.appendChild(type)
-
+    
             let description = document.createElement("div")
-            description.className = "description"
-            description.innerHTML = alarm.submissionLocation + " 위치에서 " + alarm.properLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+            description.className ="description"
+            description.innerHTML= alarm.line+ " " + alarm.location + " 위치 " + 
+            alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + 
+            "%입니다. 점검해주세요." 
             right.appendChild(description)
         }
-    }
-    else if(alarm.type == "warning") {
-        let icon = document.createElement("img")
-        icon.src="./icons/danger.png"
-        icon.className="icon"
-        left.appendChild(icon)
-
-        let type = document.createElement("div")
-        type.className ="type"
-        type.innerHTML= "위험"
-        right.appendChild(type)
-
-        let description = document.createElement("div")
-        description.className ="description"
-        description.innerHTML= alarm.location + " 위치의 " + alarm.equipment + "설비 온도가 적정범위를 벗어났습니다. 점검해주세요" 
-        right.appendChild(description)
-    }
-    else if(alarm.type == "attendance") {
-        let icon = document.createElement("img")
-        icon.src="./icons/success.png"
-        icon.className="icon"
-        left.appendChild(icon)
-
-        let type = document.createElement("div")
-        type.className ="type"
-        type.innerHTML= "출석 확인"
-        right.appendChild(type)
-
-        let description = document.createElement("div")
-        description.className ="description"
-        description.innerHTML= alarm.session + " 출석 확인"
-        right.appendChild(description)
+    
+        let time = document.createElement("div")
+        time.className = "time"
+        time.innerHTML = alarm.time
+        right.appendChild(time)
+    
+        item.appendChild(left)
+        item.appendChild(right)
         
-    }
-    else if(alarm.type == "battery") {
-        let icon = document.createElement("img")
-        icon.src="./icons/danger.png"
-        icon.className="icon"
-        left.appendChild(icon)
-
-        let type = document.createElement("div")
-        type.className ="type"
-        type.innerHTML= "비콘 배터리 잔량 부족"
-        right.appendChild(type)
-
-        let description = document.createElement("div")
-        description.className ="description"
-        description.innerHTML= alarm.line+ " " + alarm.location + " 위치 " + 
-        alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + 
-        "%입니다. 점검해주세요." 
-        right.appendChild(description)
-    }
-
-    let time = document.createElement("div")
-    time.className = "time"
-    time.innerHTML = alarm.time
-    right.appendChild(time)
-
-    item.appendChild(left)
-    item.appendChild(right)
-    
-    item.addEventListener('click', () => {
-        window.location.href="file:///android_asset/www/template/alarm/alarmdetail.html?" + "?id=" + alarm.id ;
+        item.addEventListener('click', () => {
+            window.location.href="file:///android_asset/www/template/alarm/alarmdetail.html?" + "?id=" + alarm.id ;
+        })
+        body.appendChild(item)
     })
-
-    body.appendChild(item)
-    
-})
+}

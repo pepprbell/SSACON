@@ -1,4 +1,4 @@
-@media screen and (min-width: 710px) {
+@media screen and (min-width: 850px) {
   .c-table ul {
     width: 640px;
   }
@@ -7,7 +7,7 @@
   }
 }
 
-@media screen and (max-width: 710px) {
+@media screen and (max-width: 850px) {
   .c-table ul {
     width: 100%;
   }
@@ -26,7 +26,7 @@ header {
   background-color: #fff;
   box-shadow: 0 2px 2px #ddd;
   font-weight: bold;
-  color: #034EA2;
+  color: #034ea2;
   justify-content: space-between;
   align-items: center;
   line-height: 8vh;
@@ -72,7 +72,7 @@ header {
 
 .c-btn {
   all: inherit;
-  background-color: #3F72BE;
+  background-color: #3f72be;
   color: #fff;
   font-weight: bold;
   border-radius: 5px;
