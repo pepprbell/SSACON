@@ -73,6 +73,10 @@ public class MonitoringServiceImpl implements MonitoringService{
             tmp.setYPos(i.getYPos());
             tmp.setEquipment(i.getEquipment());
             tmp.setLine(i.getLine());
+            tmp.setTempMax(i.getTempMax());
+            tmp.setTempMin(i.getTempMin());
+            tmp.setHumiMax(i.getHumidtyMax());
+            tmp.setHumiMin(i.getHumidtyMin());
             finRet.add(tmp);
         }
 

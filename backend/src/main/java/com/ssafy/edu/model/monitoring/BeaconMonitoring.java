@@ -25,6 +25,11 @@ public class BeaconMonitoring {
 
     double yPos;
 
+    double tempMax;
+    double tempMin;
+    double humiMax;
+    double humiMin;
+
     String equipment;
 
     String line;

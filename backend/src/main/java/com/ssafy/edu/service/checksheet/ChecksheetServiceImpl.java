@@ -38,6 +38,7 @@ public class ChecksheetServiceImpl implements ChecksheetService{
         ChecksheetResponse ret = new ChecksheetResponse();
         Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(checksheet.getBeaconId());
         Date now = Date.from(Instant.now());
+        Optional<User> userOpt = userRepository.findByUserId(checksheet.getUserId());
 
         List<User> admins = new ArrayList<>();
 
@@ -48,7 +49,7 @@ public class ChecksheetServiceImpl implements ChecksheetService{
                 admins.add(i);
         }
 
-        if(beaconOpt.isPresent()) {
+        if(beaconOpt.isPresent()&&userOpt.isPresent()) {
             Checksheet tmp = Checksheet.builder()
                     .beaconId(checksheet.getBeaconId())
                     .checkName(checksheet.getCheckName())
@@ -58,11 +59,12 @@ public class ChecksheetServiceImpl implements ChecksheetService{
 
             Alarm aCheck = Alarm.builder()
                     .type("checksheet")
-                    .line(beaconOpt.get().getLine())
-                    .equipment(beaconOpt.get().getEquipment())
+                    .line(checksheet.getLine())
+                    .equipment(checksheet.getEquipment())
                     .submissionBeaconId(beaconOpt.get().getBeaconId())
                     .time(now)
                     .userId(checksheet.getUserId())
+                    .checkUserName(userOpt.get().getUserName())
                     .properBeaconId(checksheet.getProperBeaconId())
                     .receive(false)
                     .build();
@@ -71,11 +73,12 @@ public class ChecksheetServiceImpl implements ChecksheetService{
             for(User i: admins){
                 Alarm admincheck = Alarm.builder()
                         .type("checksheet")
-                        .line(beaconOpt.get().getLine())
-                        .equipment(beaconOpt.get().getEquipment())
+                        .line(checksheet.getLine())
+                        .equipment(checksheet.getEquipment())
                         .submissionBeaconId(beaconOpt.get().getBeaconId())
                         .time(now)
                         .userId(i.getUserId())
+                        .checkUserName(userOpt.get().getUserName())
                         .properBeaconId(checksheet.getProperBeaconId())
                         .receive(false)
                         .build();

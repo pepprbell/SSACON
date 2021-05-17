@@ -40,5 +40,6 @@ public class Alarm {
     private String userId;
     private boolean receive;
     private String beaconId;
+    private String checkUserName;
 
 }

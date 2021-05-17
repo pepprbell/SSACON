@@ -12,4 +12,5 @@ public class ChecksheetRequest {
     String beaconId;
     String properBeaconId;
     String userId;
+    String line;
 }
