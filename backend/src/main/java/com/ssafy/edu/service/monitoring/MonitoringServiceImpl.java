@@ -1,11 +1,11 @@
 package com.ssafy.edu.service.monitoring;
 
-import com.amazonaws.services.dynamodbv2.xspec.M;
 import com.ssafy.edu.model.beacon.Beacon;
 import com.ssafy.edu.model.beacon.BeaconUsers;
 import com.ssafy.edu.model.monitoring.BeaconMonitoring;
 import com.ssafy.edu.model.monitoring.MonitoringResponse;
-import com.ssafy.edu.model.monitoring.WorkerMonitoring;
+import com.ssafy.edu.model.monitoring.MonitoringTotal;
+import com.ssafy.edu.model.monitoring.MonitoringUser;
 import com.ssafy.edu.model.user.User;
 import com.ssafy.edu.repository.beacon.BeaconRepository;
 import com.ssafy.edu.repository.beaconusers.BeaconUsersRepository;
@@ -36,20 +36,28 @@ public class MonitoringServiceImpl implements MonitoringService{
         MonitoringResponse ret = new MonitoringResponse();
         List<Beacon> beacons = beaconRepository.findAll();
         List<BeaconMonitoring> finRet = new ArrayList<>();
+
+        MonitoringTotal fin = new MonitoringTotal();
+
         for(Beacon i: beacons){
             BeaconMonitoring tmp = new BeaconMonitoring();
             List<BeaconUsers> beaconUsers = beaconUsersRepository.findByBeacon(i);
-            List<User> tmp1 = new ArrayList<>();
-            List<User> tmp2 = new ArrayList<>();
+            List<MonitoringUser> tmp1 = new ArrayList<>();
+            List<MonitoringUser> tmp2 = new ArrayList<>();
             if(!beaconUsers.isEmpty()){
                 for(BeaconUsers j: beaconUsers){
                     Date tmptime = j.getUser().getLastSignal();
                     Date timeNow = Date.from(Instant.now());
+                    MonitoringUser tmpuser = new MonitoringUser();
+                    tmpuser.setPartName(j.getUser().getPartName());
+                    tmpuser.setLastSignal(j.getUser().getLastSignal());
+                    tmpuser.setUserId(j.getUser().getUserId());
+                    tmpuser.setUserName(j.getUser().getUserName());
                     if(j.getUser().isLogin()) {
                         if (timeNow.getTime() - tmptime.getTime() < 300000) {
-                            tmp1.add(j.getUser());
+                            tmp1.add(tmpuser);
                         } else{
-                            tmp2.add(j.getUser());
+                            tmp2.add(tmpuser);
                         }
                     }
                 }
@@ -61,18 +69,12 @@ public class MonitoringServiceImpl implements MonitoringService{
             tmp.setBeaconBattery(i.getBeaconBattery());
             tmp.setConnectWorkers(tmp1);
             tmp.setNonConnectWorkers(tmp2);
+            tmp.setEquipment(i.getEquipment());
+            tmp.setLine(i.getLine());
             finRet.add(tmp);
         }
-        ret.data = finRet;
-        ret.status = true;
-        return new ResponseEntity<>(ret, HttpStatus.OK);
-    }
 
-    @Override
-    public ResponseEntity<MonitoringResponse> getWorkerstatus(){
-        MonitoringResponse ret = new MonitoringResponse();
         List<User> allusers = userRepository.findAll();
-        WorkerMonitoring total = new WorkerMonitoring();
 
         List<String> totalworker = new ArrayList<>();
         List<String> onSignal = new ArrayList<>();
@@ -92,11 +94,12 @@ public class MonitoringServiceImpl implements MonitoringService{
             }
         }
 
-        total.setTotalLoginWorker(totalworker);
-        total.setOnSignalWorker(onSignal);
-        total.setNonSignalWorker(nonSignal);
+        fin.setBeacons(finRet);
+        fin.setTotalLoginWorker(totalworker);
+        fin.setOnSignalWorker(onSignal);
+        fin.setNonSignalWorker(nonSignal);
 
-        ret.data = total;
+        ret.data = fin;
         ret.status = true;
         return new ResponseEntity<>(ret, HttpStatus.OK);
     }

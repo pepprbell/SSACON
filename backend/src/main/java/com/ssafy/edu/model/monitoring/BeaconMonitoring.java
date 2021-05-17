@@ -21,7 +21,11 @@ public class BeaconMonitoring {
 
     double beaconBattery;
 
-    List<User> connectWorkers;
+    String equipment;
 
-    List<User> nonConnectWorkers;
+    String line;
+
+    List<MonitoringUser> connectWorkers;
+
+    List<MonitoringUser> nonConnectWorkers;
 }

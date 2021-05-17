@@ -1,7 +1,6 @@
 package com.ssafy.edu.service.alarm;
 
 
-import com.amazonaws.services.apigateway.model.Op;
 import com.ssafy.edu.model.Alarm.Alarm;
 import com.ssafy.edu.model.Alarm.AlarmResponse;
 import com.ssafy.edu.model.Alarm.AlarmResultResponse;
