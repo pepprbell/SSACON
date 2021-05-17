@@ -3,7 +3,7 @@ const alarmId = window.location.href.split("?")[1].split("=")[1]
 const yesButton =  document.querySelector(".check")
 
 yesButton.addEventListener('click', () => {
-    window.location = "./alarmlist.html"
+    window.history.back();
 })
 
 
