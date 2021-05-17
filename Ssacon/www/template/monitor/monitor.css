@@ -1,7 +1,7 @@
 html main {
   margin: 0;
   padding: 0;
-  margin-top: 10vh;
+  /* margin-top: 10vh; */
   width: 100%;
   height: 90%;
 }
@@ -203,6 +203,17 @@ monitortitle {
 
 /* 모니터링 화면 2안 - 맵 */
 
+.BeaconList__lineName {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5vw;
+  font-style: bold;
+  color: #3f72be;
+}
+
 .Beacon__map {
   background-image: url("./icons/blueprint2.png");
   background-repeat: no-repeat;
@@ -210,7 +221,7 @@ monitortitle {
   /* background-position: center; */
   margin: auto;
   width: 95%;
-  height: 80%;
+  height: 90%;
   position: relative;
   border-radius: 20px;
   /* border: 1px solid #3f72be; */
