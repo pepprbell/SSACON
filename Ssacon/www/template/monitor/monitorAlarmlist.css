@@ -71,9 +71,10 @@
   justify-content: space-between;
 }
 .time {
-  margin-top: 1%;
+  margin-right: 1vw;
   text-align: left;
-  font-size: 1.1vw;
+  font-size: 1vw;
+  font-weight: bold;
   color: yellow;
   animation-name: timechange;
   /* animation-duration: 1s; */

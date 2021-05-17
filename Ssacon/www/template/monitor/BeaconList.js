@@ -62,6 +62,7 @@ function getData() {
       });
     })
     .then((data) => {
+      console.log("data : ", data);
       getBeacon(data);
     })
     .catch((error) => console.log("error", error));
@@ -78,6 +79,7 @@ function getBeacon(data) {
 }
 
 function renderBeacon() {
+  console.log(1);
   document.getElementById("BeaconList").innerHTML = "";
   for (let i = 0; i < BeaconList.length; i++) {
     let card = document.createElement("div");
