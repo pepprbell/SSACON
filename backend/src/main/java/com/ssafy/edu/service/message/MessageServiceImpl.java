@@ -101,7 +101,7 @@ public class MessageServiceImpl implements MessageService{
             List<BeaconUsers> beaconUsers = beaconUsersRepository.findByUser(userOpt.get());
             for(BeaconUsers i: beaconUsers){
                 Beacon tmpbeacon = i.getBeacon();
-                if(now.getTime() - userOpt.get().getLastSignal().getTime() < 10000) {
+                if(now.getTime() - userOpt.get().getLastSignal().getTime() < 120000) {
                     MessageBeacon tmpMb = new MessageBeacon();
                     tmpMb.setBeaconName(tmpbeacon.getBeaconName());
                     tmpMb.setBeaconId(tmpbeacon.getBeaconId());
