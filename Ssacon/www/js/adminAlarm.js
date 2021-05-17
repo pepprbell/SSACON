@@ -1,97 +1,24 @@
-const { Manager } = require('buildthing-ble-sdk')
+document.addEventListener("deviceready", onDeviceReady, false);
 
-let userInfo = window.localStorage.getItem("userInfo");
-const userID = JSON.parse(userInfo).data.userId;
-const userType = JSON.parse(userInfo).data.admin;
-let beaconList = [];
-
-var beaconScan = {
-   initialize: function() {
-     this.bleManager = null
-     this.bindEvents();
-   },
-
-   bindEvents: function() {
-       document.addEventListener('deviceready', this.onDeviceReady.bind(this), false)
-      //  document.getElementById("startScanBtn").addEventListener("click", this.startScan.bind(this))
-      //  document.getElementById("stopScanBtn").addEventListener("click", this.stopScan.bind(this))
-   },
-
-   onDeviceReady: function() {
-    this.bleManager = new Manager()
-    this.bleManager.on('stateChange', function (state) {
-      console.log(state)
-      if(state === 'poweredOn') {
-        this.bleManager.setBackgroundBetweenScanPeriod(0)
-        this.bleManager.setBackgroundScanPeriod(2000)
-        this.bleManager.setForegroundBetweenScanPeriod(0)
-        this.bleManager.setForegroundScanPeriod(2000)
-        this.bleManager.updateScanPeriod()
-        this.bleManager.startScan()
-      }
-      else {
-         alert('블루투스 기능이 꺼져 있습니다.')
-      }
-    }.bind(this))
-
-    // beacon discover
-    this.bleManager.on('discover', function(beacon) {
-      if (beacon.sensors.length === 0) {
-        beaconList.push({
-            beacon_id: beacon.id,
-            beacon_name: beacon.name,
-            temperature: 0,
-            humidity: 0,
-            vbatt: beacon.vbatt.percentage.value
-        })
-      } else {
-        beaconList.push({
-            beacon_id: beacon.id,
-            beacon_name: beacon.name,
-            temperature: beacon.sensors[0].data.temperature.value,
-            humidity: beacon.sensors[0].data.humidity.value,
-            vbatt: beacon.vbatt.percentage.value
-        })
-      }
-      console.log(beaconList);
-      alarm();
-    })
-   },
-
-   stopScan: function() {
-    this.bleManager.stopScan()
-    },
-
-   startScan: function() {
-     if(this.isBlePoweredOn === true) {
-        this.bleManager.setBackgroundBetweenScanPeriod(0)
-        this.bleManager.setBackgroundScanPeriod(2000)
-        this.bleManager.setForegroundBetweenScanPeriod(0)
-        this.bleManager.setForegroundScanPeriod(2000)
-        this.bleManager.updateScanPeriod()
-        this.bleManager.startScan()
-     }
-     else {
-        alert('블루투스 기능이 꺼져 있습니다.')
-     }
-   },
-};
-
-
+// device APIs are available
+//
+function onDeviceReady() {
+  setInterval(() => {
+    alarm()
+  }, 3000)
+}
 
 function alarm() {
-  fetch(`http://k4b101.p.ssafy.io/api/beacon/scanInfo/${userID}`, {
-    method:'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(beaconList),
+  console.log('관리자 알림');
+  const userID = JSON.parse(window.localStorage.getItem("userInfo")).data.userId
+  fetch(`http://k4b101.p.ssafy.io/api/alarm/admin/${userID}`, {
+    method:'GET',
   })
   .then((response) => { 
       return response.json();
   })
   .then((result) => {
-    console.log('요청하고 있음',result.data);
+    console.log(result.data);
     let alarmlist = result.data
     let items = []
     if(alarmlist) {
@@ -162,6 +89,3 @@ function alarm() {
     console.error(error)
   })
 }
-
-beaconScan.initialize()
-window.beaconScan = beaconScan // 디버그 용

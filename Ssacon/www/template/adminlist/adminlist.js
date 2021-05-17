@@ -19,7 +19,7 @@ function onBackKeyDown() {
   }, 1000);
 }
 function moveCheckSheet() {
-  window.location = "../checklist/checklist.html";
+  window.location = "../sheetlist/sheetlist.html";
 }
 function moveCheckSheetList() {
   window.location = "../seeChecklist/seeChecklist.html";

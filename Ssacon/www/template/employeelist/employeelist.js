@@ -23,7 +23,7 @@ function moveWorkerAlarm() {
 
 function moveWorkerCheckSheet() {
   console.log(WorkerCheckSheet);
-  window.location = "../checklist/checklist.html";
+  window.location = "../sheetlist/sheetlist.html";
 }
 function moveWorkerMessage() {
   window.location = "../message/message.html";
