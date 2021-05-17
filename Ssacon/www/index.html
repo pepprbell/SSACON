@@ -16,20 +16,21 @@
 
         <script>
             window.addEventListener("load", function(event) {
-                console.log("All resources finished loading!");
-                const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
-                console.log(userInfo);
-                if (userInfo) {
-                    if (userInfo.admin === true) {
-                        console.log('true');
-                        window.location = "./template/adminlist/adminlist.html";
-                    } else {
-                        console.log('false');
-                        window.location = "./template/employeelist/employeelist.html";
-                    }
-                } else {
-                    window.location = "./template/login/login.html";
-                }
+                // console.log("All resources finished loading!");
+                // const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+                // console.log(userInfo);
+                // if (userInfo) {
+                //     if (userInfo.data.admin) {
+                //         console.log('true');
+                //         window.location = "./template/adminlist/adminlist.html";
+                //     } else {
+                //         console.log('false');
+                //         window.location = "./template/employeelist/employeelist.html";
+                //     }
+                // } else {
+                //     window.location = "./template/login/login.html";
+                // }
+                window.location = "./template/login/login.html";
             });
         </script>
     </body>
