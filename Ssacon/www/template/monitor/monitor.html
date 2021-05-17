@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../navbar/navbar.css">
     <link rel="stylesheet" href="./monitor.css" />
     <link rel="stylesheet" href="./monitorAlarmlist.css" />
     <title>Monitor</title>
   </head>
   <body>
-    <header class="header"><h2>Monitor</h2></header>
+    <!-- <header class="header"><h2>Monitor</h2></header> -->
     <main>
       <div class="leftlist">
         <div class="leftup">
@@ -22,23 +23,10 @@
         <div id="alarmList" class="alarmlist"></div>
       </div>
       <div class="BeaconList">
-        <h1>비콘 목록</h1>
-        <div class="Beacon__list">
-          <div class="Beacon__card">
-            <div class="Beacon__card__header">
-              <img src="file:///android_asset/www/image/beacon_logo.jpg" class="beacon__img">
-              <div class="Beacon__card__info">
-                <div class="Beacon__card__line">라인1</div>
-                <div class="Beacon__card__equipment">설비3</div>
-              </div>
-            </div>
-            <div class="Beacon__card__body">
-              <div class="Beacon__card__worker"></div>
-              <div class="Beacon__card__worker"></div>
-              <div class="Beacon__card__worker"></div>
-              <div class="Beacon__card__worker"></div>
-            </div>
-          </div>
+        <h2>생산라인 현황</h2>
+        <div class="Beacon__map">
+          
+          
         </div>
       </div>
       <div class="BeaconStatus">
@@ -57,8 +45,10 @@
       </div>
     </main>
     <footer></footer>
+    <script src="../navbar/navbar.js"></script>
     <script src="./BeaconList.js"></script>
     <script src="./monitorAlarmlist.js"></script>
+    <script src="./monitor.js"></script>
     <script type="text/javascript"></script>
   </body>
 </html>
