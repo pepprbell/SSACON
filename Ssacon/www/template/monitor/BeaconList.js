@@ -149,10 +149,7 @@ function drawPieSlice(
   ctx.closePath();
   ctx.fill();
 }
-var myVinyls = {
-  "현재 근무": 10,
-  "자리 이탈": 14,
-};
+
 // slice angle = 2 * PI * category value / total value
 var Piechart = function (options) {
   this.options = options;
@@ -216,7 +213,7 @@ var Piechart = function (options) {
 
         var labelText = Math.round(val);
         this.ctx.fillStyle = "white";
-        this.ctx.font = "bold 15px Arial";
+        this.ctx.font = "bold 1vw Arial";
         this.ctx.fillText(labelText + "명", labelX, labelY);
         start_angle += slice_angle;
       }
@@ -237,7 +234,7 @@ var Piechart = function (options) {
         var legendHTML = "";
         for (categ in this.options.data) {
           legendHTML +=
-            "<span style='display:inline-block;width:20px; height:20px; border-radius:100px;  background-color:" +
+            "<span style='display:inline-block;width:20px; height:20px; border-radius:100px; font-size : 1vw; background-color:" +
             this.colors[color_index++] +
             ";'>&nbsp;</span> " +
             categ;

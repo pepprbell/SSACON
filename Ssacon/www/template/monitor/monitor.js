@@ -152,16 +152,21 @@ function Monitor() {
         .then((response) => response.json())
         .then((result) => {
           alarmlist = result.data;
-        //   console.log("alarm:", alarmlist);
           alarmlist.forEach((alarm) => {
             let item = document.createElement("div");
             let left = document.createElement("div");
             let right = document.createElement("div");
-
+            let right_title = document.createElement("div");
+            right_title.className = "right_title";
             left.className = "left";
             right.className = "right";
-
             item.className = "alarm";
+            let time = document.createElement("div");
+            let timedifference = document.createElement("div");
+            time.className = "time";
+            timedifference.className = "timechange";
+            let timebewteen = timeForToday(alarm.time);
+            time.innerHTML = timebewteen;
             if (alarm.type == "takeover") {
               let icon = document.createElement("img");
               icon.src = "../alarm/icons/info.png";
@@ -171,7 +176,9 @@ function Monitor() {
               let type = document.createElement("div");
               type.className = "type";
               type.innerHTML = "인수 인계";
-              right.appendChild(type);
+              right_title.appendChild(type);
+              right_title.appendChild(time);
+              right.appendChild(right_title);
 
               // let info = document.createElement("div")
               // info.className="info"
@@ -201,7 +208,9 @@ function Monitor() {
                 let type = document.createElement("div");
                 type.className = "type";
                 type.innerHTML = "체크시트 제출 확인";
-                right.appendChild(type);
+                right_title.appendChild(type);
+                right_title.appendChild(time);
+                right.appendChild(right_title);
 
                 let description = document.createElement("div");
                 description.className = "description";
@@ -220,7 +229,9 @@ function Monitor() {
                 let type = document.createElement("div");
                 type.className = "type";
                 type.innerHTML = "잘못된 위치에서 체크시트 제출";
-                right.appendChild(type);
+                right_title.appendChild(type);
+                right_title.appendChild(time);
+                right.appendChild(right_title);
 
                 let description = document.createElement("div");
                 description.className = "description";
@@ -242,7 +253,9 @@ function Monitor() {
               let type = document.createElement("div");
               type.className = "type";
               type.innerHTML = "위험";
-              right.appendChild(type);
+              right_title.appendChild(type);
+              right_title.appendChild(time);
+              right.appendChild(right_title);
 
               let description = document.createElement("div");
               description.className = "description";
@@ -250,7 +263,7 @@ function Monitor() {
                 alarm.location +
                 " 위치의 " +
                 alarm.equipment +
-                "설비 온도가 적정범위를 벗어났습니다. 점검해주세요";
+                "설비 온도가 적정범위를 벗어났습니다!";
               right.appendChild(description);
             } else if (alarm.type == "attendance") {
               let icon = document.createElement("img");
@@ -261,7 +274,9 @@ function Monitor() {
               let type = document.createElement("div");
               type.className = "type";
               type.innerHTML = "출석 확인";
-              right.appendChild(type);
+              right_title.appendChild(type);
+              right_title.appendChild(time);
+              right.appendChild(right_title);
 
               let description = document.createElement("div");
               description.className = "description";
@@ -276,8 +291,9 @@ function Monitor() {
               let type = document.createElement("div");
               type.className = "type";
               type.innerHTML = "비콘 배터리 잔량 부족";
-              right.appendChild(type);
-
+              right_title.appendChild(type);
+              right_title.appendChild(time);
+              right.appendChild(right_title);
               let description = document.createElement("div");
               description.className = "description";
               description.innerHTML =
@@ -288,21 +304,9 @@ function Monitor() {
                 alarm.equipment +
                 " 비콘 배터리 잔량이 " +
                 alarm.battery +
-                "%입니다. 점검해주세요.";
+                "%입니다.";
               right.appendChild(description);
             }
-
-            let time = document.createElement("div");
-            let timedifference = document.createElement("div");
-            time.className = "time";
-            timedifference.className = "timechange";
-            // time.innerHTML = alarm.time;
-
-            let timebewteen = timeForToday(alarm.time);
-            time.innerHTML = timebewteen;
-            // left.innerText = timebewteen;
-            right.appendChild(time);
-            // left.appendChild(timebewteen);
             item.appendChild(left);
             item.appendChild(right);
 
