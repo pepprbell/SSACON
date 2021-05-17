@@ -26,15 +26,15 @@ function getData() {
         legend: myLegend,
       });
       myDougnutChart.draw();
-      total = document.getElementById("total");
-      let totalHTML = "";
-      totalHTML +=
-        "<div><span style='display:inline-block;width:20px;background-color: black" +
-        ";'>&nbsp;</span> " +
-        " TOTAL " +
-        `${totalLoginWorker} 명` +
-        "</div>";
-      total.innerHTML = totalHTML;
+      // total = document.getElementById("total");
+      // let totalHTML = "";
+      // totalHTML +=
+      //   "<div><span style='display:inline-block;width:20px;background-color: black" +
+      //   ";'>&nbsp;</span> " +
+      //   " TOTAL " +
+      //   `${totalLoginWorker} 명` +
+      //   "</div>";
+      // total.innerHTML = totalHTML;
       // ----------------------------------------------------------pit chart area end
       beaconAll.forEach.call(beaconAll, function (beacon) {
         let item = document.createElement("ul");
@@ -214,10 +214,10 @@ var Piechart = function (options) {
             (offset + pieRadius / 2) * Math.sin(start_angle + slice_angle / 2);
         }
 
-        var labelText = Math.round((100 * val) / total_value);
+        var labelText = Math.round(val);
         this.ctx.fillStyle = "white";
         this.ctx.font = "bold 15px Arial";
-        this.ctx.fillText(labelText + "%", labelX, labelY);
+        this.ctx.fillText(labelText + "명", labelX, labelY);
         start_angle += slice_angle;
       }
       drawPieSlice(
@@ -232,19 +232,18 @@ var Piechart = function (options) {
       );
       if (this.options.legend) {
         color_index = 0;
+        let legenddiv = document.createElement("div");
+        legenddiv.className = "mylegend";
         var legendHTML = "";
         for (categ in this.options.data) {
           legendHTML +=
-            "<div><span style='display:inline-block;width:20px;background-color:" +
+            "<span style='display:inline-block;width:20px; height:20px; border-radius:100px;  background-color:" +
             this.colors[color_index++] +
             ";'>&nbsp;</span> " +
-            categ +
-            `  ` +
-            this.options.data[categ] +
-            "명 " +
-            "</div>";
+            categ;
         }
-        this.options.legend.innerHTML = legendHTML;
+        legenddiv.innerHTML = legendHTML;
+        this.options.legend.appendChild(legenddiv);
       }
     }
   };

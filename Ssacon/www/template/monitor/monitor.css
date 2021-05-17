@@ -1,7 +1,7 @@
 html main {
   margin: 0;
   padding: 0;
-  margin-top:10%;
+  margin-top: 10%;
   width: 100%;
   height: 90%;
 }
@@ -106,33 +106,45 @@ main {
 .subm-batt {
   width: 20%;
 }
-
+.mylegend {
+  display: flex;
+  justify-content: space-evenly;
+}
 .donut {
-  width: 15vw;
-  height: 15vh;
+  width: 100%;
+  height: 60%;
+  margin: 10% 0%;
 }
 .donutinfo {
   width: 100%;
-  height: 30%;
+  height: 10%;
 }
 .leftlist {
-  margin-top: 10vh;
   width: 20%;
   height: 90vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .leftup {
-  width: 100%;
+  width: 85%;
   height: 30vh;
   display: block;
+  justify-content: center;
+
   background-color: white;
   border-radius: 10px;
-  margin: 1%;
+  /* margin: 10px 0%; */
 }
-
+.mg-top {
+  margin-top: 10px;
+}
 monitortitle {
   font-size: medium;
+  font-weight: bold;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   color: white;
   background: #1488cc; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -146,9 +158,11 @@ monitortitle {
     #1488cc
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-radius: 10px;
-  margin: 0 5%;
-  padding: 0;
-  text-align: center;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px 20px;
+  /* text-align: center; */
 }
 
 /* 모니터링 화면 1안 - 비콘 목록 나열 */
@@ -199,11 +213,11 @@ monitortitle {
 /* 모니터링 화면 2안 - 맵 */
 
 .Beacon__map {
-  background-image: url("./icons/blueprint.png") ;
+  background-image: url("./icons/blueprint.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   /* background-position: center; */
-  margin:auto;
+  margin: auto;
   width: 95%;
   height: 80%;
   position: relative;
@@ -214,7 +228,7 @@ monitortitle {
 .Beacon__img {
   width: 40px;
   height: 40px;
-  position:absolute;
+  position: absolute;
 }
 
 .Beacon__item {
@@ -233,12 +247,11 @@ monitortitle {
   /* border-radius: 50%; */
   position: absolute;
   /* background-color: skyblue; */
- 
 }
 
 .Beacon__worker__img {
   width: 15px;
-  height:15px;
+  height: 15px;
 }
 
 /* 
@@ -253,9 +266,9 @@ monitortitle {
 
 @keyframes beacon {
   0% {
-    box-shadow: 0 0 0 0 #afeeee
+    box-shadow: 0 0 0 0 #afeeee;
   }
   100% {
-    box-shadow: 0 0 0 2rem transparent
+    box-shadow: 0 0 0 2rem transparent;
   }
 }
