@@ -178,9 +178,11 @@ var beaconAdd = {
     // Connection
     const TxPower = [false, '-20', '-16', '-12', '-8', '-4', '0', '4']
     var connection = new Connection(beaconAddInfo);
+    console.log(connection || null);
     connection.connect()
     connection.on('connect', async function (beaconAddInfo) {
-      await connection.changeName(values.equipment)
+      document.querySelector('.loading_bg').classList.remove('no_loading_bg')
+      // await connection.changeName(values.equipment)
       await connection.changeTxPower(TxPower.indexOf(values.signalPower))
       await connection.changeSensorInterval(values.sensing)
       await connection.disconnect() // mode 변경 요청 이후, 연결 해제 (연결이 해제 되어야만 다시 스캔이 됩니다.)
@@ -241,6 +243,7 @@ var beaconAdd = {
       console.log('disconnect', isTimeout, errorMessage)
       console.log('isConnected', connection.isConnected)
     })
+    document.querySelector('.loading_bg').classList.add('no_loading_bg')
     document.getElementById('beacon_c_container').innerHTML = ''
     this.bleManager.startScan()
   },
@@ -284,7 +287,7 @@ function createNewBeaconCard(beacon, beaconName) {
   const cardContainerContentCreate = `
       <div class="top">
         <div class="left">
-          <img src="file:///android_asset/www/image/beacon.png" alt="비콘이미지">
+          <img class="beacon_img"  src="file:///android_asset/www/image/beacon.png" alt="비콘이미지">
         </div>
 
         <div class="center">
@@ -322,7 +325,7 @@ function createNewBeaconCard(beacon, beaconName) {
   const cardContainerContentUpdate = `
       <div class="top">
         <div class="left">
-          <img src="file:///android_asset/www/image/beacon.png" alt="비콘이미지">
+          <img class="beacon_img"  src="file:///android_asset/www/image/beacon.png" alt="비콘이미지">
         </div>
 
         <div class="center">
@@ -339,6 +342,7 @@ function createNewBeaconCard(beacon, beaconName) {
             <span class="beacon_opthion_name">센싱 주기</span>
             <span id="${beacon.id}_sensing" class="beacon_opthion_value">${beacon.intervalOfSensing.value}sec</span>
           </div>
+          <br>
         </div>
 
         <div class="right">
