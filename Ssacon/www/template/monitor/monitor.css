@@ -1,7 +1,7 @@
 html main {
   margin: 0;
   padding: 0;
-  margin-top:10%;
+  /* margin-top: 10vh; */
   width: 100%;
   height: 90%;
 }
@@ -107,47 +107,53 @@ main {
   width: 20%;
 }
 
+.mylegend {
+  display: flex;
+  justify-content: space-evenly;
+}
 .donut {
-  width: 15vw;
-  height: 15vh;
+  width: 100%;
+  height: 60%;
+  margin: 10% 0%;
 }
 .donutinfo {
   width: 100%;
-  height: 30%;
+  height: 10%;
 }
 .leftlist {
-  margin-top: 10vh;
   width: 20%;
   height: 90vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .leftup {
-  width: 100%;
+  width: 85%;
   height: 30vh;
   display: block;
+  justify-content: center;
+  box-shadow: 2px 2px 2px 2px #e2e2e2;
+
   background-color: white;
   border-radius: 10px;
-  margin: 1%;
+  /* margin: 10px 0%; */
 }
-
-h2 {
+.mg-top {
+  margin-top: 10px;
+}
+monitortitle {
+  font-size: small;
+  font-weight: bold;
+  width: 98%;
+  display: flex;
+  justify-content: center;
   color: white;
-  background: #1488cc; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #2b32b2,
-    #1488cc
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #2b32b2,
-    #1488cc
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #3f72be; /* fallback for old browsers */
   border-radius: 10px;
-  margin: 0;
-  padding: 0;
-  text-align: center;
+  margin: 10px auto;
+
+  padding: 10px 20px;
+  /* text-align: center; */
 }
 
 /* 모니터링 화면 1안 - 비콘 목록 나열 */
@@ -197,14 +203,25 @@ h2 {
 
 /* 모니터링 화면 2안 - 맵 */
 
+.BeaconList__lineName {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5vw;
+  font-style: bold;
+  color: #3f72be;
+}
+
 .Beacon__map {
-  background-image: url("./icons/blueprint.png") ;
+  background-image: url("./icons/blueprint2.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   /* background-position: center; */
-  margin:auto;
+  margin: auto;
   width: 95%;
-  height: 80%;
+  height: 90%;
   position: relative;
   border-radius: 20px;
   /* border: 1px solid #3f72be; */
@@ -213,31 +230,43 @@ h2 {
 .Beacon__img {
   width: 40px;
   height: 40px;
-  position:absolute;
+  position: absolute;
 }
 
 .Beacon__item {
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background-color: #3f72be;
   position: absolute;
   animation-name: beacon;
-  animation: beacon 3s infinite;
+  animation: beacon 2s infinite;
+}
+
+.bad {
+  background-color: red;
+  animation-name: bad__beacon;
+  animation: bad__beacon 2s infinite;
 }
 
 .Beacon__worker {
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 25px;
   /* border-radius: 50%; */
   position: absolute;
   /* background-color: skyblue; */
- 
 }
 
 .Beacon__worker__img {
   width: 15px;
-  height:15px;
+  height: 15px;
+}
+
+.picked_area {
+  position: absolute;
+  border: 1px solid skyblue;
+  background-color: skyblue;
+  opacity: 0.4;
 }
 
 /* 
@@ -252,9 +281,34 @@ h2 {
 
 @keyframes beacon {
   0% {
-    box-shadow: 0 0 0 0 #afeeee
+    box-shadow: 0 0 0 0 #afeeee;
   }
   100% {
-    box-shadow: 0 0 0 2rem transparent
+    box-shadow: 0 0 0 4rem transparent;
+  }
+}
+
+@keyframes bad__beacon {
+  0% {
+    box-shadow: 0 0 0 0 red;
+  }
+  100% {
+    box-shadow: 0 0 0 4rem transparent;
+  }
+}
+
+.beaconmoving {
+  width: 5vw;
+  z-index: 2;
+  opacity: 1;
+  animation: jump 1.5s linear infinite;
+}
+
+@keyframes jump {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

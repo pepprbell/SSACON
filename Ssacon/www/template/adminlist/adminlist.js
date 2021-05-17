@@ -22,7 +22,7 @@ function moveCheckSheet() {
   window.location = "../sheetlist/sheetlist.html";
 }
 function moveCheckSheetList() {
-  window.location = "../seeChecklist/seeChecklist.html";
+  window.location = "../sheetlist/sheetlist.html";
 }
 function moveBeaconMornitor() {
   window.location = "../monitor/monitor.html";
