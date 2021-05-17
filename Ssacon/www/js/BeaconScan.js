@@ -91,7 +91,7 @@ function alarm() {
       return response.json();
   })
   .then((result) => {
-    console.log('요청하고 있음',result.data);
+    console.log('요청하고 있음', result.data);
     let alarmlist = result.data
     let items = []
     if(alarmlist) {
@@ -118,12 +118,12 @@ function alarm() {
         }
         else if(alarm.type == "warning") {
             title = "위험"
-            description = alarm.beaconId + " 위치의 " + alarm.equipment + "설비 온도가 적정범위를 벗어났습니다. 점검해주세요" 
+            description = alarm.line + " 라인 " + alarm.equipment + "설비 온도가 적정범위를 벗어났습니다. 점검해주세요" 
             icon="res://danger.png"
         }
         else if(alarm.type == "attendance") {
-            title= "출석 확인"
-            description = alarm.session + " 출석 확인"
+            title= "교육장 출석"
+            description = alarm.session + " 출석 완료"
             icon="res://success.png"
         }
         else if(alarm.type == "battery") {

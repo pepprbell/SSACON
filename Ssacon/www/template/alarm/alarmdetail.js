@@ -1,4 +1,5 @@
 const content = document.querySelector(".content")
+console.log(window.location);
 const alarmId = window.location.href.split("?")[1].split("=")[1]
 const yesButton =  document.querySelector(".check")
 
@@ -46,7 +47,7 @@ function alarmSep(alarm) {
         content.appendChild(description)
     }
     else if(alarm.type == "checksheet") {
-        if(alarm.equipment == alarm.submission) {
+        if(alarm.properBeaconId == alarm.submissionBeaconId) {
             // 잘 제출 한 경우
             let type = document.createElement("div")
             type.className ="type"
@@ -55,7 +56,7 @@ function alarmSep(alarm) {
     
             let description = document.createElement("div")
             description.className = "description"
-            description.innerHTML = alarm.submissionLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+            description.innerHTML = alarm.submissionBeaconId + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
             content.appendChild(description)
         }
         else {
@@ -69,7 +70,7 @@ function alarmSep(alarm) {
     
             let description = document.createElement("div")
             description.className = "description"
-            description.innerHTML = alarm.submissionLocation + " 위치에서 " + alarm.properLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+            description.innerHTML = alarm.submissionBeaconId + " 위치에서 " + alarm.properBeaconId + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
             content.appendChild(description)
         }
     }
@@ -116,9 +117,24 @@ function alarmSep(alarm) {
     
     let time = document.createElement("div")
     time.className = "time"
-    time.innerHTML = alarm.time
+    time.innerHTML = timeForToday(alarm.time)
     content.appendChild(time)
 }
 
+function timeForToday(value) {
+    const today = new Date();
+    const timeValue = new Date(value);
 
+    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+    if (betweenTime < 1) return "방금전";
+    if (betweenTime < 60) return `${betweenTime}분전`;
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) return `${betweenTimeHour}시간전`;
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) return `${betweenTimeDay}일전`;
+
+    return `${Math.floor(betweenTimeDay / 365)}년전`;
+  }
 
