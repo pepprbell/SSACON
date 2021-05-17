@@ -146,6 +146,13 @@ function alarm() {
           // console.log(notification)
           window.location = "file:///android_asset/www/template/alarm/alarmdetail.html" + "?id=" + notification.id ;
       })
+      if(!cordova.plugins.backgroundMode.isActive()) {
+        if(items.length == 1) {
+          window.location = "file:///android_asset/www/template/alarm/alarmdetail.html" + "?id=" + items[0].id ;
+        } else if(items.length > 1) {
+          window.location = "file:///android_asset/www/template/alarm/alarmlist.html"
+        }
+      }
     }
     beaconList = []
   })
