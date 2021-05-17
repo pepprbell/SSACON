@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="title">
-    <div class="back_btn" id="beaconBackBtt"><</div>
+    <div class="back_btn" id="beaconBackBtt"></div>
     <div class="title_content">
       <div class="title_content_1">비콘 리스트</div>
       <div class="title_content_2">
@@ -22,15 +22,14 @@
 
 
   <div id="beacon_c_container">
-    <div class="beacon_card_body">
+    <!-- <div class="beacon_card_body">
       <div class="top">
         <div class="left">
-          <div class="beacon_img"></div>
-          <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
+          <img class="beacon_img" src="../../image/beacon.png" alt="비콘이미지">
         </div>
 
         <div class="center">
-          <div id="${beacon.id}name" class="beacon_title">장비3</div>
+          <div id="${beacon.id}name" class="beacon_title">TAB용접기</div>
           <div>
             <span class="beacon_opthion_name">RSSI</span>
             <span id="${beacon.id}_rssi" class="beacon_opthion_value">-4dBm</span>
@@ -59,8 +58,8 @@
       <div class="bottom">
         <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
       </div>
-    </div>
-
+    </div> -->
+<!-- 
     <div class="beacon_card_body">
       <div class="top">
         <div class="left">
@@ -191,7 +190,7 @@
       <div class="bottom">
         <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
       </div>
-    </div>
+    </div> -->
 
   </div>
     
@@ -201,8 +200,8 @@
 
   <!-- <div class="modal_body modal_body_hide"> -->
   <div class="modal_body">
-    <!-- <div class="modal-bg" id="modal_container"> -->
-    <div class="modal-bg bg-active" id="modal_container">
+    <div class="modal-bg" id="modal_container">
+    <!-- <div class="modal-bg bg-active" id="modal_container"> -->
       <div class="title title-modal">
         <button type="button" class="modal-close" id="beaconModalClose">x</button>
         

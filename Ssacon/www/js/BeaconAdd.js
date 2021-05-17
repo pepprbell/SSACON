@@ -4,7 +4,7 @@ let beaconScanList = {};
 let beaconListDBfront = [];
 let beaconAddInfo = null;
 let beaconUpdateInfo = null;
-let beaconAllInfo = [];
+let beaconAllInfo = {};
 let lineEquipment = {};
 
 var beaconAdd = {
@@ -30,10 +30,13 @@ var beaconAdd = {
       return response.json();
     })
     .then((result) => {
-      beaconListDBfront = result.data.beacon_id
-      beaconAllInfo = result.data.beacon_info
-      lineEquipment = result.data.line_equipment
       console.log(result.data);
+      beaconListDBfront = result.data.beacon_id
+      lineEquipment = result.data.line_equipment
+      const beaconDB = result.data.beacon_info
+      beaconDB.forEach(e => {
+        beaconAllInfo[e.beacon_id] = e
+      });
     })
     .catch((error) => {
         console.error(error)
@@ -66,7 +69,11 @@ var beaconAdd = {
       } else {
         // 처음 스캔되면 dom create
         console.log('처음추가');
-        createNewBeaconCard(beacon)
+        if (beaconAllInfo[beacon.id]) {
+          createNewBeaconCard(beacon, beaconAllInfo[beacon.id].equipment)
+        } else {
+          createNewBeaconCard(beacon, '')
+        }
       }
 
       // 오래동안 upgrade 못하면 dom, object delete 로직
@@ -108,7 +115,7 @@ var beaconAdd = {
     // modal close
     const modalBg = document.querySelector('.modal-bg')
     modalBg.classList.remove('bg-active')
-    document.querySelector('.modal_body').classList.remove('.modal_body_hide')
+    document.querySelector('.modal_body').classList.remove('modal_body_hide')
     this.bleManager.startScan()
    },
 
@@ -172,7 +179,6 @@ var beaconAdd = {
     const TxPower = [false, '-20', '-16', '-12', '-8', '-4', '0', '4']
     var connection = new Connection(beaconAddInfo);
     connection.connect()
-
     connection.on('connect', async function (beaconAddInfo) {
       await connection.changeName(values.equipment)
       await connection.changeTxPower(TxPower.indexOf(values.signalPower))
@@ -193,16 +199,14 @@ var beaconAdd = {
         .then((result) => {
           console.log(result.data);
           beaconListDBfront.push(values.beacon_id)
-          beaconAllInfo.push(values)
-          document.getElementById(`${values.beacon_id}`).remove()
+          beaconAllInfo[values.beacon_id] = values
+          // document.getElementById(`${values.beacon_id}`).remove()
           const btn = document.getElementById('cu_btn');
           btn.className = 'nothing'
           beaconAddInfo = null;
-          beaconUpdateInfo = null;
           // 모달끄기
-          const modalBg = document.querySelector('.modal-bg')
-          modalBg.classList.remove('bg-active')
-          document.querySelector('.modal_body').classList.remove('.modal_body_hide')
+          document.querySelector('.modal-bg').classList.remove('bg-active')
+          document.querySelector('.modal_body').classList.remove('modal_body_hide')
         })
         .catch((error) => {
           console.error(error)
@@ -220,18 +224,13 @@ var beaconAdd = {
         })
         .then((result) => {
           console.log(result.data);
-          beaconListDBfront.push(values.beacon_id)
-          beaconAllInfo.push(values)
-          document.getElementById(`${values.beacon_id}`).remove()
+          beaconAllInfo[values.beacon_id] = values
           const btn = document.getElementById('cu_btn');
           btn.className = 'nothing'
           beaconAddInfo = null;
-          beaconUpdateInfo = null;
-
           // 모달끄기
-          const modalBg = document.querySelector('.modal-bg')
-          modalBg.classList.remove('bg-active')
-          document.querySelector('.modal_body').classList.remove('.modal_body_hide')
+          document.querySelector('.modal-bg').classList.remove('bg-active')
+          document.querySelector('.modal_body').classList.remove('modal_body_hide')
         })
         .catch((error) => {
           console.error(error)
@@ -242,7 +241,7 @@ var beaconAdd = {
       console.log('disconnect', isTimeout, errorMessage)
       console.log('isConnected', connection.isConnected)
     })
-    
+    document.getElementById('beacon_c_container').innerHTML = ''
     this.bleManager.startScan()
   },
 
@@ -256,16 +255,19 @@ var beaconAdd = {
     .then((result) => {
       console.log(result.data);
       beaconListDBfront = result.data.beacon_id
-      beaconAllInfo = result.data.beacon_info
-      document.getElementById(`${beaconAddInfo.id}`).remove()
-      const modalBg = document.querySelector('.modal-bg')
-          modalBg.classList.remove('bg-active')
+      const beaconDB = result.data.beacon_info
+      beaconDB.forEach(e => {
+        beaconAllInfo[e.beacon_id] = e
+      });
       beaconAddInfo = null;
       beaconUpdateInfo = null;
+      document.querySelector('.modal-bg').classList.remove('bg-active')
+      document.querySelector('.modal_body').classList.remove('modal_body_hide')
     })
     .catch((error) => {
       console.error(error)
     })
+    document.getElementById('beacon_c_container').innerHTML = ''
     this.bleManager.startScan()
   },
 };
@@ -273,7 +275,7 @@ var beaconAdd = {
 
 
 
-function createNewBeaconCard(beacon) {
+function createNewBeaconCard(beacon, beaconName) {
   let cardContainer = document.createElement("div");
 
   cardContainer.id = `${beacon.id}`
@@ -282,11 +284,11 @@ function createNewBeaconCard(beacon) {
   const cardContainerContentCreate = `
       <div class="top">
         <div class="left">
-          <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
+          <img src="file:///android_asset/www/image/beacon.png" alt="비콘이미지">
         </div>
 
         <div class="center">
-          <div id="${beacon.id}name" class="beacon_title">${beacon.name}</div>
+          <div id="${beacon.id}name" class="beacon_title">Undefined</div>
           <div>
             <span class="beacon_opthion_name">RSSI</span>
             <span id="${beacon.id}_rssi" class="beacon_opthion_value">${beacon.rssi}dBm</span>
@@ -305,7 +307,7 @@ function createNewBeaconCard(beacon) {
         <div class="right">
           <div class="batteryContainer">
             <div class="batteryOuter">
-              <div id="batteryLevel"></div>
+              <div id="batteryLevel" style="width: ${Math.round(beacon.vbatt.percentage.value)}%;"></div>
             </div>
             <div class="batteryBump"></div>
           </div>
@@ -320,12 +322,11 @@ function createNewBeaconCard(beacon) {
   const cardContainerContentUpdate = `
       <div class="top">
         <div class="left">
-          <div class="beacon_img"></div>
-          <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
+          <img src="file:///android_asset/www/image/beacon.png" alt="비콘이미지">
         </div>
 
         <div class="center">
-          <div id="${beacon.id}name" class="beacon_title">${beacon.name}</div>
+          <div id="${beacon.id}name" class="beacon_title">${beaconName}</div>
           <div>
             <span class="beacon_opthion_name">RSSI</span>
             <span id="${beacon.id}_rssi" class="beacon_opthion_value">${beacon.rssi}dBm</span>
@@ -343,7 +344,7 @@ function createNewBeaconCard(beacon) {
         <div class="right">
           <div class="batteryContainer">
             <div class="batteryOuter">
-              <div id="batteryLevel"></div>
+              <div id="batteryLevel" style="width: ${Math.round(beacon.vbatt.percentage.value)}%;"></div>
             </div>
             <div class="batteryBump"></div>
           </div>
@@ -367,7 +368,6 @@ function createNewBeaconCard(beacon) {
 }
 
 function updateBeaconCard(beacon) {
-  document.getElementById(`${beacon.id}name`).innerText = `${beacon.name}`
   document.getElementById(`${beacon.id}_rssi`).innerText = `${beacon.rssi}dBm`
   document.getElementById(`${beacon.id}_sensing`).innerText = `${beacon.intervalOfSensing.value}sec`
   document.getElementById(`${beacon.id}_vbatt`).innerText = `${Math.round(beacon.vbatt.percentage.value)}%`
@@ -402,7 +402,7 @@ function beaconAddModalOpen(e) {
   // modal open
   const modalBtn = document.querySelector('.modal-bg');
   modalBtn.classList.add('bg-active');
-  document.querySelector('.modal_body').classList.add('.modal_body_hide')
+  document.querySelector('.modal_body').classList.add('modal_body_hide')
 }
 
 function beaconUpdateModalOpen(e) {
@@ -414,77 +414,70 @@ function beaconUpdateModalOpen(e) {
   delete connection_beacon.scanTime; 
   beaconAddInfo = connection_beacon
 
-  for (let i = 0; i < beaconAllInfo.length; i++) {
-    if (beaconAllInfo[i].beacon_id === e.target.value) {
-      console.log(beaconAllInfo[i].beacon_id);
-
-      const values = {
-        beacon_id: beaconAllInfo[i].beacon_id,
-        line: beaconAllInfo[i].line,
-        equipment: beaconAllInfo[i].equipment,
-        temperatureMin: beaconAllInfo[i].temperatureMin,
-        temperatureMax: beaconAllInfo[i].temperatureMax,
-        humidityMin: beaconAllInfo[i].humidityMin,
-        humidityMax: beaconAllInfo[i].humidityMax,
-        signalPower: beaconAllInfo[i].signalPower,
-        sensing: beaconAllInfo[i].sensing,
-      }
-      //설비, 라인 넣기
-      let line = `<option value="">----------</option>`;
-      let equipment = `<option value="">----------</option>`;
-      for (key in lineEquipment) {
-        if (key === values.line) {
-          line += `<option value="${key}" selected>${key}</option>`
-          lineEquipment[key].forEach(e => {
-            if (e === values.equipment) {
-              equipment += `<option value="${key}" selected>${key}</option>`
-            } else {
-              equipment += `<option value="${key}">${key}</option>`
-            }
-          })
+  const values = {
+    beacon_id: beaconAllInfo[e.target.value].beacon_id,
+    line: beaconAllInfo[e.target.value].line,
+    equipment: beaconAllInfo[e.target.value].equipment,
+    temperatureMin: beaconAllInfo[e.target.value].temperatureMin,
+    temperatureMax: beaconAllInfo[e.target.value].temperatureMax,
+    humidityMin: beaconAllInfo[e.target.value].humidityMin,
+    humidityMax: beaconAllInfo[e.target.value].humidityMax,
+    signalPower: beaconAllInfo[e.target.value].signalPower,
+    sensing: beaconAllInfo[e.target.value].sensing,
+  }
+  //설비, 라인 넣기
+  let line = `<option value="">----------</option>`;
+  let equipment = `<option value="">----------</option>`;
+  for (key in lineEquipment) {
+    if (key === values.line) {
+      line += `<option value="${key}" selected>${key}</option>`
+      lineEquipment[key].forEach(e => {
+        if (e === values.equipment) {
+          equipment += `<option value="${e}" selected>${e}</option>`
         } else {
-          line += `<option value="${key}">${key}</option>`
+          equipment += `<option value="${e}">${e}</option>`
         }
-      }
-      document.getElementById('beacon_line').innerHTML = line
-      document.getElementById('beacon_equipment').innerHTML = equipment
-      //신호 세기 넣기
-      // var signalpower = document.getElementById("beacon_signalPower");
-      // for(var i=0; i<signalpower.length; i++){
-      //   if(signalpower[i].value === values.signalPower) {
-      //     signalpower[i].selected = true;
-      //   }
-      //   else {
-      //     signalpower[i].selected = false;
-      //   }
-      // }
-      // 온도 범위 넣기
-      document.getElementById('beacon_temperatureMin').value = values.temperatureMin
-      document.getElementById('beacon_temperatureMax').value = values.temperatureMax
-      // 습도 범위 넣기
-      document.getElementById('beacon_humidityMin').value = values.humidityMin
-      document.getElementById('beacon_humidityMax').value = values.humidityMax
-      // 신호 주기 넣기
-      document.getElementById('beacon_sensing').value = values.sensing
-
-      // line-equ 관계연결
-      const linequ = document.getElementById('beacon_line')
-      linequ.addEventListener("change", line_option);
-
-      // Update Btn
-      const cubtn = document.getElementById('cu_btn')
-      cubtn.className = 'beaconUpdateBtn'
-      cubtn.innerText = '수정'
-      document.getElementById('d_btn').style.display = 'inline-block'
-
-      // modal open
-      const modalBtn = document.querySelector('.modal-bg');
-      modalBtn.classList.add('bg-active');
-      document.querySelector('.modal_body').classList.add('.modal_body_hide')
-
-      break
+      })
+    } else {
+      line += `<option value="${key}">${key}</option>`
     }
   }
+  document.getElementById('beacon_line').innerHTML = line
+  document.getElementById('beacon_equipment').innerHTML = equipment
+  //신호 세기 넣기
+  // var signalpower = document.getElementById("beacon_signalPower");
+  // for(var i=0; i<signalpower.length; i++){
+  //   if(signalpower[i].value === values.signalPower) {
+  //     signalpower[i].selected = true;
+  //   }
+  //   else {
+  //     signalpower[i].selected = false;
+  //   }
+  // }
+  // 온도 범위 넣기
+  document.getElementById('beacon_temperatureMin').value = values.temperatureMin
+  document.getElementById('beacon_temperatureMax').value = values.temperatureMax
+  // 습도 범위 넣기
+  document.getElementById('beacon_humidityMin').value = values.humidityMin
+  document.getElementById('beacon_humidityMax').value = values.humidityMax
+  // 신호 주기 넣기
+  document.getElementById('beacon_sensing').value = values.sensing
+
+  // line-equ 관계연결
+  const linequ = document.getElementById('beacon_line')
+  linequ.addEventListener("change", line_option);
+
+  // Update Btn
+  const cubtn = document.getElementById('cu_btn')
+  cubtn.className = 'beaconUpdateBtn'
+  cubtn.innerText = '수정'
+  document.getElementById('d_btn').style.display = 'inline-block'
+
+  // modal open
+  const modalBtn = document.querySelector('.modal-bg');
+  modalBtn.classList.add('bg-active');
+  document.querySelector('.modal_body').classList.add('modal_body_hide')
+
 }
 
 function line_option() {
