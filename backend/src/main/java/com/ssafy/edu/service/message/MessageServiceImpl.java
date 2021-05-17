@@ -96,14 +96,18 @@ public class MessageServiceImpl implements MessageService{
         MessageResponse ret = new MessageResponse();
         Optional<User> userOpt = userRepository.findByUserId(userId);
         List<MessageBeacon> fin = new ArrayList<>();
+        Date now = Date.from(Instant.now());
         if(userOpt.isPresent()) {
             List<BeaconUsers> beaconUsers = beaconUsersRepository.findByUser(userOpt.get());
             for(BeaconUsers i: beaconUsers){
                 Beacon tmpbeacon = i.getBeacon();
-                MessageBeacon tmpMb = new MessageBeacon();
-                tmpMb.setBeaconName(tmpbeacon.getBeaconName());
-                tmpMb.setBeaconId(tmpbeacon.getBeaconId());
-                fin.add(tmpMb);
+                if(now.getTime() - userOpt.get().getLastSignal().getTime() < 10000) {
+                    MessageBeacon tmpMb = new MessageBeacon();
+                    tmpMb.setBeaconName(tmpbeacon.getBeaconName());
+                    tmpMb.setBeaconId(tmpbeacon.getBeaconId());
+                    tmpMb.setLastSignal(userOpt.get().getLastSignal());
+                    fin.add(tmpMb);
+                }
             }
             ret.data = fin;
             ret.status = true;
