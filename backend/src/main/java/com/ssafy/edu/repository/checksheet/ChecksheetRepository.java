@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ChecksheetRepository extends JpaRepository<Checksheet, String> {
+public interface ChecksheetRepository extends JpaRepository<Checksheet, Long> {
     public List<Checksheet> findAll();
 }

@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface EducationUsersRepository extends JpaRepository<EducationUser, String> {
+public interface EducationUsersRepository extends JpaRepository<EducationUser, Long> {
     public Optional<EducationUser> findByUserAndEducation(User user, Education education);
 }

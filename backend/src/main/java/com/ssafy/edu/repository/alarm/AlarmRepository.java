@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AlarmRepository extends JpaRepository<Alarm, String> {
+public interface AlarmRepository extends JpaRepository<Alarm, Long> {
     public List<Alarm> findByUserId(String id);
     public Optional<Alarm> findById(Long id);
     public List<Alarm> findByTypeAndBeaconId(String type, String beaconId);

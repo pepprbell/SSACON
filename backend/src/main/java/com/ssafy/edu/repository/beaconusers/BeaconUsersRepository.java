@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface BeaconUsersRepository extends JpaRepository<BeaconUsers, String> {
+public interface BeaconUsersRepository extends JpaRepository<BeaconUsers, Long> {
     public List<BeaconUsers> findByBeacon(Beacon beacon);
     public List<BeaconUsers> findByUser(User user);
 }

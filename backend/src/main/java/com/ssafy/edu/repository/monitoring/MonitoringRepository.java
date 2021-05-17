@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MonitoringRepository extends JpaRepository<Beacon, String> {
+public interface MonitoringRepository extends JpaRepository<Beacon, Long> {
     public List<Beacon> findAll();
 }

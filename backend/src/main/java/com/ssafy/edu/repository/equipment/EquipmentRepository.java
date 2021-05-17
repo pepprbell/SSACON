@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface EquipmentRepository extends JpaRepository<Equipment, String> {
+public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
     public List<Equipment> findAll();
 }
