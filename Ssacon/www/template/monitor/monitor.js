@@ -1,3 +1,5 @@
+let beacons = [];
+
 const beacon__map = document.querySelector(".Beacon__map");
 beacon__map.addEventListener("click", (event) => {
     // 기존 네모 지우기
@@ -21,6 +23,27 @@ beacon__map.addEventListener("click", (event) => {
         // console.log(now_area.style.left,now_area.style.top)
         // console.log(now_area)
         beacon__map.appendChild(now_area)
+        
+        // 오른쪽에 데이터 해당 비콘 관련 정보로 넣기 
+        // beacons에 들어있음
+        for(let i = 0; i < beacons.length; i++) {
+          if(beacons[i].beaconId == event.target.dataset.id) {
+            // 클릭한 비콘의 정보
+            console.log(beacons[i])
+            // 오른쪽에 잇는거 다날리고
+            // 오른쪽에 자료를 넣기
+            
+            break
+          }
+        }
+    } else {
+      // 오른쪽에 전체 목록 관련으로 바꾸기
+      for(let i = 0; i < beacons.length; i++) {
+        if(beacons[i].beaconId == event.target.dataset.id) {
+          // 클릭한 비콘의 정보
+          console.log(beacons[i])
+        }
+      }
     }
 })
 const beacon__map__width = beacon__map.clientWidth;
@@ -33,14 +56,14 @@ var requestOptions = {
   method: "GET",
   redirect: "follow",
 };
-let beacons = [];
+
 
 function Monitor() {
   fetch("http://k4b101.p.ssafy.io/api/monitoring/beacon", requestOptions)
     .then((response) => response.json())
     .then((result) => {
       beacons = result.data.beacons;
-      console.log(beacons);
+      // console.log(beacons);
     })
     .then(() => {
       const beacon__workers = document.querySelectorAll(".Beacon__worker");
