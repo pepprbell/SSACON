@@ -27,7 +27,7 @@ public class AlarmServiceImpl implements AlarmService{
     @Override
     public ResponseEntity<AlarmResponse> getAlarmAll(String userId){
         AlarmResponse ret = new AlarmResponse();
-        List<Alarm> alarms = alarmRepository.findByUserId(userId);
+        List<Alarm> alarms = alarmRepository.findByUserIdOrderByTimeDesc(userId);
         List<AlarmResultResponse> alarmResult = new ArrayList<>();
         for(Alarm i: alarms){
             AlarmResultResponse tmp = new AlarmResultResponse();

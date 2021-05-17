@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
-    public List<Message> findByBeaconId(String id);
+    public List<Message> findByBeaconIdAndReceive(String id, boolean receive);
 }
