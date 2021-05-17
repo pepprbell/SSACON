@@ -21,6 +21,10 @@ public class BeaconMonitoring {
 
     double beaconBattery;
 
+    double xPos;
+
+    double yPos;
+
     String equipment;
 
     String line;

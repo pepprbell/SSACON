@@ -69,6 +69,8 @@ public class MonitoringServiceImpl implements MonitoringService{
             tmp.setBeaconBattery(i.getBeaconBattery());
             tmp.setConnectWorkers(tmp1);
             tmp.setNonConnectWorkers(tmp2);
+            tmp.setXPos(i.getXPos());
+            tmp.setYPos(i.getYPos());
             tmp.setEquipment(i.getEquipment());
             tmp.setLine(i.getLine());
             finRet.add(tmp);
