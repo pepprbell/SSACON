@@ -2,6 +2,7 @@ const { Manager } = require('buildthing-ble-sdk')
 
 let userInfo = window.localStorage.getItem("userInfo");
 const userID = JSON.parse(userInfo).data.userId;
+const userType = JSON.parse(userInfo).data.admin;
 let beaconList = [];
 
 var beaconScan = {
@@ -53,7 +54,9 @@ var beaconScan = {
         })
       }
       console.log(beaconList);
-      alarm();
+      if (!userType) {
+        alarm();
+      }
     })
    },
 

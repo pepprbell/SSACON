@@ -14,7 +14,7 @@
 .blank {
   width: 100%;
   height: 7vh;
-  background:transparent;
+  background: transparent;
   z-index: -1;
 }
 

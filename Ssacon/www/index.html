@@ -8,26 +8,29 @@
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
         <meta name="color-scheme" content="light dark">
         <link rel="stylesheet" href="index.css">
-        <link rel="stylesheet" href="template/navbar/navbar.css">
-        <title>Hello SsaCon</title>
+        <title>SSACON</title>
     </head>
     <body>
-        <script type="text/javascript" src="template/navbar/navbar.js"></script>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <button id="worker">근무자</button>
-                <button id="manager">관리자</button>
-                <button id="TestPage">testPage</button>
-                <button id="loginpage">Log In</button>
-            </div>
-        </div>
-
-        
+        <div class="loader"></div>
 
 
-        <script type="text/javascript" src="cordova.js"></script>
-        
-        <script type="text/javascript" src="js/index.js"></script>
+        <script>
+            window.addEventListener("load", function(event) {
+                console.log("All resources finished loading!");
+                const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+                console.log(userInfo);
+                if (userInfo) {
+                    if (userInfo.admin === true) {
+                        console.log('true');
+                        window.location = "./template/adminlist/adminlist.html";
+                    } else {
+                        console.log('false');
+                        window.location = "./template/employeelist/employeelist.html";
+                    }
+                } else {
+                    window.location = "./template/login/login.html";
+                }
+            });
+        </script>
     </body>
 </html>
