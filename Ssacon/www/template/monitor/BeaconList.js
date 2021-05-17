@@ -13,7 +13,29 @@ function getData() {
       const container = document.getElementById("content");
       console.log("connected! - all");
       beaconAll = result.data;
+      // ------------------------------------------------------------pie chart area
       console.log(beaconAll);
+      totalLoginWorker = beaconAll.totalLoginWorker.length;
+      nonSignalWorker = beaconAll.nonSignalWorker.length;
+      onSignalWorker = beaconAll.onSignalWorker.length;
+      var myDougnutChart = new Piechart({
+        canvas: myCanvas,
+        data: { 근무중: onSignalWorker, 자리이탈: nonSignalWorker },
+        colors: ["#3F72BE", "#ff0000", "#57d9ff", "#937e88"],
+        doughnutHoleSize: 0.5,
+        legend: myLegend,
+      });
+      myDougnutChart.draw();
+      total = document.getElementById("total");
+      let totalHTML = "";
+      totalHTML +=
+        "<div><span style='display:inline-block;width:20px;background-color: black" +
+        ";'>&nbsp;</span> " +
+        " TOTAL " +
+        `${totalLoginWorker} 명` +
+        "</div>";
+      total.innerHTML = totalHTML;
+      // ----------------------------------------------------------pit chart area end
       beaconAll.forEach.call(beaconAll, function (beacon) {
         let item = document.createElement("ul");
 
@@ -36,7 +58,6 @@ function getData() {
         batt.className = "subm-batt";
         batt.innerHTML = beacon.beaconBattery;
         item.appendChild(batt);
-
         container.appendChild(item);
       });
     })
@@ -96,37 +117,7 @@ function renderSession(selectedBeacon) {
   document.getElementById("BeaconStatus").appendChild(table);
   document.getElementById("BeaconStatus").appendChild(WorkerList);
 }
-// -----------------------------------------------------------------------------------비콘 pie graph
-let test = false;
-let count = 1;
-function getWorkerStatusData() {
-  fetch("http://k4b101.p.ssafy.io/api/monitoring/workerstatus", requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      console.log(result);
-      totalLoginWorker = result.data.totalLoginWorker.length;
-      nonSignalWorker = result.data.nonSignalWorker.length;
-      onSignalWorker = result.data.onSignalWorker.length;
-      var myDougnutChart = new Piechart({
-        canvas: myCanvas,
-        data: { 근무중: onSignalWorker, 자리이탈: nonSignalWorker },
-        colors: ["#3F72BE", "#ff0000", "#57d9ff", "#937e88"],
-        doughnutHoleSize: 0.5,
-        legend: myLegend,
-      });
-      myDougnutChart.draw();
-      total = document.getElementById("total");
-      let totalHTML = "";
-      totalHTML +=
-        "<div><span style='display:inline-block;width:20px;background-color: black" +
-        ";'>&nbsp;</span> " +
-        " TOTAL " +
-        `${totalLoginWorker} 명` +
-        "</div>";
-      total.innerHTML = totalHTML;
-    });
-}
-// ------------------------------------------
+// --- Piechart start
 let myCanvas = document.getElementById("myCanvas");
 var total = document.getElementById("total");
 
@@ -260,9 +251,6 @@ var Piechart = function (options) {
 };
 async function load() {
   getData();
-  getWorkerStatusData();
-
-  // getBeacon(data);
 }
 
 window.onload = load;

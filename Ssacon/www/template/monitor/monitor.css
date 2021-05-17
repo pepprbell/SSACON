@@ -130,7 +130,8 @@ main {
   margin: 1%;
 }
 
-h2 {
+monitortitle {
+  font-size: medium;
   color: white;
   background: #1488cc; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -144,7 +145,7 @@ h2 {
     #1488cc
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-radius: 10px;
-  margin: 0;
+  margin: 0 5%;
   padding: 0;
   text-align: center;
 }
