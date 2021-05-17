@@ -1,51 +1,53 @@
 let beacons = [];
-
+let beaconStatus = document.querySelector("#BeaconStatus");
 const beacon__map = document.querySelector(".Beacon__map");
 beacon__map.addEventListener("click", (event) => {
-    // 기존 네모 지우기
-    // console.log('네모 지우기')
-    const before_area = beacon__map.querySelector(".picked_area")
-    if(before_area) {
-        // console.log(before_area, '지움')
-        before_area.remove()
-    }
-    if(event.target.classList.contains("Beacon__item")) {
-        // console.log('네모만들어라')
-        // 새 네모 만들기
-        const now_area = document.createElement("div")
-        now_area.className = "picked_area"
-        now_area.style.width = "20%"
-        now_area.style.height = "20%"
-        // console.log(event.target.dataset.left)
-        // console.log(event.target.dataset.top)
-        now_area.style.left = `${event.target.dataset.left*1-8.5}%`
-        now_area.style.top = `${event.target.dataset.top*1-8.5}%`
-        // console.log(now_area.style.left,now_area.style.top)
-        // console.log(now_area)
-        beacon__map.appendChild(now_area)
-        
-        // 오른쪽에 데이터 해당 비콘 관련 정보로 넣기 
-        // beacons에 들어있음
-        for(let i = 0; i < beacons.length; i++) {
-          if(beacons[i].beaconId == event.target.dataset.id) {
-            // 클릭한 비콘의 정보
-            console.log(beacons[i])
-            // 오른쪽에 잇는거 다날리고
-            // 오른쪽에 자료를 넣기
-            
-            break
-          }
-        }
-    } else {
-      // 오른쪽에 전체 목록 관련으로 바꾸기
-      for(let i = 0; i < beacons.length; i++) {
-        if(beacons[i].beaconId == event.target.dataset.id) {
-          // 클릭한 비콘의 정보
-          console.log(beacons[i])
-        }
+  // 기존 네모 지우기
+  // console.log('네모 지우기')
+  const before_area = beacon__map.querySelector(".picked_area");
+  if (before_area) {
+    // console.log(before_area, '지움')
+    before_area.remove();
+  }
+  if (event.target.classList.contains("Beacon__item")) {
+    // console.log('네모만들어라')
+    // 새 네모 만들기
+    const now_area = document.createElement("div");
+    now_area.className = "picked_area";
+    now_area.style.width = "20%";
+    now_area.style.height = "20%";
+    // console.log(event.target.dataset.left)
+    // console.log(event.target.dataset.top)
+    now_area.style.left = `${event.target.dataset.left * 1 - 8.5}%`;
+    now_area.style.top = `${event.target.dataset.top * 1 - 8.5}%`;
+    // console.log(now_area.style.left,now_area.style.top)
+    // console.log(now_area)
+    beacon__map.appendChild(now_area);
+
+    // 오른쪽에 데이터 해당 비콘 관련 정보로 넣기
+    // beacons에 들어있음
+    for (let i = 0; i < beacons.length; i++) {
+      if (beacons[i].beaconId == event.target.dataset.id) {
+        // 클릭한 비콘의 정보
+        console.log(beacons[i]);
+        let content = document.createElement("div");
+        content.innerText = beacons[i];
+        beaconStatus.appendChild(content);
+        // 오른쪽에 자료를 넣기
+
+        break;
       }
     }
-})
+  } else {
+    // 오른쪽에 전체 목록 관련으로 바꾸기
+    for (let i = 0; i < beacons.length; i++) {
+      if (beacons[i].beaconId == event.target.dataset.id) {
+        // 클릭한 비콘의 정보
+        console.log(beacons[i]);
+      }
+    }
+  }
+});
 const beacon__map__width = beacon__map.clientWidth;
 const beacon__map__height = beacon__map.clientHeight;
 const x_diff = [-7.5, -0.5, 6.5, -7.5, 6.5, -7.5, -0.5, 6.5];
@@ -56,7 +58,6 @@ var requestOptions = {
   method: "GET",
   redirect: "follow",
 };
-
 
 function Monitor() {
   fetch("http://k4b101.p.ssafy.io/api/monitoring/beacon", requestOptions)
@@ -76,51 +77,55 @@ function Monitor() {
       beacons.forEach((beacon) => {
         const beacon__item = document.createElement("div");
         beacon__item.className = "Beacon__item";
-        beacon__item.dataset.id = beacon.beaconId
-        beacon__item.dataset.left = beacon.xpos
-        beacon__item.dataset.top = beacon.ypos
+        beacon__item.dataset.id = beacon.beaconId;
+        beacon__item.dataset.left = beacon.xpos;
+        beacon__item.dataset.top = beacon.ypos;
         beacon__item.style.left = `${beacon.xpos}%`;
         beacon__item.style.top = `${beacon.ypos}%`;
         const beacon__img = document.createElement("img");
         const beacon__items = document.querySelectorAll(".Beacon__item");
         //아픈 비콘은 표시를 해줌
-        for(let i = 0; i < beacon__items.length; i++) {
-          if(beacon__items[i].dataset.id == beacon.beaconId) {
-              // 배터리 or 온습도
-              if(beacon.beaconBattery <= 5 || beacon.beaconMoisture > beacon.humiMax || beacon.beaconMoisture < beacon.humiMin 
-              || beacon.beaconTemperature > beacon.tempMax || beacon.beaconTemperature < beacon.tempMin) {
-                if(!beacon__items[i].classList.contains("bad")){
-                  beacon__items[i].classList.add("bad")
-                }
-              } else {
-                if(beacon__items[i].classList.contains("bad")){
-                  beacon__items[i].classList.remove("bad")
-                }
+        for (let i = 0; i < beacon__items.length; i++) {
+          if (beacon__items[i].dataset.id == beacon.beaconId) {
+            // 배터리 or 온습도
+            if (
+              beacon.beaconBattery <= 5 ||
+              beacon.beaconMoisture > beacon.humiMax ||
+              beacon.beaconMoisture < beacon.humiMin ||
+              beacon.beaconTemperature > beacon.tempMax ||
+              beacon.beaconTemperature < beacon.tempMin
+            ) {
+              if (!beacon__items[i].classList.contains("bad")) {
+                beacon__items[i].classList.add("bad");
               }
-              break
-          }
-      }
-        //이미 추가댄 비콘이면 안 넣음
-        let is_added = false
-        for(let i = 0; i < beacon__items.length; i++) {
-            if(beacon__items[i].dataset.id == beacon.beaconId) {
-                is_added = true
-                break
+            } else {
+              if (beacon__items[i].classList.contains("bad")) {
+                beacon__items[i].classList.remove("bad");
+              }
             }
+            break;
+          }
         }
-        if(!is_added) {
-            beacon__map.appendChild(beacon__item)
+        //이미 추가댄 비콘이면 안 넣음
+        let is_added = false;
+        for (let i = 0; i < beacon__items.length; i++) {
+          if (beacon__items[i].dataset.id == beacon.beaconId) {
+            is_added = true;
+            break;
+          }
+        }
+        if (!is_added) {
+          beacon__map.appendChild(beacon__item);
         }
         // console.log(beacon__items)
-        
 
         let cnt = 0;
-        
+
         if (beacon.connectWorkers !== undefined) {
           beacon.connectWorkers.forEach((worker) => {
             const beacon__worker = document.createElement("div");
             beacon__worker.className = "Beacon__worker";
-            
+
             const beacon__worker__img = document.createElement("img");
             beacon__worker__img.className = "Beacon__worker__img";
             // beacon__worker.src="file:///android_asset/www/template/monitor/icons/person.png"
@@ -128,7 +133,7 @@ function Monitor() {
             // 해당 비콘 온습도 문제 있으면 빨간색으로 바꾸기
             beacon__worker.className = "Beacon__worker";
             beacon__worker.appendChild(beacon__worker__img);
-          
+
             const x_pos = beacon.xpos + x_diff[cnt];
             const y_pos = beacon.ypos + y_diff[cnt];
             cnt += 1;
@@ -142,7 +147,7 @@ function Monitor() {
           beacon.nonConnectWorkers.forEach((worker) => {
             const beacon__worker = document.createElement("div");
             beacon__worker.className = "Beacon__worker";
-            
+
             const beacon__worker__img = document.createElement("img");
             beacon__worker__img.className = "Beacon__worker__img";
             // beacon__worker.src="file:///android_asset/www/template/monitor/icons/person.png"
@@ -150,7 +155,7 @@ function Monitor() {
             // 해당 비콘 온습도 문제 있으면 빨간색으로 바꾸기
             beacon__worker.className = "Beacon__worker";
             beacon__worker.appendChild(beacon__worker__img);
-          
+
             const x_pos = beacon.xpos + x_diff[cnt];
             const y_pos = beacon.ypos + y_diff[cnt];
             cnt += 1;
@@ -167,8 +172,8 @@ function Monitor() {
     .then(() => {
       // fetch(알람다가져온후) 거기에 기존에잇느거 지우고 다시 넣기
       let alarmUserInfo = window.localStorage.getItem("userInfo");
-    //   console.log("확인", alarmUserInfo);
-    //   console.log(JSON.parse(alarmUserInfo));
+      //   console.log("확인", alarmUserInfo);
+      //   console.log(JSON.parse(alarmUserInfo));
       alarmUserInfo = JSON.parse(alarmUserInfo);
       let userId = alarmUserInfo.data.userId;
       fetch(`http://k4b101.p.ssafy.io/api/alarm/${userId}`, requestOptions)
