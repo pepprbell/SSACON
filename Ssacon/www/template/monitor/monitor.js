@@ -47,9 +47,62 @@ beacon__map.addEventListener("click", (event) => {
         BeaconAnimation.appendChild(BeaconMovingImg);
         let data = document.createElement("div");
         data.innerHTML = beacons[i];
-        content.appendChild(data);
-        // 오른쪽에 자료를 넣기
+        
 
+        // 넣기전에 한번 초기화
+        BeaconWorker.innerHTML = "<ul>" +
+        "<li class='subm-username'>이름</li>" +
+        "<li class='subm-part'>파트</li>" +
+        "<li class='subm-scan'>스캔 여부</li>"
+
+        // 오른쪽에 자료를 넣
+        
+        const workers_on_beacon = beacons[i].connectWorkers
+        const missing_on_beacon = beacons[i].nonConnectWorkers
+        for(let i = 0; i < workers_on_beacon.length; i++) {
+          const worker_row = document.createElement("ul")
+          const worker_username = document.createElement("li")
+          const worker_part = document.createElement("li")
+          const worker_scan = document.createElement("li")
+          
+          worker_row.className = "subm-white"
+          worker_username.className="subm-username"
+          worker_part.className = "subm-part"
+          worker_scan.className = "subm-scan"
+
+          worker_username.innerHTML = workers_on_beacon[i].userName
+          worker_part.innerHTML = workers_on_beacon[i].partName
+          worker_scan.innerHTML = "O"
+
+          worker_row.appendChild(worker_username)
+          worker_row.appendChild(worker_part)
+          worker_row.appendChild(worker_scan)
+
+          BeaconWorker.appendChild(worker_row)
+        } 
+        for(let i = 0; i < missing_on_beacon.length; i++) {
+          const worker_row = document.createElement("ul")
+          const worker_username = document.createElement("li")
+          const worker_part = document.createElement("li")
+          const worker_scan = document.createElement("li")
+          
+          worker_row.className = "subm-white"
+          worker_username.className="subm-username"
+          worker_part.className = "subm-part"
+          worker_scan.className = "subm-scan"
+
+          worker_username.innerHTML = missing_on_beacon[i].userName
+          worker_part.innerHTML = missing_on_beacon[i].partName
+          worker_scan.innerHTML = "X"
+
+          worker_row.appendChild(worker_username)
+          worker_row.appendChild(worker_part)
+          worker_row.appendChild(worker_scan)
+
+          BeaconWorker.appendChild(worker_row)
+        } 
+        worker_row.appendChild()
+        BeaconWorker.
         break;
       }
     }

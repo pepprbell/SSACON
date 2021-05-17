@@ -43,7 +43,7 @@ main {
 }
 .BeaconStatus {
   width: 30%;
-  height: 40%;
+  height: 90vh;
   background-color: #f3f6fa;
 }
 
@@ -330,4 +330,26 @@ monitortitle {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* 워커리스트 */
+#BeaconWorker {
+  height: 40vh;
+  overflow-y:auto;
+}
+
+.subm-username {
+  width: 40%;
+}
+
+.subm-part {
+  width: 30%;
+}
+
+.subm-scan {
+  width: 30%;
+}
+
+.subm-white {
+  background-color: white;
 }
