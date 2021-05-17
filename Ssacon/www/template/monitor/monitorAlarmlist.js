@@ -96,7 +96,7 @@ alarmlist.forEach((alarm) => {
   if (alarm.type == "takeover") {
     let icon = document.createElement("img");
     icon.src = "../alarm/icons/info.png";
-    icon.className = "icon";
+    icon.className = "alarmicon";
     left.appendChild(icon);
 
     let type = document.createElement("div");
@@ -126,7 +126,7 @@ alarmlist.forEach((alarm) => {
 
       let icon = document.createElement("img");
       icon.src = "../alarm/icons/success.png";
-      icon.className = "icon";
+      icon.className = "alarmicon";
       left.appendChild(icon);
 
       let type = document.createElement("div");
@@ -145,7 +145,7 @@ alarmlist.forEach((alarm) => {
     } else {
       let icon = document.createElement("img");
       icon.src = "../alarm/icons/warning.png";
-      icon.className = "icon";
+      icon.className = "alarmicon";
       left.appendChild(icon);
 
       let type = document.createElement("div");
@@ -167,7 +167,7 @@ alarmlist.forEach((alarm) => {
   } else if (alarm.type == "warning") {
     let icon = document.createElement("img");
     icon.src = "../alarm/icons/danger.png";
-    icon.className = "icon";
+    icon.className = "alarmicon";
     left.appendChild(icon);
 
     let type = document.createElement("div");
@@ -186,7 +186,7 @@ alarmlist.forEach((alarm) => {
   } else if (alarm.type == "attendance") {
     let icon = document.createElement("img");
     icon.src = "../alarm/icons/success.png";
-    icon.className = "icon";
+    icon.className = "alarmicon";
     left.appendChild(icon);
 
     let type = document.createElement("div");
@@ -201,7 +201,7 @@ alarmlist.forEach((alarm) => {
   } else if (alarm.type == "battery") {
     let icon = document.createElement("img");
     icon.src = "../alarm/icons/danger.png";
-    icon.className = "icon";
+    icon.className = "alarmicon";
     left.appendChild(icon);
 
     let type = document.createElement("div");

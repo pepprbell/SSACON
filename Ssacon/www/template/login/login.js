@@ -22,7 +22,7 @@ const closeModal = () => {
 //onModal
 //모달창 내부의 닫기 버튼
 
-overlay.addEventListener("click", closeModal);
+// overlay.addEventListener("click", closeModal);
 //모달창 영역 밖
 window.onload = init();
 
@@ -55,7 +55,11 @@ function userLogin() {
         openModal();
         window.localStorage.setItem("userInfo", JSON.stringify(result));
         setTimeout(() => {
-          window.location = "../adminlist/adminlist.html";
+          if (result.data.admin) {
+            window.location = "../adminlist/adminlist.html";
+          } else {
+            window.location = "../employeelist/employeelist.html";
+          }
         }, 2000);
         setTimeout(() => {
           failmodal.classList.remove("modalenabled");
@@ -88,24 +92,5 @@ function userLogin() {
       setTimeout(() => {
         successModal.classList.remove("modalenabled");
       }, 2100);
-
-      // loginCheck(!isLogin);
     });
-  // }
 }
-// function loginCheck(isLogin) {
-//   modal.classList.add("enabled");
-
-//   if (isLogin) {
-//     successMsg.classList.add("enabled");
-//   } else {
-//     errorMsg.classList.add("enabled");
-//   }
-//   setTimeout(function () {
-//     modal.classList.remove("enabled");
-//     loginForm.reset();
-//     modalContent.forEach(function (content) {
-//       content.classList.remove("enabled");
-//     });
-//   }, 3000);
-// }

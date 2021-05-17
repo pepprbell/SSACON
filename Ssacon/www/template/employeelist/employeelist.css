@@ -27,7 +27,6 @@ main {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 10vh;
 }
 
 .card {
@@ -89,7 +88,7 @@ view {
     top: 0;
     text-align: center;
     width: 100%;
-    height: 10vh;
+    height: 10vw;
     font-size: 4vw;
     display: flex;
     justify-content: center;
@@ -107,8 +106,8 @@ view {
     background-color: white;
     border-radius: 1vw;
     height: 15vw;
-    margin: 4%;
-    padding: 4%;
+    margin: 20%;
+    padding: 10%;
     display: flex;
     flex-direction: column;
     justify-content: center;
