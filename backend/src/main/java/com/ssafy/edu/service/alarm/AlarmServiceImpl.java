@@ -108,7 +108,7 @@ public class AlarmServiceImpl implements AlarmService{
         Optional<User> userOpt = userRepository.findByUserId(userId);
         if(userOpt.isPresent()){
             if(userOpt.get().isAdmin()){
-                List<Alarm> alarms = alarmRepository.findByUserId(userId);
+                List<Alarm> alarms = alarmRepository.findByUserIdOrderByTimeDesc(userId);
                 List<AlarmResultResponse> alarmResult = new ArrayList<>();
                 for(Alarm i: alarms){
                     if(!i.isReceive()) {
