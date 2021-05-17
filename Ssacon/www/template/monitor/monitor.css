@@ -60,8 +60,10 @@ main {
 }
 
 .subm-container {
+  background-color: #fff;
   text-align: center;
   margin: 0 auto;
+  margin-bottom: 3vw;
   width: 100%;
 }
 
@@ -92,18 +94,30 @@ main {
 }
 
 .subm-name {
-  width: 30%;
+  width: 46%;
 }
 
 .subm-temp {
-  width: 25%;
+  width: 17%;
 }
 
 .subm-humi {
-  width: 25%;
+  width: 17%;
 }
 
 .subm-batt {
+  width: 30%;
+}
+
+.subm-wname {
+  width: 30%;
+}
+
+.subm-part {
+  width: 40%;
+}
+
+.subm-conn {
   width: 20%;
 }
 
@@ -267,6 +281,11 @@ monitortitle {
   border: 1px solid skyblue;
   background-color: skyblue;
   opacity: 0.4;
+}
+
+.invisible {
+  display: none;
+  visibility: hidden;
 }
 
 /* 

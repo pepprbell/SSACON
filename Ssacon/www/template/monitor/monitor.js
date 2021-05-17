@@ -10,13 +10,19 @@ beacon__map.addEventListener("click", (event) => {
   // 기존 네모 지우기
   // console.log('네모 지우기')
   const before_area = beacon__map.querySelector(".picked_area");
+  const seeAllB = document.getElementById('BeaconStatus')
+  const seeAllW = document.getElementById('WorkerStatus')
   if (before_area) {
     // console.log(before_area, '지움')
     before_area.remove();
+    seeAllB.classList.remove('invisible')
+    seeAllW.classList.remove('invisible')
   }
   if (event.target.classList.contains("Beacon__item")) {
     // console.log('네모만들어라')
     // 새 네모 만들기
+    seeAllB.classList.add('invisible')
+    seeAllW.classList.add('invisible')
     const now_area = document.createElement("div");
     now_area.className = "picked_area";
     now_area.style.width = "20%";
@@ -322,210 +328,296 @@ function Monitor() {
         }
       });
     })
+    // .then(() => {
+    //   // fetch(알람다가져온후) 거기에 기존에잇느거 지우고 다시 넣기
+    //   let alarmUserInfo = window.localStorage.getItem("userInfo");
+    //   //   console.log("확인", alarmUserInfo);
+    //   //   console.log(JSON.parse(alarmUserInfo));
+    //   alarmUserInfo = JSON.parse(alarmUserInfo);
+    //   let userId = alarmUserInfo.data.userId;
+    //   fetch(`http://k4b101.p.ssafy.io/api/alarm/${userId}`, requestOptions)
+    //     .then((response) => response.json())
+    //     .then((result) => {
+    //       alarmlist = result.data;
+    //       alarmlist.forEach((alarm) => {
+    //         let item = document.createElement("div");
+    //         let left = document.createElement("div");
+    //         let right = document.createElement("div");
+    //         let right_title = document.createElement("div");
+    //         right_title.className = "right_title";
+    //         left.className = "left";
+    //         right.className = "right";
+    //         item.className = "alarm";
+    //         let time = document.createElement("div");
+    //         let timedifference = document.createElement("div");
+    //         time.className = "time";
+    //         timedifference.className = "timechange";
+    //         let timebewteen = timeForToday(alarm.time);
+    //         time.innerHTML = timebewteen;
+    //         if (alarm.type == "takeover") {
+    //           let icon = document.createElement("img");
+    //           icon.src = "../alarm/icons/info.png";
+    //           icon.className = "alarmicon";
+    //           left.appendChild(icon);
+
+    //           let type = document.createElement("div");
+    //           type.className = "type";
+    //           type.innerHTML = "인수 인계";
+    //           right_title.appendChild(type);
+    //           right_title.appendChild(time);
+    //           right.appendChild(right_title);
+
+    //           // let info = document.createElement("div")
+    //           // info.className="info"
+    //           // info.innerHTML= alarm.line + " " + alarm.equipment
+    //           // item.appendChild(info)
+
+    //           let description = document.createElement("div");
+    //           description.className = "description";
+    //           description.innerHTML =
+    //             alarm.line +
+    //             " " +
+    //             alarm.equipment +
+    //             " " +
+    //             alarm.description +
+    //             " - " +
+    //             alarm.writer;
+    //           right.appendChild(description);
+    //         } else if (alarm.type == "checksheet") {
+    //           if (alarm.properLocation == alarm.submissionLocation) {
+    //             // 잘 제출 한 경우
+
+    //             let icon = document.createElement("img");
+    //             icon.src = "../alarm/icons/success.png";
+    //             icon.className = "alarmicon";
+    //             left.appendChild(icon);
+
+    //             let type = document.createElement("div");
+    //             type.className = "type";
+    //             type.innerHTML = "체크시트 제출 확인";
+    //             right_title.appendChild(type);
+    //             right_title.appendChild(time);
+    //             right.appendChild(right_title);
+
+    //             let description = document.createElement("div");
+    //             description.className = "description";
+    //             description.innerHTML =
+    //               alarm.submissionLocation +
+    //               " 위치의 " +
+    //               alarm.equipment +
+    //               " 설비 체크시트 제출 확인";
+    //             right.appendChild(description);
+    //           } else {
+    //             let icon = document.createElement("img");
+    //             icon.src = "../alarm/icons/warning.png";
+    //             icon.className = "alarmicon";
+    //             left.appendChild(icon);
+
+    //             let type = document.createElement("div");
+    //             type.className = "type";
+    //             type.innerHTML = "잘못된 위치에서 체크시트 제출";
+    //             right_title.appendChild(type);
+    //             right_title.appendChild(time);
+    //             right.appendChild(right_title);
+
+    //             let description = document.createElement("div");
+    //             description.className = "description";
+    //             description.innerHTML =
+    //               alarm.submissionLocation +
+    //               " 위치에서 " +
+    //               alarm.properLocation +
+    //               " 위치의 " +
+    //               alarm.equipment +
+    //               " 설비 체크시트 제출 확인";
+    //             right.appendChild(description);
+    //           }
+    //         } else if (alarm.type == "warning") {
+    //           let icon = document.createElement("img");
+    //           icon.src = "../alarm/icons/danger.png";
+    //           icon.className = "alarmicon";
+    //           left.appendChild(icon);
+
+    //           let type = document.createElement("div");
+    //           type.className = "type";
+    //           type.innerHTML = "위험";
+    //           right_title.appendChild(type);
+    //           right_title.appendChild(time);
+    //           right.appendChild(right_title);
+
+    //           let description = document.createElement("div");
+    //           description.className = "description";
+    //           description.innerHTML =
+    //             alarm.location +
+    //             " 위치의 " +
+    //             alarm.equipment +
+    //             "설비 온도가 적정범위를 벗어났습니다!";
+    //           right.appendChild(description);
+    //         } else if (alarm.type == "attendance") {
+    //           let icon = document.createElement("img");
+    //           icon.src = "../alarm/icons/success.png";
+    //           icon.className = "alarmicon";
+    //           left.appendChild(icon);
+
+    //           let type = document.createElement("div");
+    //           type.className = "type";
+    //           type.innerHTML = "출석 확인";
+    //           right_title.appendChild(type);
+    //           right_title.appendChild(time);
+    //           right.appendChild(right_title);
+
+    //           let description = document.createElement("div");
+    //           description.className = "description";
+    //           description.innerHTML = alarm.session + " 출석 확인";
+    //           right.appendChild(description);
+    //         } else if (alarm.type == "battery") {
+    //           let icon = document.createElement("img");
+    //           icon.src = "../alarm/icons/danger.png";
+    //           icon.className = "alarmicon";
+    //           left.appendChild(icon);
+
+    //           let type = document.createElement("div");
+    //           type.className = "type";
+    //           type.innerHTML = "비콘 배터리 잔량 부족";
+    //           right_title.appendChild(type);
+    //           right_title.appendChild(time);
+    //           right.appendChild(right_title);
+    //           let description = document.createElement("div");
+    //           description.className = "description";
+    //           description.innerHTML =
+    //             alarm.line +
+    //             " " +
+    //             alarm.location +
+    //             " 위치 " +
+    //             alarm.equipment +
+    //             " 비콘 배터리 잔량이 " +
+    //             alarm.battery +
+    //             "%입니다.";
+    //           right.appendChild(description);
+    //         }
+    //         item.appendChild(left);
+    //         item.appendChild(right);
+
+    //         item.addEventListener("click", () => {
+    //           window.location.href =
+    //             "file:///android_asset/www/template/alarm/alarmdetail.html?" +
+    //             "?id=" +
+    //             alarm.id;
+    //         });
+
+    //         alarmList.appendChild(item);
+    //       });
+    //       function timeForToday(value) {
+    //         const today = new Date();
+    //         const timeValue = new Date(value);
+
+    //         const betweenTime = Math.floor(
+    //           (today.getTime() - timeValue.getTime()) / 1000 / 60
+    //         );
+    //         if (betweenTime < 1) return "방금전";
+    //         if (betweenTime < 60) {
+    //           return `${betweenTime}분전`;
+    //         }
+
+    //         const betweenTimeHour = Math.floor(betweenTime / 60);
+    //         if (betweenTimeHour < 24) {
+    //           return `${betweenTimeHour}시간전`;
+    //         }
+
+    //         const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    //         if (betweenTimeDay < 365) {
+    //           return `${betweenTimeDay}일전`;
+    //         }
+
+    //         return `${Math.floor(betweenTimeDay / 365)}년전`;
+    //       }
+    //     });
+    // })
     .then(() => {
-      // fetch(알람다가져온후) 거기에 기존에잇느거 지우고 다시 넣기
-      let alarmUserInfo = window.localStorage.getItem("userInfo");
-      //   console.log("확인", alarmUserInfo);
-      //   console.log(JSON.parse(alarmUserInfo));
-      alarmUserInfo = JSON.parse(alarmUserInfo);
-      let userId = alarmUserInfo.data.userId;
-      fetch(`http://k4b101.p.ssafy.io/api/alarm/${userId}`, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          alarmlist = result.data;
-          alarmlist.forEach((alarm) => {
-            let item = document.createElement("div");
-            let left = document.createElement("div");
-            let right = document.createElement("div");
-            let right_title = document.createElement("div");
-            right_title.className = "right_title";
-            left.className = "left";
-            right.className = "right";
-            item.className = "alarm";
-            let time = document.createElement("div");
-            let timedifference = document.createElement("div");
-            time.className = "time";
-            timedifference.className = "timechange";
-            let timebewteen = timeForToday(alarm.time);
-            time.innerHTML = timebewteen;
-            if (alarm.type == "takeover") {
-              let icon = document.createElement("img");
-              icon.src = "../alarm/icons/info.png";
-              icon.className = "alarmicon";
-              left.appendChild(icon);
+      console.log(beacons)
+      const containerB = document.getElementById("contentB");
+      const containerW = document.getElementById("contentW");
+      while (containerB.hasChildNodes()) {
+        containerB.removeChild(containerB.firstChild)
+      }
+      while (containerW.hasChildNodes()) {
+        containerW.removeChild(containerW.firstChild)
+      }
+      // ------------------------------------------------------------right beacon area
+      beacons.forEach.call(beacons, function (beacon) {
+        let item = document.createElement("ul");
 
-              let type = document.createElement("div");
-              type.className = "type";
-              type.innerHTML = "인수 인계";
-              right_title.appendChild(type);
-              right_title.appendChild(time);
-              right.appendChild(right_title);
+        let name = document.createElement("li");
+        name.className = "subm-name";
+        name.innerHTML = beacon.beaconName;
+        item.appendChild(name);
 
-              // let info = document.createElement("div")
-              // info.className="info"
-              // info.innerHTML= alarm.line + " " + alarm.equipment
-              // item.appendChild(info)
+        let temp = document.createElement("li");
+        temp.className = "subm-temp";
+        temp.innerHTML = beacon.beaconTemperature;
+        item.appendChild(temp);
 
-              let description = document.createElement("div");
-              description.className = "description";
-              description.innerHTML =
-                alarm.line +
-                " " +
-                alarm.equipment +
-                " " +
-                alarm.description +
-                " - " +
-                alarm.writer;
-              right.appendChild(description);
-            } else if (alarm.type == "checksheet") {
-              if (alarm.properLocation == alarm.submissionLocation) {
-                // 잘 제출 한 경우
+        let humi = document.createElement("li");
+        humi.className = "subm-humi";
+        humi.innerHTML = beacon.beaconMoisture;
+        item.appendChild(humi);
 
-                let icon = document.createElement("img");
-                icon.src = "../alarm/icons/success.png";
-                icon.className = "alarmicon";
-                left.appendChild(icon);
+        let batt = document.createElement("li");
+        batt.className = "subm-batt";
+        batt.innerHTML = beacon.beaconBattery;
+        item.appendChild(batt);
+        containerB.appendChild(item)
+      })
+      // ------------------------------------------------------------right beacon area end
 
-                let type = document.createElement("div");
-                type.className = "type";
-                type.innerHTML = "체크시트 제출 확인";
-                right_title.appendChild(type);
-                right_title.appendChild(time);
-                right.appendChild(right_title);
-
-                let description = document.createElement("div");
-                description.className = "description";
-                description.innerHTML =
-                  alarm.submissionLocation +
-                  " 위치의 " +
-                  alarm.equipment +
-                  " 설비 체크시트 제출 확인";
-                right.appendChild(description);
-              } else {
-                let icon = document.createElement("img");
-                icon.src = "../alarm/icons/warning.png";
-                icon.className = "alarmicon";
-                left.appendChild(icon);
-
-                let type = document.createElement("div");
-                type.className = "type";
-                type.innerHTML = "잘못된 위치에서 체크시트 제출";
-                right_title.appendChild(type);
-                right_title.appendChild(time);
-                right.appendChild(right_title);
-
-                let description = document.createElement("div");
-                description.className = "description";
-                description.innerHTML =
-                  alarm.submissionLocation +
-                  " 위치에서 " +
-                  alarm.properLocation +
-                  " 위치의 " +
-                  alarm.equipment +
-                  " 설비 체크시트 제출 확인";
-                right.appendChild(description);
-              }
-            } else if (alarm.type == "warning") {
-              let icon = document.createElement("img");
-              icon.src = "../alarm/icons/danger.png";
-              icon.className = "alarmicon";
-              left.appendChild(icon);
-
-              let type = document.createElement("div");
-              type.className = "type";
-              type.innerHTML = "위험";
-              right_title.appendChild(type);
-              right_title.appendChild(time);
-              right.appendChild(right_title);
-
-              let description = document.createElement("div");
-              description.className = "description";
-              description.innerHTML =
-                alarm.location +
-                " 위치의 " +
-                alarm.equipment +
-                "설비 온도가 적정범위를 벗어났습니다!";
-              right.appendChild(description);
-            } else if (alarm.type == "attendance") {
-              let icon = document.createElement("img");
-              icon.src = "../alarm/icons/success.png";
-              icon.className = "alarmicon";
-              left.appendChild(icon);
-
-              let type = document.createElement("div");
-              type.className = "type";
-              type.innerHTML = "출석 확인";
-              right_title.appendChild(type);
-              right_title.appendChild(time);
-              right.appendChild(right_title);
-
-              let description = document.createElement("div");
-              description.className = "description";
-              description.innerHTML = alarm.session + " 출석 확인";
-              right.appendChild(description);
-            } else if (alarm.type == "battery") {
-              let icon = document.createElement("img");
-              icon.src = "../alarm/icons/danger.png";
-              icon.className = "alarmicon";
-              left.appendChild(icon);
-
-              let type = document.createElement("div");
-              type.className = "type";
-              type.innerHTML = "비콘 배터리 잔량 부족";
-              right_title.appendChild(type);
-              right_title.appendChild(time);
-              right.appendChild(right_title);
-              let description = document.createElement("div");
-              description.className = "description";
-              description.innerHTML =
-                alarm.line +
-                " " +
-                alarm.location +
-                " 위치 " +
-                alarm.equipment +
-                " 비콘 배터리 잔량이 " +
-                alarm.battery +
-                "%입니다.";
-              right.appendChild(description);
-            }
-            item.appendChild(left);
-            item.appendChild(right);
-
-            item.addEventListener("click", () => {
-              window.location.href =
-                "file:///android_asset/www/template/alarm/alarmdetail.html?" +
-                "?id=" +
-                alarm.id;
-            });
-
-            alarmList.appendChild(item);
-          });
-          function timeForToday(value) {
-            const today = new Date();
-            const timeValue = new Date(value);
-
-            const betweenTime = Math.floor(
-              (today.getTime() - timeValue.getTime()) / 1000 / 60
-            );
-            if (betweenTime < 1) return "방금전";
-            if (betweenTime < 60) {
-              return `${betweenTime}분전`;
-            }
-
-            const betweenTimeHour = Math.floor(betweenTime / 60);
-            if (betweenTimeHour < 24) {
-              return `${betweenTimeHour}시간전`;
-            }
-
-            const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-            if (betweenTimeDay < 365) {
-              return `${betweenTimeDay}일전`;
-            }
-
-            return `${Math.floor(betweenTimeDay / 365)}년전`;
-          }
-        });
-    });
+      // ------------------------------------------------------------right worker area
+      beacons.forEach.call(beacons, function (beacon) {
+        if (beacon.connectWorkers.length) {
+          beacon.connectWorkers.forEach.call(beacon.connectWorkers, function(person) {
+            let Witem = document.createElement("ul");
+    
+            let Wname = document.createElement("li");
+            Wname.className = "subm-wname";
+            Wname.innerHTML = person.userName;
+            Witem.appendChild(Wname);
+    
+            let Wtemp = document.createElement("li");
+            Wtemp.className = "subm-part";
+            Wtemp.innerHTML = person.partName;
+            Witem.appendChild(Wtemp);
+    
+            let Whumi = document.createElement("li");
+            Whumi.className = "subm-conn";
+            Whumi.innerHTML = person.lastSignal;
+            Witem.appendChild(Whumi);
+    
+            containerW.appendChild(Witem);
+          })
+        }
+        if (beacon.nonConnectWorkers.length) {
+          beacon.nonConnectWorkers.forEach.call(beacon.nonConnectWorkers, function(person) {
+            let Witem = document.createElement("ul");
+    
+            let Wname = document.createElement("li");
+            Wname.className = "subm-wname";
+            Wname.innerHTML = person.userName;
+            Witem.appendChild(Wname);
+    
+            let Wtemp = document.createElement("li");
+            Wtemp.className = "subm-part";
+            Wtemp.innerHTML = person.partName;
+            Witem.appendChild(Wtemp);
+    
+            let Whumi = document.createElement("li");
+            Whumi.className = "subm-conn";
+            Whumi.innerHTML = person.lastSignal;
+            Witem.appendChild(Whumi);
+    
+            containerW.appendChild(Witem);
+          })
+        }
+      // ------------------------------------------------------------right worker area end
+    })
+    })
 }
 
 Monitor();
