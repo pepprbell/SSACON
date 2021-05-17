@@ -135,7 +135,7 @@ public class BeaconServiceImpl implements BeaconService{
         if(beaconOpt.isPresent()) {
             beaconOpt.get().setLine(beaconCreateRequest.getLine());
             beaconOpt.get().setEquipment(beaconCreateRequest.getEquipment());
-            beaconOpt.get().setBeaconName(beaconCreateRequest.getLine() + "_" + beaconCreateRequest.getEquipment());
+            beaconOpt.get().setBeaconName(beaconCreateRequest.getLine() + beaconCreateRequest.getEquipment());
             beaconOpt.get().setTempMax(beaconCreateRequest.getTemperatureMax());
             beaconOpt.get().setTempMin(beaconCreateRequest.getTemperatureMin());
             beaconOpt.get().setHumidtyMax(beaconCreateRequest.getHumidityMax());
