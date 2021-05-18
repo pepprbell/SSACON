@@ -53,6 +53,8 @@ beacon__map.addEventListener("click", (event) => {
         console.log(beacons[i]);
         console.log(document.getElementsByClassName("beaconmoving").length);
         if (document.getElementsByClassName("beaconmoving").length == 0) {
+          const BeaconAnimation = document.createElement("div")
+          BeaconAnimation.className = "beaconanimation"
           let BeacondataName = beacons[i].beaconName;
           let BeaconBattery = beacons[i].beaconBattery;
           let BeaconId = beacons[i].beaconId;
@@ -89,6 +91,7 @@ beacon__map.addEventListener("click", (event) => {
           bodydetail.appendChild(bodydetailimgdiv);
           bodydetail.appendChild(BeaconName);
           BeaconAnimation.appendChild(bodydetail);
+          
 
           //beacondataa
           let BeaconData = document.createElement("div");
@@ -124,6 +127,7 @@ beacon__map.addEventListener("click", (event) => {
           BeacondataDetail.appendChild(Beacondataright);
           BeaconData.appendChild(BeacondataDetail);
           BeaconAnimation.appendChild(BeaconData);
+          BeaconStatus.appendChild(BeaconAnimation)
         }
         // let data = document.createElement("div");
         // data.innerHTML = beacons[i];
