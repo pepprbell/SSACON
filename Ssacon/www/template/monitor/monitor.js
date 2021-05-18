@@ -561,6 +561,7 @@ function Monitor() {
         .then((response) => response.json())
         .then((result) => {
           alarmlist = result.data;
+          alarmList.innerHTML = "";
           alarmlist.forEach((alarm) => {
             let item = document.createElement("div");
             let left = document.createElement("div");
@@ -725,7 +726,7 @@ function Monitor() {
                 "?id=" +
                 alarm.id;
             });
-
+            // console.log(alarmList);
             alarmList.appendChild(item);
           });
           function timeForToday(value) {
