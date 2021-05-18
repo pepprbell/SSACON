@@ -10,6 +10,7 @@
   top: 2.8rem;
   left: 0;
   z-index: 0;
+  overflow: hidden;
 }
 
 .beacon-list {
@@ -62,18 +63,20 @@
   width: inherit;
   height: 74%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);  /* 한 줄에 갯수 */
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: min-content;
-  grid-auto-rows: 40vw;
+  grid-auto-rows: 38vw;
   place-items: center;
   position: absolute;
   overflow: auto;
+  overflow-x: hidden;
   word-break: break-all;
 }
 
 .beacon-div select {
   grid-column-start: 1;
-  grid-column-end: 5;
+  grid-column-end: 3;
+  margin: 15px 0;
   height: 2em;
   width: 95%;
   border: none;

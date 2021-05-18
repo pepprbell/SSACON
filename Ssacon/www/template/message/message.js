@@ -1,7 +1,6 @@
 document.getElementById("closeMessage").addEventListener("click", closeModal)
 document.getElementById("seeAll").addEventListener("click", seeAll)
 document.getElementById("submitMessage").addEventListener("click", sendMessage)
-document.getElementById("lineSelect").addEventListener("change", changeLine)
 
 // let userId = JSON.parse(window.localStorage.getItem("userInfo")).data.userId;
 let userId = "3"
@@ -11,6 +10,7 @@ let userId = "3"
 const viewHere = document.getElementById('beaconHere')
 const viewAll = document.getElementById('beaconAll')
 const lineSelect = document.getElementById('lineSelect')
+document.getElementById("lineSelect").addEventListener("change", function() {changeLine(lineSelect.value)})
 
 // 현재 위치의 비콘 검색 및 아이콘 생성
 function scanBeacon() {
@@ -42,7 +42,7 @@ function scanBeacon() {
 }
 
 setTimeout(scanBeacon, 0)
-let scanning = setInterval(scanBeacon, 3000)
+// let scanning = setInterval(scanBeacon, 3000)
 
 function stopScan() {
   clearInterval(scanning)
@@ -52,6 +52,9 @@ function letScan() {
   scanning = setInterval(scanBeacon, 3000)
 }
 
+let beaconAll = []
+let lineAll = {}
+
 // 모든 위치의 비콘 검색 및 아이콘 생성
 fetch("http://k4b101.p.ssafy.io/api/beacon/list", {method: "GET",})
 .then((res) => res.json())
@@ -60,11 +63,13 @@ fetch("http://k4b101.p.ssafy.io/api/beacon/list", {method: "GET",})
   beaconAll = result.data.beacon_info
   lineAll = result.data.line_equipment
   console.log(beaconAll)
+  console.log(lineAll)
   beaconAll.forEach.call(beaconAll, function(beacon) {
     let item = document.createElement("div")
     item.className = "item"
     let beaconName = beacon.equipment
     item.innerHTML = beaconName
+    item.classList.add(beacon.line)
     if (beaconName.length > 8) {
       item.classList.add("smallLetter")
     }
@@ -72,13 +77,13 @@ fetch("http://k4b101.p.ssafy.io/api/beacon/list", {method: "GET",})
     viewAll.appendChild(item)
   })
 
-  lineAll.forEach.call(lineAll, function(line) {
+  for (let key in lineAll) {
     let list = document.createElement("option")
     list.className = "line"
-    list.value = line.name
-    list.innerHTML = line.name
+    list.value = key
+    list.innerHTML = key
     lineSelect.appendChild(list)
-  })
+  }
 })
 .catch((err) => console.log(err))
 
@@ -100,11 +105,39 @@ function seeAll() {
     letScan()
     viewHere.classList.remove("invisible")
     viewAll.classList.add("invisible")
+    changeLine('')
   }
 }
 
-function changeLine() {
-  console.log('change')
+function changeLine(value) {
+  let i;
+  let lineAllSelect = document.getElementsByClassName('line')
+  let selected = document.getElementsByClassName(value)
+
+  for (i = 0; i < lineAllSelect.length; i++) {
+    console.log(value)
+    if (lineAllSelect[i].className.indexOf('invisible') <= -1) filterAdd(lineAllSelect[i], "invisible");
+    if (lineAllSelect[i].className.indexOf(value) > -1) filterRemove(lineAllSelect[i], "invisible");
+  }
+}
+
+function filterAdd(elem, name) {
+  console.log('add')
+  let i, arr1
+  arr1 = elem.className.split(" ")
+  while (arr1.indexOf(name) > -1) {
+    arr1.splice(arr1.indexOf(name), 1)
+  }
+  elem.className = arr1.join(" ")
+}
+
+function filterRemove(elem, name) {
+  console.log('remove')
+  let i, arr1
+  arr1 = elem.className.split(" ")
+  if (arr1.indexOf(name) == -1) {
+    elem.className += " "+name
+  }
 }
 
 let modal = document.getElementById("modal")
