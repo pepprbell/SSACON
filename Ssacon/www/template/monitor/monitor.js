@@ -53,8 +53,8 @@ beacon__map.addEventListener("click", (event) => {
         // console.log(beacons[i]);
         // console.log(document.getElementsByClassName("beaconmoving").length);
         if (document.getElementsByClassName("beaconmoving").length == 0) {
-          const BeaconAnimation = document.createElement("div")
-          BeaconAnimation.className = "beaconanimation"
+          const BeaconAnimation = document.createElement("div");
+          BeaconAnimation.className = "beaconanimation";
           let BeacondataName = beacons[i].beaconName;
           let BeaconBattery = beacons[i].beaconBattery;
           let BeaconId = beacons[i].beaconId;
@@ -84,14 +84,13 @@ beacon__map.addEventListener("click", (event) => {
           bodydetailimgdiv.appendChild(BeaconMovingImg);
           BeaconName.className = "beaconname";
           BeaconName.innerHTML = `<div>
-          <h1>${BeacondataName}</h1>
+          <h2>${BeacondataName}</h2>
           <p>비콘ID : ${BeaconId}</p>
           </div>`;
 
           bodydetail.appendChild(bodydetailimgdiv);
           bodydetail.appendChild(BeaconName);
           BeaconAnimation.appendChild(bodydetail);
-          
 
           //beacondataa
           let BeaconData = document.createElement("div");
@@ -111,13 +110,13 @@ beacon__map.addEventListener("click", (event) => {
           BeacondataTemperature.className = "BeacondataTemperature infocard";
           BeacondataTemperatureAlarm.className =
             "BeacondataTemperatureAlarm infocard";
-          BeacondataBattery.innerHTML = `  <h2>${BeaconBattery}%</h2>
+          BeacondataBattery.innerHTML = `  <h3>${BeaconBattery}%</h3>
           <p>Battery</p>`;
-          BeacondataTemperature.innerHTML = `  <h2>${BeaconTemperature}℃</h2>
+          BeacondataTemperature.innerHTML = `  <h3>${BeaconTemperature}℃</h3>
           <p>Temperature</p>`;
-          BeacondataMoisture.innerHTML = `  <h2>${BeaconMoisture}%</h2>
+          BeacondataMoisture.innerHTML = `  <h3>${BeaconMoisture}%</h3>
           <p>Moisture</p>`;
-          BeacondataTemperatureAlarm.innerHTML = `  <h2>${BeaconTempMax}℃ ~ ${BeaconTempMin}℃</h2>
+          BeacondataTemperatureAlarm.innerHTML = `  <h3>${BeaconTempMax}℃ ~ ${BeaconTempMin}℃</h3>
           <p>Warning range</p>`;
           Beacondataleft.appendChild(BeacondataBattery);
           Beacondataright.appendChild(BeacondataTemperature);
@@ -127,7 +126,7 @@ beacon__map.addEventListener("click", (event) => {
           BeacondataDetail.appendChild(Beacondataright);
           BeaconData.appendChild(BeacondataDetail);
           BeaconAnimation.appendChild(BeaconData);
-          BeaconStatus.appendChild(BeaconAnimation)
+          BeaconStatus.appendChild(BeaconAnimation);
         }
         // let data = document.createElement("div");
         // data.innerHTML = beacons[i];
@@ -194,11 +193,11 @@ beacon__map.addEventListener("click", (event) => {
     // console.log("ㄴㄴ");
     // 넣기전에 한번 초기화
     BeaconStatus.innerHTML =
-    "<ul>" +
-    "<li class='subm-name'>이름</li>" +
-    "<li class='subm-temp'>온도(°C)</li>" +
-    "<li class='subm-humi'>습도(%)</li>" + 
-    "<li class='subm-batt'>배터리(%)</li>";
+      "<ul>" +
+      "<li class='subm-name'>이름</li>" +
+      "<li class='subm-temp'>온도(°C)</li>" +
+      "<li class='subm-humi'>습도(%)</li>" +
+      "<li class='subm-batt'>배터리(%)</li>";
     // 오른쪽에 전체 목록 관련으로 바꾸기
     for (let i = 0; i < beacons.length; i++) {
       //비콘들 정보 넣기
@@ -227,10 +226,10 @@ beacon__map.addEventListener("click", (event) => {
       BeaconStatus.appendChild(item);
       // 넣기전에 한번 초기화
       WorkerStatus.innerHTML =
-      "<ul>" +
-      "<li class='subm-username'>이름</li>" +
-      "<li class='subm-part'>파트</li>" +
-      "<li class='subm-scan'>스캔 여부</li>";
+        "<ul>" +
+        "<li class='subm-username'>이름</li>" +
+        "<li class='subm-part'>파트</li>" +
+        "<li class='subm-scan'>스캔 여부</li>";
 
       // 근무자들 정보 넣기
       if (beacon.connectWorkers.length) {
@@ -551,65 +550,131 @@ function Monitor() {
         }
       });
     })
-  .then(() => {
-    // fetch(알람다가져온후) 거기에 기존에잇느거 지우고 다시 넣기
-    let alarmUserInfo = window.localStorage.getItem("userInfo");
-    //   console.log("확인", alarmUserInfo);
-    //   console.log(JSON.parse(alarmUserInfo));
-    alarmUserInfo = JSON.parse(alarmUserInfo);
-    let userId = alarmUserInfo.data.userId;
-    fetch(`http://k4b101.p.ssafy.io/api/alarm/${userId}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        alarmlist = result.data;
-        alarmlist.forEach((alarm) => {
-          let item = document.createElement("div");
-          let left = document.createElement("div");
-          let right = document.createElement("div");
-          let right_title = document.createElement("div");
-          right_title.className = "right_title";
-          left.className = "left";
-          right.className = "right";
-          item.className = "alarm";
-          let time = document.createElement("div");
-          let timedifference = document.createElement("div");
-          time.className = "time";
-          timedifference.className = "timechange";
-          let timebewteen = timeForToday(alarm.time);
-          time.innerHTML = timebewteen;
-          if (alarm.type == "takeover") {
-            let icon = document.createElement("img");
-            icon.src = "../alarm/icons/info.png";
-            icon.className = "alarmicon";
-            left.appendChild(icon);
+    .then(() => {
+      // fetch(알람다가져온후) 거기에 기존에잇느거 지우고 다시 넣기
+      let alarmUserInfo = window.localStorage.getItem("userInfo");
+      //   console.log("확인", alarmUserInfo);
+      //   console.log(JSON.parse(alarmUserInfo));
+      alarmUserInfo = JSON.parse(alarmUserInfo);
+      let userId = alarmUserInfo.data.userId;
+      fetch(`http://k4b101.p.ssafy.io/api/alarm/${userId}`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          alarmlist = result.data;
+          alarmlist.forEach((alarm) => {
+            let item = document.createElement("div");
+            let left = document.createElement("div");
+            let right = document.createElement("div");
+            let right_title = document.createElement("div");
+            right_title.className = "right_title";
+            left.className = "left";
+            right.className = "right";
+            item.className = "alarm";
+            let time = document.createElement("div");
+            let timedifference = document.createElement("div");
+            time.className = "time";
+            timedifference.className = "timechange";
+            let timebewteen = timeForToday(alarm.time);
+            time.innerHTML = timebewteen;
+            if (alarm.type == "takeover") {
+              let icon = document.createElement("img");
+              icon.src = "../alarm/icons/info.png";
+              icon.className = "alarmicon";
+              left.appendChild(icon);
 
-            let type = document.createElement("div");
-            type.className = "type";
-            type.innerHTML = "인수 인계";
-            right_title.appendChild(type);
-            right_title.appendChild(time);
-            right.appendChild(right_title);
+              let type = document.createElement("div");
+              type.className = "type";
+              type.innerHTML = "인수 인계";
+              right_title.appendChild(type);
+              right_title.appendChild(time);
+              right.appendChild(right_title);
 
-            // let info = document.createElement("div")
-            // info.className="info"
-            // info.innerHTML= alarm.line + " " + alarm.equipment
-            // item.appendChild(info)
+              // let info = document.createElement("div")
+              // info.className="info"
+              // info.innerHTML= alarm.line + " " + alarm.equipment
+              // item.appendChild(info)
 
-            let description = document.createElement("div");
-            description.className = "description";
-            description.innerHTML =
-              alarm.line +
-              " " +
-              alarm.equipment +
-              " " +
-              alarm.description +
-              " - " +
-              alarm.writer;
-            right.appendChild(description);
-          } else if (alarm.type == "checksheet") {
-            if (alarm.properLocation == alarm.submissionLocation) {
-              // 잘 제출 한 경우
+              let description = document.createElement("div");
+              description.className = "description";
+              description.innerHTML =
+                alarm.line +
+                " " +
+                alarm.equipment +
+                " " +
+                alarm.description +
+                " - " +
+                alarm.writer;
+              right.appendChild(description);
+            } else if (alarm.type == "checksheet") {
+              if (alarm.properLocation == alarm.submissionLocation) {
+                // 잘 제출 한 경우
 
+                let icon = document.createElement("img");
+                icon.src = "../alarm/icons/success.png";
+                icon.className = "alarmicon";
+                left.appendChild(icon);
+
+                let type = document.createElement("div");
+                type.className = "type";
+                type.innerHTML = "체크시트 제출 확인";
+                right_title.appendChild(type);
+                right_title.appendChild(time);
+                right.appendChild(right_title);
+
+                let description = document.createElement("div");
+                description.className = "description";
+                description.innerHTML =
+                  alarm.submissionLocation +
+                  " 위치의 " +
+                  alarm.equipment +
+                  " 설비 체크시트 제출 확인";
+                right.appendChild(description);
+              } else {
+                let icon = document.createElement("img");
+                icon.src = "../alarm/icons/warning.png";
+                icon.className = "alarmicon";
+                left.appendChild(icon);
+
+                let type = document.createElement("div");
+                type.className = "type";
+                type.innerHTML = "잘못된 위치에서 체크시트 제출";
+                right_title.appendChild(type);
+                right_title.appendChild(time);
+                right.appendChild(right_title);
+
+                let description = document.createElement("div");
+                description.className = "description";
+                description.innerHTML =
+                  alarm.submissionLocation +
+                  " 위치에서 " +
+                  alarm.properLocation +
+                  " 위치의 " +
+                  alarm.equipment +
+                  " 설비 체크시트 제출 확인";
+                right.appendChild(description);
+              }
+            } else if (alarm.type == "warning") {
+              let icon = document.createElement("img");
+              icon.src = "../alarm/icons/danger.png";
+              icon.className = "alarmicon";
+              left.appendChild(icon);
+
+              let type = document.createElement("div");
+              type.className = "type";
+              type.innerHTML = "위험";
+              right_title.appendChild(type);
+              right_title.appendChild(time);
+              right.appendChild(right_title);
+
+              let description = document.createElement("div");
+              description.className = "description";
+              description.innerHTML =
+                alarm.location +
+                " 위치의 " +
+                alarm.equipment +
+                "설비 온도가 적정범위를 벗어났습니다!";
+              right.appendChild(description);
+            } else if (alarm.type == "attendance") {
               let icon = document.createElement("img");
               icon.src = "../alarm/icons/success.png";
               icon.className = "alarmicon";
@@ -617,160 +682,93 @@ function Monitor() {
 
               let type = document.createElement("div");
               type.className = "type";
-              type.innerHTML = "체크시트 제출 확인";
+              type.innerHTML = "출석 확인";
               right_title.appendChild(type);
               right_title.appendChild(time);
               right.appendChild(right_title);
 
               let description = document.createElement("div");
               description.className = "description";
-              description.innerHTML =
-                alarm.submissionLocation +
-                " 위치의 " +
-                alarm.equipment +
-                " 설비 체크시트 제출 확인";
+              description.innerHTML = alarm.session + " 출석 확인";
               right.appendChild(description);
-            } else {
+            } else if (alarm.type == "battery") {
               let icon = document.createElement("img");
-              icon.src = "../alarm/icons/warning.png";
+              icon.src = "../alarm/icons/danger.png";
               icon.className = "alarmicon";
               left.appendChild(icon);
 
               let type = document.createElement("div");
               type.className = "type";
-              type.innerHTML = "잘못된 위치에서 체크시트 제출";
+              type.innerHTML = "비콘 배터리 잔량 부족";
               right_title.appendChild(type);
               right_title.appendChild(time);
               right.appendChild(right_title);
-
               let description = document.createElement("div");
               description.className = "description";
               description.innerHTML =
-                alarm.submissionLocation +
-                " 위치에서 " +
-                alarm.properLocation +
-                " 위치의 " +
+                alarm.line +
+                " " +
+                alarm.location +
+                " 위치 " +
                 alarm.equipment +
-                " 설비 체크시트 제출 확인";
+                " 비콘 배터리 잔량이 " +
+                alarm.battery +
+                "%입니다.";
               right.appendChild(description);
             }
-          } else if (alarm.type == "warning") {
-            let icon = document.createElement("img");
-            icon.src = "../alarm/icons/danger.png";
-            icon.className = "alarmicon";
-            left.appendChild(icon);
+            item.appendChild(left);
+            item.appendChild(right);
 
-            let type = document.createElement("div");
-            type.className = "type";
-            type.innerHTML = "위험";
-            right_title.appendChild(type);
-            right_title.appendChild(time);
-            right.appendChild(right_title);
+            item.addEventListener("click", () => {
+              window.location.href =
+                "file:///android_asset/www/template/alarm/alarmdetail.html?" +
+                "?id=" +
+                alarm.id;
+            });
 
-            let description = document.createElement("div");
-            description.className = "description";
-            description.innerHTML =
-              alarm.location +
-              " 위치의 " +
-              alarm.equipment +
-              "설비 온도가 적정범위를 벗어났습니다!";
-            right.appendChild(description);
-          } else if (alarm.type == "attendance") {
-            let icon = document.createElement("img");
-            icon.src = "../alarm/icons/success.png";
-            icon.className = "alarmicon";
-            left.appendChild(icon);
-
-            let type = document.createElement("div");
-            type.className = "type";
-            type.innerHTML = "출석 확인";
-            right_title.appendChild(type);
-            right_title.appendChild(time);
-            right.appendChild(right_title);
-
-            let description = document.createElement("div");
-            description.className = "description";
-            description.innerHTML = alarm.session + " 출석 확인";
-            right.appendChild(description);
-          } else if (alarm.type == "battery") {
-            let icon = document.createElement("img");
-            icon.src = "../alarm/icons/danger.png";
-            icon.className = "alarmicon";
-            left.appendChild(icon);
-
-            let type = document.createElement("div");
-            type.className = "type";
-            type.innerHTML = "비콘 배터리 잔량 부족";
-            right_title.appendChild(type);
-            right_title.appendChild(time);
-            right.appendChild(right_title);
-            let description = document.createElement("div");
-            description.className = "description";
-            description.innerHTML =
-              alarm.line +
-              " " +
-              alarm.location +
-              " 위치 " +
-              alarm.equipment +
-              " 비콘 배터리 잔량이 " +
-              alarm.battery +
-              "%입니다.";
-            right.appendChild(description);
-          }
-          item.appendChild(left);
-          item.appendChild(right);
-
-          item.addEventListener("click", () => {
-            window.location.href =
-              "file:///android_asset/www/template/alarm/alarmdetail.html?" +
-              "?id=" +
-              alarm.id;
+            alarmList.appendChild(item);
           });
+          function timeForToday(value) {
+            const today = new Date();
+            const timeValue = new Date(value);
 
-          alarmList.appendChild(item);
+            const betweenTime = Math.floor(
+              (today.getTime() - timeValue.getTime()) / 1000 / 60
+            );
+            if (betweenTime < 1) return "방금전";
+            if (betweenTime < 60) {
+              return `${betweenTime}분전`;
+            }
+
+            const betweenTimeHour = Math.floor(betweenTime / 60);
+            if (betweenTimeHour < 24) {
+              return `${betweenTimeHour}시간전`;
+            }
+
+            const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+            if (betweenTimeDay < 365) {
+              return `${betweenTimeDay}일전`;
+            }
+
+            return `${Math.floor(betweenTimeDay / 365)}년전`;
+          }
         });
-        function timeForToday(value) {
-          const today = new Date();
-          const timeValue = new Date(value);
-
-          const betweenTime = Math.floor(
-            (today.getTime() - timeValue.getTime()) / 1000 / 60
-          );
-          if (betweenTime < 1) return "방금전";
-          if (betweenTime < 60) {
-            return `${betweenTime}분전`;
-          }
-
-          const betweenTimeHour = Math.floor(betweenTime / 60);
-          if (betweenTimeHour < 24) {
-            return `${betweenTimeHour}시간전`;
-          }
-
-          const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-          if (betweenTimeDay < 365) {
-            return `${betweenTimeDay}일전`;
-          }
-
-          return `${Math.floor(betweenTimeDay / 365)}년전`;
-        }
-      });
-  })
-  
+    });
 }
 
 async function render_first() {
   await fetch("http://k4b101.p.ssafy.io/api/monitoring/beacon", requestOptions)
-  .then((response) => response.json())
-  .then((result) => {
-    beacons = result.data.beacons;
-  })
+    .then((response) => response.json())
+    .then((result) => {
+      beacons = result.data.beacons;
+    });
   // 넣기전에 한번 초기화
   BeaconStatus.innerHTML =
-  "<ul>" +
-  "<li class='subm-name'>이름</li>" +
-  "<li class='subm-temp'>온도(°C)</li>" +
-  "<li class='subm-humi'>습도(%)</li>" + 
-  "<li class='subm-batt'>배터리(%)</li>";
+    "<ul>" +
+    "<li class='subm-name'>이름</li>" +
+    "<li class='subm-temp'>온도(°C)</li>" +
+    "<li class='subm-humi'>습도(%)</li>" +
+    "<li class='subm-batt'>배터리(%)</li>";
   // 오른쪽에 전체 목록 관련으로 바꾸기
   for (let i = 0; i < beacons.length; i++) {
     //비콘들 정보 넣기
@@ -799,10 +797,10 @@ async function render_first() {
     BeaconStatus.appendChild(item);
     // 넣기전에 한번 초기화
     WorkerStatus.innerHTML =
-    "<ul>" +
-    "<li class='subm-username'>이름</li>" +
-    "<li class='subm-part'>파트</li>" +
-    "<li class='subm-scan'>스캔 여부</li>";
+      "<ul>" +
+      "<li class='subm-username'>이름</li>" +
+      "<li class='subm-part'>파트</li>" +
+      "<li class='subm-scan'>스캔 여부</li>";
     // 근무자들 정보 넣기
     if (beacon.connectWorkers.length) {
       beacon.connectWorkers.forEach.call(
