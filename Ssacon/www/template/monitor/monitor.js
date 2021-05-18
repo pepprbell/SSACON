@@ -136,7 +136,7 @@ beacon__map.addEventListener("click", (event) => {
 
         // 넣기전에 한번 초기화
         WorkerStatus.innerHTML =
-          "<ul>" +
+          "<ul class='subm-title'>" +
           "<li class='subm-username'>이름</li>" +
           "<li class='subm-part'>파트</li>" +
           "<li class='subm-scan'>스캔 여부</li>";
@@ -194,7 +194,7 @@ beacon__map.addEventListener("click", (event) => {
     // console.log("ㄴㄴ");
     // 넣기전에 한번 초기화
     BeaconStatus.innerHTML =
-    "<ul>" +
+    "<ul class='subm-title'>" +
     "<li class='subm-name'>이름</li>" +
     "<li class='subm-temp'>온도(°C)</li>" +
     "<li class='subm-humi'>습도(%)</li>" + 
@@ -227,7 +227,7 @@ beacon__map.addEventListener("click", (event) => {
       BeaconStatus.appendChild(item);
       // 넣기전에 한번 초기화
       WorkerStatus.innerHTML =
-      "<ul>" +
+      "<ul class='subm-title'>" +
       "<li class='subm-username'>이름</li>" +
       "<li class='subm-part'>파트</li>" +
       "<li class='subm-scan'>스캔 여부</li>";
@@ -766,7 +766,7 @@ async function render_first() {
   })
   // 넣기전에 한번 초기화
   BeaconStatus.innerHTML =
-  "<ul>" +
+  "<ul class='subm-title'>" +
   "<li class='subm-name'>이름</li>" +
   "<li class='subm-temp'>온도(°C)</li>" +
   "<li class='subm-humi'>습도(%)</li>" + 
@@ -799,7 +799,7 @@ async function render_first() {
     BeaconStatus.appendChild(item);
     // 넣기전에 한번 초기화
     WorkerStatus.innerHTML =
-    "<ul>" +
+    "<ul class='subm-title'>" +
     "<li class='subm-username'>이름</li>" +
     "<li class='subm-part'>파트</li>" +
     "<li class='subm-scan'>스캔 여부</li>";
