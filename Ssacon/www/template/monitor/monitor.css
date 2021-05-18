@@ -65,7 +65,8 @@ main {
   text-align: center;
   margin: 0 auto;
   margin-bottom: 3vw;
-  width: 100%;
+  width: 95%;
+  border-radius: 10px;
 }
 
 .subm-container ul {
@@ -171,53 +172,6 @@ monitortitle {
   /* text-align: center; */
 }
 
-/* 모니터링 화면 1안 - 비콘 목록 나열 */
-/* .Beacon__list {
-  width: 90%;
-  margin: auto;
-}
-
-.Beacon__card {
-  width: 30%;
-  background-color: white;
-  border-radius: 10px;
-  border: 1px solid #3f72be;
-  padding: 1%;
-}
-
-.Beacon__card__header {
-  display: flex;
-}
-
-.beacon__img {
-  width: 50%;
-}
-
-.Beacon__card__info {
-  font-size: 10px;
-}
-
-.Beacon__card__title {
-  text-align: center;
-  font-size: 9px;
-}
-
-.Beacon__card__workers {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.Beacon__card__worker {
-  width: 18%;
-  height: 10px;
-  background-color: #3f72be;
-  border-radius: 50%;
-  margin: 1%;
-} */
-
-/* 모니터링 화면 2안 - 맵 */
-
 .BeaconList__lineName {
   width: 100%;
   height: 10%;
@@ -317,9 +271,10 @@ monitortitle {
   }
 }
 .beaconanimation {
-  width: 95%;
-  height: 40vh;
+  width: 100%;
+  height: 50%;
   border-radius: 10px;
+  padding: 2%;
   /* background-color:#f3f6fa ; */
 }
 .bodydetailimgdiv {
@@ -336,8 +291,13 @@ monitortitle {
 .bodydetail {
   display: flex;
   justify-content: space-around;
-  background-color: white;
+  align-items: center;
+  /* background-color: white; */
   color: #3f72be;
+}
+.BeaconData {
+  /* margin: 0% 3%; */
+  height: 100%;
 }
 .beaconmoving {
   width: 50%;
@@ -356,9 +316,9 @@ monitortitle {
 .BeacondataDetail {
   display: flex;
   background-color: skyblue;
+  border-radius: 10px;
   color: white;
   width: 100%;
-  height: 50%;
 }
 
 @keyframes jump {
@@ -373,7 +333,7 @@ monitortitle {
 /* 워커리스트 */
 #BeaconWorker {
   height: 40vh;
-  overflow-y:auto;
+  overflow-y: auto;
 }
 
 .subm-username {
