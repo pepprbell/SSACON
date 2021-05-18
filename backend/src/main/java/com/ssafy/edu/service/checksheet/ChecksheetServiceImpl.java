@@ -65,7 +65,7 @@ public class ChecksheetServiceImpl implements ChecksheetService{
                     .time(now)
                     .userId(checksheet.getUserId())
                     .checkUserName(userOpt.get().getUserName())
-                    .properBeaconId(checksheet.getProperBeaconId())
+                    .properBeaconId("D4:5C:67:6A:7A:7A")
                     .receive(false)
                     .build();
             alarmRepository.save(aCheck);
@@ -79,7 +79,7 @@ public class ChecksheetServiceImpl implements ChecksheetService{
                         .time(now)
                         .userId(i.getUserId())
                         .checkUserName(userOpt.get().getUserName())
-                        .properBeaconId(checksheet.getProperBeaconId())
+                        .properBeaconId("D4:5C:67:6A:7A:7A")
                         .receive(false)
                         .build();
                 alarmRepository.save(admincheck);
