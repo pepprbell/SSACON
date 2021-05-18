@@ -7,22 +7,32 @@ let nonSignalWorker, onSignalWorker;
 
 const beacon__map = document.querySelector(".Beacon__map");
 beacon__map.addEventListener("click", (event) => {
+  // 기존 비콘,워커 정보 지우기
+  const BeaconStatus = document.querySelector("#BeaconStatus")
+  const WorkerStatus = document.querySelector("#WorkerStatus");
+  while (BeaconStatus.hasChildNodes()) {
+    BeaconStatus.removeChild(BeaconStatus.firstChild)
+  }
+  while (WorkerStatus.hasChildNodes()) {
+    WorkerStatus.removeChild(WorkerStatus.firstChild)
+  }
   // 기존 네모 지우기
   // console.log('네모 지우기')
   const before_area = beacon__map.querySelector(".picked_area");
-  const seeAllB = document.getElementById('BeaconStatus')
-  const seeAllW = document.getElementById('WorkerStatus')
+  // const seeAllB = document.getElementById('BeaconStatus')
+  // const seeAllW = document.getElementById('WorkerStatus')
   if (before_area) {
     // console.log(before_area, '지움')
     before_area.remove();
-    seeAllB.classList.remove('invisible')
-    seeAllW.classList.remove('invisible')
+    // seeAllB.classList.remove('invisible')
+    // seeAllW.classList.remove('invisible')
   }
   if (event.target.classList.contains("Beacon__item")) {
+    console.log('비콘')
     // console.log('네모만들어라')
     // 새 네모 만들기
-    seeAllB.classList.add('invisible')
-    seeAllW.classList.add('invisible')
+    // seeAllB.classList.add('invisible')
+    // seeAllW.classList.add('invisible')
     const now_area = document.createElement("div");
     now_area.className = "picked_area";
     now_area.style.width = "20%";
@@ -50,7 +60,7 @@ beacon__map.addEventListener("click", (event) => {
         
 
         // 넣기전에 한번 초기화
-        BeaconWorker.innerHTML = "<ul>" +
+        WorkerStatus.innerHTML = "<ul>" +
         "<li class='subm-username'>이름</li>" +
         "<li class='subm-part'>파트</li>" +
         "<li class='subm-scan'>스캔 여부</li>"
@@ -78,7 +88,7 @@ beacon__map.addEventListener("click", (event) => {
           worker_row.appendChild(worker_part)
           worker_row.appendChild(worker_scan)
 
-          BeaconWorker.appendChild(worker_row)
+          WorkerStatus.appendChild(worker_row)
         } 
         for(let i = 0; i < missing_on_beacon.length; i++) {
           const worker_row = document.createElement("ul")
@@ -99,19 +109,84 @@ beacon__map.addEventListener("click", (event) => {
           worker_row.appendChild(worker_part)
           worker_row.appendChild(worker_scan)
 
-          BeaconWorker.appendChild(worker_row)
+          WorkerStatus.appendChild(worker_row)
         } 
-        worker_row.appendChild()
-        BeaconWorker.
         break;
       }
     }
   } else {
+    console.log('ㄴㄴ')
+    
     // 오른쪽에 전체 목록 관련으로 바꾸기
     for (let i = 0; i < beacons.length; i++) {
-      if (beacons[i].beaconId == event.target.dataset.id) {
-        // 클릭한 비콘의 정보
-        console.log(beacons[i]);
+      //비콘들 정보 넣기
+      let beacon = beacons[i]
+      let item = document.createElement("ul");
+
+      let name = document.createElement("li");
+      name.className = "subm-name";
+      name.innerHTML = beacon.beaconName;
+      item.appendChild(name);
+
+      let temp = document.createElement("li");
+      temp.className = "subm-temp";
+      temp.innerHTML = beacon.beaconTemperature;
+      item.appendChild(temp);
+
+      let humi = document.createElement("li");
+      humi.className = "subm-humi";
+      humi.innerHTML = beacon.beaconMoisture;
+      item.appendChild(humi);
+
+      let batt = document.createElement("li");
+      batt.className = "subm-batt";
+      batt.innerHTML = beacon.beaconBattery;
+      item.appendChild(batt);
+      BeaconStatus.appendChild(item)
+      // 근무자들 정보 넣기
+      if (beacon.connectWorkers.length) {
+        beacon.connectWorkers.forEach.call(beacon.connectWorkers, function(person) {
+          let Witem = document.createElement("ul");
+  
+          let Wname = document.createElement("li");
+          Wname.className = "subm-wname";
+          Wname.innerHTML = person.userName;
+          Witem.appendChild(Wname);
+  
+          let Wtemp = document.createElement("li");
+          Wtemp.className = "subm-part";
+          Wtemp.innerHTML = person.partName;
+          Witem.appendChild(Wtemp);
+  
+          let Whumi = document.createElement("li");
+          Whumi.className = "subm-conn";
+          Whumi.innerHTML = person.lastSignal;
+          Witem.appendChild(Whumi);
+  
+          WorkerStatus.appendChild(Witem);
+        })
+      }
+      if (beacon.nonConnectWorkers.length) {
+        beacon.nonConnectWorkers.forEach.call(beacon.nonConnectWorkers, function(person) {
+          let Witem = document.createElement("ul");
+  
+          let Wname = document.createElement("li");
+          Wname.className = "subm-wname";
+          Wname.innerHTML = person.userName;
+          Witem.appendChild(Wname);
+  
+          let Wtemp = document.createElement("li");
+          Wtemp.className = "subm-part";
+          Wtemp.innerHTML = person.partName;
+          Witem.appendChild(Wtemp);
+  
+          let Whumi = document.createElement("li");
+          Whumi.className = "subm-conn";
+          Whumi.innerHTML = person.lastSignal;
+          Witem.appendChild(Whumi);
+  
+          WorkerStatus.appendChild(Witem);
+        })
       }
     }
   }
@@ -585,92 +660,92 @@ function Monitor() {
     //       }
     //     });
     // })
-    .then(() => {
-      console.log(beacons)
-      const containerB = document.getElementById("contentB");
-      const containerW = document.getElementById("contentW");
-      while (containerB.hasChildNodes()) {
-        containerB.removeChild(containerB.firstChild)
-      }
-      while (containerW.hasChildNodes()) {
-        containerW.removeChild(containerW.firstChild)
-      }
-      // ------------------------------------------------------------right beacon area
-      beacons.forEach.call(beacons, function (beacon) {
-        let item = document.createElement("ul");
+    // .then(() => {
+    //   console.log(beacons)
+    //   const containerB = document.getElementById("contentB");
+    //   const containerW = document.getElementById("contentW");
+    //   while (containerB.hasChildNodes()) {
+    //     containerB.removeChild(containerB.firstChild)
+    //   }
+    //   while (containerW.hasChildNodes()) {
+    //     containerW.removeChild(containerW.firstChild)
+    //   }
+    //   // ------------------------------------------------------------right beacon area
+    //   beacons.forEach.call(beacons, function (beacon) {
+    //     let item = document.createElement("ul");
 
-        let name = document.createElement("li");
-        name.className = "subm-name";
-        name.innerHTML = beacon.beaconName;
-        item.appendChild(name);
+    //     let name = document.createElement("li");
+    //     name.className = "subm-name";
+    //     name.innerHTML = beacon.beaconName;
+    //     item.appendChild(name);
 
-        let temp = document.createElement("li");
-        temp.className = "subm-temp";
-        temp.innerHTML = beacon.beaconTemperature;
-        item.appendChild(temp);
+    //     let temp = document.createElement("li");
+    //     temp.className = "subm-temp";
+    //     temp.innerHTML = beacon.beaconTemperature;
+    //     item.appendChild(temp);
 
-        let humi = document.createElement("li");
-        humi.className = "subm-humi";
-        humi.innerHTML = beacon.beaconMoisture;
-        item.appendChild(humi);
+    //     let humi = document.createElement("li");
+    //     humi.className = "subm-humi";
+    //     humi.innerHTML = beacon.beaconMoisture;
+    //     item.appendChild(humi);
 
-        let batt = document.createElement("li");
-        batt.className = "subm-batt";
-        batt.innerHTML = beacon.beaconBattery;
-        item.appendChild(batt);
-        containerB.appendChild(item)
-      })
-      // ------------------------------------------------------------right beacon area end
+    //     let batt = document.createElement("li");
+    //     batt.className = "subm-batt";
+    //     batt.innerHTML = beacon.beaconBattery;
+    //     item.appendChild(batt);
+    //     containerB.appendChild(item)
+    //   })
+    //   // ------------------------------------------------------------right beacon area end
 
-      // ------------------------------------------------------------right worker area
-      beacons.forEach.call(beacons, function (beacon) {
-        if (beacon.connectWorkers.length) {
-          beacon.connectWorkers.forEach.call(beacon.connectWorkers, function(person) {
-            let Witem = document.createElement("ul");
+    //   // ------------------------------------------------------------right worker area
+    //   beacons.forEach.call(beacons, function (beacon) {
+    //     if (beacon.connectWorkers.length) {
+    //       beacon.connectWorkers.forEach.call(beacon.connectWorkers, function(person) {
+    //         let Witem = document.createElement("ul");
     
-            let Wname = document.createElement("li");
-            Wname.className = "subm-wname";
-            Wname.innerHTML = person.userName;
-            Witem.appendChild(Wname);
+    //         let Wname = document.createElement("li");
+    //         Wname.className = "subm-wname";
+    //         Wname.innerHTML = person.userName;
+    //         Witem.appendChild(Wname);
     
-            let Wtemp = document.createElement("li");
-            Wtemp.className = "subm-part";
-            Wtemp.innerHTML = person.partName;
-            Witem.appendChild(Wtemp);
+    //         let Wtemp = document.createElement("li");
+    //         Wtemp.className = "subm-part";
+    //         Wtemp.innerHTML = person.partName;
+    //         Witem.appendChild(Wtemp);
     
-            let Whumi = document.createElement("li");
-            Whumi.className = "subm-conn";
-            Whumi.innerHTML = person.lastSignal;
-            Witem.appendChild(Whumi);
+    //         let Whumi = document.createElement("li");
+    //         Whumi.className = "subm-conn";
+    //         Whumi.innerHTML = person.lastSignal;
+    //         Witem.appendChild(Whumi);
     
-            containerW.appendChild(Witem);
-          })
-        }
-        if (beacon.nonConnectWorkers.length) {
-          beacon.nonConnectWorkers.forEach.call(beacon.nonConnectWorkers, function(person) {
-            let Witem = document.createElement("ul");
+    //         containerW.appendChild(Witem);
+    //       })
+    //     }
+    //     if (beacon.nonConnectWorkers.length) {
+    //       beacon.nonConnectWorkers.forEach.call(beacon.nonConnectWorkers, function(person) {
+    //         let Witem = document.createElement("ul");
     
-            let Wname = document.createElement("li");
-            Wname.className = "subm-wname";
-            Wname.innerHTML = person.userName;
-            Witem.appendChild(Wname);
+    //         let Wname = document.createElement("li");
+    //         Wname.className = "subm-wname";
+    //         Wname.innerHTML = person.userName;
+    //         Witem.appendChild(Wname);
     
-            let Wtemp = document.createElement("li");
-            Wtemp.className = "subm-part";
-            Wtemp.innerHTML = person.partName;
-            Witem.appendChild(Wtemp);
+    //         let Wtemp = document.createElement("li");
+    //         Wtemp.className = "subm-part";
+    //         Wtemp.innerHTML = person.partName;
+    //         Witem.appendChild(Wtemp);
     
-            let Whumi = document.createElement("li");
-            Whumi.className = "subm-conn";
-            Whumi.innerHTML = person.lastSignal;
-            Witem.appendChild(Whumi);
+    //         let Whumi = document.createElement("li");
+    //         Whumi.className = "subm-conn";
+    //         Whumi.innerHTML = person.lastSignal;
+    //         Witem.appendChild(Whumi);
     
-            containerW.appendChild(Witem);
-          })
-        }
-      // ------------------------------------------------------------right worker area end
-    })
-    })
+    //         containerW.appendChild(Witem);
+    //       })
+    //     }
+    //   // ------------------------------------------------------------right worker area end
+    // })
+    // })
 }
 
 Monitor();
