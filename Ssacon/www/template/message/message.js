@@ -40,7 +40,7 @@ function scanBeacon() {
 }
 
 setTimeout(scanBeacon, 0)
-setInterval(scanBeacon, 3000)
+let scanning = setInterval(scanBeacon, 3000)
 
 // 모든 위치의 비콘 검색 및 아이콘 생성
 fetch("http://k4b101.p.ssafy.io/api/beacon/list", {method: "GET",})
@@ -70,12 +70,15 @@ function seeAll() {
   if (everyBeacon) {
     btn.innerHTML = "현재 설비 보기"
     everyBeacon = false
+    clearInterval(scanning)
     viewAll.classList.remove("invisible")
     viewHere.classList.add("invisible")
   }
   else {
     btn.innerHTML = "전체 설비 보기"
     everyBeacon = true
+    setTimeout(scanBeacon, 0)
+    setInterval(scanBeacon, 3000)
     viewHere.classList.remove("invisible")
     viewAll.classList.add("invisible")
   }
