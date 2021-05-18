@@ -7,16 +7,32 @@ let nonSignalWorker, onSignalWorker;
 
 const beacon__map = document.querySelector(".Beacon__map");
 beacon__map.addEventListener("click", (event) => {
+  // 기존 비콘,워커 정보 지우기
+  const BeaconStatus = document.querySelector("#BeaconStatus");
+  const WorkerStatus = document.querySelector("#WorkerStatus");
+  while (BeaconStatus.hasChildNodes()) {
+    BeaconStatus.removeChild(BeaconStatus.firstChild);
+  }
+  while (WorkerStatus.hasChildNodes()) {
+    WorkerStatus.removeChild(WorkerStatus.firstChild);
+  }
   // 기존 네모 지우기
   // console.log('네모 지우기')
   const before_area = beacon__map.querySelector(".picked_area");
+  // const seeAllB = document.getElementById('BeaconStatus')
+  // const seeAllW = document.getElementById('WorkerStatus')
   if (before_area) {
     // console.log(before_area, '지움')
     before_area.remove();
+    // seeAllB.classList.remove('invisible')
+    // seeAllW.classList.remove('invisible')
   }
   if (event.target.classList.contains("Beacon__item")) {
+    // console.log("비콘");
     // console.log('네모만들어라')
     // 새 네모 만들기
+    // seeAllB.classList.add('invisible')
+    // seeAllW.classList.add('invisible')
     const now_area = document.createElement("div");
     now_area.className = "picked_area";
     now_area.style.width = "20%";
@@ -34,25 +50,237 @@ beacon__map.addEventListener("click", (event) => {
     for (let i = 0; i < beacons.length; i++) {
       if (beacons[i].beaconId == event.target.dataset.id) {
         // 클릭한 비콘의 정보
-        console.log(beacons[i]);
-        let BeaconMovingImg = document.createElement("img");
-        BeaconMovingImg.src = "../../assets/pics/buildthing.png";
-        BeaconMovingImg.className = "beaconmoving";
-        BeaconAnimation.appendChild(BeaconMovingImg);
-        let data = document.createElement("div");
-        data.innerHTML = beacons[i];
-        content.appendChild(data);
+        // console.log(beacons[i]);
+        // console.log(document.getElementsByClassName("beaconmoving").length);
+        if (document.getElementsByClassName("beaconmoving").length == 0) {
+          const BeaconAnimation = document.createElement("div");
+          BeaconAnimation.className = "beaconanimation";
+          let BeacondataName = beacons[i].beaconName;
+          let BeaconBattery = beacons[i].beaconBattery;
+          let BeaconId = beacons[i].beaconId;
+          let BeaconMoisture = beacons[i].beaconMoisture;
+          let BeaconTemperature = beacons[i].beaconTemperature;
+          let BeaconTempMax = beacons[i].tempMax;
+          let BeaconTempMin = beacons[i].tempMin;
+
+          let bodyheader = document.createElement("div");
+          let headerbackground = document.createElement("img");
+
+          headerbackground.src = "../../assets/pics/background2.jpg";
+          headerbackground.className = "headerbackground";
+          // bodyheader.appendChild(headerbackground);
+          BeaconAnimation.appendChild(bodyheader);
+
+          //detail
+          let bodydetail = document.createElement("div");
+          bodydetail.className = "bodydetail";
+          let BeaconMovingImg = document.createElement("img");
+          let bodydetailimgdiv = document.createElement("div");
+
+          bodydetailimgdiv.className = "bodydetailimgdiv";
+          let BeaconName = document.createElement("div");
+          BeaconMovingImg.src = "../../assets/pics/buildthing.png";
+          BeaconMovingImg.className = "beaconmoving";
+          bodydetailimgdiv.appendChild(BeaconMovingImg);
+          BeaconName.className = "beaconname";
+          BeaconName.innerHTML = `<div>
+          <h2>${BeacondataName}</h2>
+          <p>비콘ID : ${BeaconId}</p>
+          </div>`;
+
+          bodydetail.appendChild(bodydetailimgdiv);
+          bodydetail.appendChild(BeaconName);
+          BeaconAnimation.appendChild(bodydetail);
+
+          //beacondataa
+          let BeaconData = document.createElement("div");
+          let BeacondataDetail = document.createElement("div");
+          let BeacondataBattery = document.createElement("div");
+          let BeacondataTemperature = document.createElement("div");
+          let BeacondataMoisture = document.createElement("div");
+          let BeacondataTemperatureAlarm = document.createElement("div");
+          let Beacondataleft = document.createElement("div");
+          let Beacondataright = document.createElement("div");
+          Beacondataleft.className = "Beacondataleft";
+          Beacondataright.className = "Beacondataright";
+          BeaconData.className = "BeaconData";
+          BeacondataDetail.className = "BeacondataDetail ";
+          BeacondataBattery.className = "BeacondataBattery infocard";
+          BeacondataMoisture.className = "BeacondataMoisture infocard";
+          BeacondataTemperature.className = "BeacondataTemperature infocard";
+          BeacondataTemperatureAlarm.className =
+            "BeacondataTemperatureAlarm infocard";
+          BeacondataBattery.innerHTML = `  <h3>${BeaconBattery}%</h3>
+          <p>Battery</p>`;
+          BeacondataTemperature.innerHTML = `  <h3>${BeaconTemperature}℃</h3>
+          <p>Temperature</p>`;
+          BeacondataMoisture.innerHTML = `  <h3>${BeaconMoisture}%</h3>
+          <p>Moisture</p>`;
+          BeacondataTemperatureAlarm.innerHTML = `  <h3>${BeaconTempMax}℃ ~ ${BeaconTempMin}℃</h3>
+          <p>Warning range</p>`;
+          Beacondataleft.appendChild(BeacondataBattery);
+          Beacondataright.appendChild(BeacondataTemperature);
+          Beacondataleft.appendChild(BeacondataMoisture);
+          Beacondataright.appendChild(BeacondataTemperatureAlarm);
+          BeacondataDetail.appendChild(Beacondataleft);
+          BeacondataDetail.appendChild(Beacondataright);
+          BeaconData.appendChild(BeacondataDetail);
+          BeaconAnimation.appendChild(BeaconData);
+          BeaconStatus.appendChild(BeaconAnimation);
+        }
+        // let data = document.createElement("div");
+        // data.innerHTML = beacons[i];
+        // content.appendChild(data);
         // 오른쪽에 자료를 넣기
 
+        // 넣기전에 한번 초기화
+        WorkerStatus.innerHTML =
+          "<ul class='subm-title'>" +
+          "<li class='subm-username'>이름</li>" +
+          "<li class='subm-part'>파트</li>" +
+          "<li class='subm-scan'>스캔 여부</li>";
+
+        // 오른쪽에 자료를 넣
+
+        const workers_on_beacon = beacons[i].connectWorkers;
+        const missing_on_beacon = beacons[i].nonConnectWorkers;
+        for (let i = 0; i < workers_on_beacon.length; i++) {
+          const worker_row = document.createElement("ul");
+          const worker_username = document.createElement("li");
+          const worker_part = document.createElement("li");
+          const worker_scan = document.createElement("li");
+
+          worker_row.className = "subm-white";
+          worker_username.className = "subm-username";
+          worker_part.className = "subm-part";
+          worker_scan.className = "subm-scan";
+
+          worker_username.innerHTML = workers_on_beacon[i].userName;
+          worker_part.innerHTML = workers_on_beacon[i].partName;
+          worker_scan.innerHTML = "O";
+
+          worker_row.appendChild(worker_username);
+          worker_row.appendChild(worker_part);
+          worker_row.appendChild(worker_scan);
+
+          WorkerStatus.appendChild(worker_row);
+        }
+        for (let i = 0; i < missing_on_beacon.length; i++) {
+          const worker_row = document.createElement("ul");
+          const worker_username = document.createElement("li");
+          const worker_part = document.createElement("li");
+          const worker_scan = document.createElement("li");
+
+          worker_row.className = "subm-white";
+          worker_username.className = "subm-username";
+          worker_part.className = "subm-part";
+          worker_scan.className = "subm-scan";
+
+          worker_username.innerHTML = missing_on_beacon[i].userName;
+          worker_part.innerHTML = missing_on_beacon[i].partName;
+          worker_scan.innerHTML = "X";
+
+          worker_row.appendChild(worker_username);
+          worker_row.appendChild(worker_part);
+          worker_row.appendChild(worker_scan);
+
+          WorkerStatus.appendChild(worker_row);
+        }
         break;
       }
     }
   } else {
+    // console.log("ㄴㄴ");
+    // 넣기전에 한번 초기화
+    BeaconStatus.innerHTML =
+      "<ul class='subm-title'>" +
+      "<li class='subm-name'>이름</li>" +
+      "<li class='subm-temp'>온도(°C)</li>" +
+      "<li class='subm-humi'>습도(%)</li>" +
+      "<li class='subm-batt'>배터리(%)</li>";
     // 오른쪽에 전체 목록 관련으로 바꾸기
     for (let i = 0; i < beacons.length; i++) {
-      if (beacons[i].beaconId == event.target.dataset.id) {
-        // 클릭한 비콘의 정보
-        console.log(beacons[i]);
+      //비콘들 정보 넣기
+      let beacon = beacons[i];
+      let item = document.createElement("ul");
+
+      let name = document.createElement("li");
+      name.className = "subm-name";
+      name.innerHTML = beacon.beaconName;
+      item.appendChild(name);
+
+      let temp = document.createElement("li");
+      temp.className = "subm-temp";
+      temp.innerHTML = beacon.beaconTemperature;
+      item.appendChild(temp);
+
+      let humi = document.createElement("li");
+      humi.className = "subm-humi";
+      humi.innerHTML = beacon.beaconMoisture;
+      item.appendChild(humi);
+
+      let batt = document.createElement("li");
+      batt.className = "subm-batt";
+      batt.innerHTML = beacon.beaconBattery;
+      item.appendChild(batt);
+      BeaconStatus.appendChild(item);
+      // 넣기전에 한번 초기화
+      WorkerStatus.innerHTML =
+        "<ul class='subm-title'>" +
+        "<li class='subm-username'>이름</li>" +
+        "<li class='subm-part'>파트</li>" +
+        "<li class='subm-scan'>스캔 여부</li>";
+
+      // 근무자들 정보 넣기
+      if (beacon.connectWorkers.length) {
+        beacon.connectWorkers.forEach.call(
+          beacon.connectWorkers,
+          function (person) {
+            let Witem = document.createElement("ul");
+
+            let Wname = document.createElement("li");
+            Wname.className = "subm-username";
+            Wname.innerHTML = person.userName;
+            Witem.appendChild(Wname);
+
+            let Wtemp = document.createElement("li");
+            Wtemp.className = "subm-part";
+            Wtemp.innerHTML = person.partName;
+            Witem.appendChild(Wtemp);
+
+            let Whumi = document.createElement("li");
+            Whumi.className = "subm-scan";
+            Whumi.innerHTML = "O";
+            Witem.appendChild(Whumi);
+
+            WorkerStatus.appendChild(Witem);
+          }
+        );
+      }
+      if (beacon.nonConnectWorkers.length) {
+        beacon.nonConnectWorkers.forEach.call(
+          beacon.nonConnectWorkers,
+          function (person) {
+            let Witem = document.createElement("ul");
+
+            let Wname = document.createElement("li");
+            Wname.className = "subm-username";
+            Wname.innerHTML = person.userName;
+            Witem.appendChild(Wname);
+
+            let Wtemp = document.createElement("li");
+            Wtemp.className = "subm-part";
+            Wtemp.innerHTML = person.partName;
+            Witem.appendChild(Wtemp);
+
+            let Whumi = document.createElement("li");
+            Whumi.className = "subm-scan";
+            Whumi.innerHTML = "X";
+            Witem.appendChild(Whumi);
+
+            WorkerStatus.appendChild(Witem);
+          }
+        );
       }
     }
   }
@@ -528,6 +756,106 @@ function Monitor() {
     });
 }
 
+async function render_first() {
+  await fetch("http://k4b101.p.ssafy.io/api/monitoring/beacon", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      beacons = result.data.beacons;
+    });
+  // 넣기전에 한번 초기화
+  BeaconStatus.innerHTML =
+    "<ul class='subm-title'>" +
+    "<li class='subm-name'>이름</li>" +
+    "<li class='subm-temp'>온도(°C)</li>" +
+    "<li class='subm-humi'>습도(%)</li>" +
+    "<li class='subm-batt'>배터리(%)</li>";
+  // 오른쪽에 전체 목록 관련으로 바꾸기
+  for (let i = 0; i < beacons.length; i++) {
+    //비콘들 정보 넣기
+    let beacon = beacons[i];
+    let item = document.createElement("ul");
+
+    let name = document.createElement("li");
+    name.className = "subm-name";
+    name.innerHTML = beacon.beaconName;
+    item.appendChild(name);
+
+    let temp = document.createElement("li");
+    temp.className = "subm-temp";
+    temp.innerHTML = beacon.beaconTemperature;
+    item.appendChild(temp);
+
+    let humi = document.createElement("li");
+    humi.className = "subm-humi";
+    humi.innerHTML = beacon.beaconMoisture;
+    item.appendChild(humi);
+
+    let batt = document.createElement("li");
+    batt.className = "subm-batt";
+    batt.innerHTML = beacon.beaconBattery;
+    item.appendChild(batt);
+    BeaconStatus.appendChild(item);
+    // 넣기전에 한번 초기화
+    WorkerStatus.innerHTML =
+      "<ul class='subm-title'>" +
+      "<li class='subm-username'>이름</li>" +
+      "<li class='subm-part'>파트</li>" +
+      "<li class='subm-scan'>스캔 여부</li>";
+    // 근무자들 정보 넣기
+    if (beacon.connectWorkers.length) {
+      beacon.connectWorkers.forEach.call(
+        beacon.connectWorkers,
+        function (person) {
+          let Witem = document.createElement("ul");
+
+          let Wname = document.createElement("li");
+          Wname.className = "subm-username";
+          Wname.innerHTML = person.userName;
+          Witem.appendChild(Wname);
+
+          let Wtemp = document.createElement("li");
+          Wtemp.className = "subm-part";
+          Wtemp.innerHTML = person.partName;
+          Witem.appendChild(Wtemp);
+
+          let Whumi = document.createElement("li");
+          Whumi.className = "subm-scan";
+          Whumi.innerHTML = "O";
+          Witem.appendChild(Whumi);
+
+          WorkerStatus.appendChild(Witem);
+        }
+      );
+    }
+    if (beacon.nonConnectWorkers.length) {
+      beacon.nonConnectWorkers.forEach.call(
+        beacon.nonConnectWorkers,
+        function (person) {
+          let Witem = document.createElement("ul");
+
+          let Wname = document.createElement("li");
+          Wname.className = "subm-username";
+          Wname.innerHTML = person.userName;
+          Witem.appendChild(Wname);
+
+          let Wtemp = document.createElement("li");
+          Wtemp.className = "subm-part";
+          Wtemp.innerHTML = person.partName;
+          Witem.appendChild(Wtemp);
+
+          let Whumi = document.createElement("li");
+          Whumi.className = "subm-scan";
+          Whumi.innerHTML = "X";
+          Witem.appendChild(Whumi);
+
+          WorkerStatus.appendChild(Witem);
+        }
+      );
+    }
+  }
+}
+
+render_first();
 Monitor();
 setInterval(() => {
   Monitor();

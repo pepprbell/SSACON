@@ -43,7 +43,7 @@ main {
 }
 .BeaconStatus {
   width: 30%;
-  height: 40%;
+  height: 90vh;
   background-color: #f3f6fa;
 }
 
@@ -53,6 +53,7 @@ main {
 
 .subm-n {
   font-weight: bold;
+  border-radius: 10px;
 }
 
 .subm-highlight {
@@ -60,11 +61,23 @@ main {
 }
 
 .subm-container {
+  background-color: #fff;
   text-align: center;
   margin: 0 auto;
-  width: 100%;
+  width: 95%;
+  height: 45%;
+  overflow: scroll;
+  border-radius: 10px;
 }
-
+.subm-container2 {
+  background-color: #fff;
+  text-align: center;
+  margin: 0 auto;
+  width: 95%;
+  height: 37%;
+  overflow: scroll;
+  border-radius: 10px;
+}
 .subm-container ul {
   margin: 0;
   padding: 0;
@@ -78,7 +91,20 @@ main {
   display: inline-block;
   padding: 10px 0;
 }
+/* -------------------------- */
+.subm-container2 ul {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #ccc;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
 
+.subm-container2 li {
+  display: inline-block;
+  padding: 10px 0;
+}
 .subm-header {
   font-weight: bold;
   background-color: #3f72be10;
@@ -92,18 +118,30 @@ main {
 }
 
 .subm-name {
-  width: 30%;
+  width: 40%;
 }
 
 .subm-temp {
-  width: 25%;
+  width: 20%;
 }
 
 .subm-humi {
-  width: 25%;
+  width: 20%;
 }
 
 .subm-batt {
+  width: 20%;
+}
+
+.subm-wname {
+  width: 30%;
+}
+
+.subm-part {
+  width: 40%;
+}
+
+.subm-conn {
   width: 20%;
 }
 
@@ -155,53 +193,6 @@ monitortitle {
   padding: 10px 20px;
   /* text-align: center; */
 }
-
-/* 모니터링 화면 1안 - 비콘 목록 나열 */
-/* .Beacon__list {
-  width: 90%;
-  margin: auto;
-}
-
-.Beacon__card {
-  width: 30%;
-  background-color: white;
-  border-radius: 10px;
-  border: 1px solid #3f72be;
-  padding: 1%;
-}
-
-.Beacon__card__header {
-  display: flex;
-}
-
-.beacon__img {
-  width: 50%;
-}
-
-.Beacon__card__info {
-  font-size: 10px;
-}
-
-.Beacon__card__title {
-  text-align: center;
-  font-size: 9px;
-}
-
-.Beacon__card__workers {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.Beacon__card__worker {
-  width: 18%;
-  height: 10px;
-  background-color: #3f72be;
-  border-radius: 50%;
-  margin: 1%;
-} */
-
-/* 모니터링 화면 2안 - 맵 */
 
 .BeaconList__lineName {
   width: 100%;
@@ -269,6 +260,11 @@ monitortitle {
   opacity: 0.4;
 }
 
+.invisible {
+  display: none;
+  visibility: hidden;
+}
+
 /* 
 @keyframes goodBeacon {
   from {
@@ -296,12 +292,55 @@ monitortitle {
     box-shadow: 0 0 0 4rem transparent;
   }
 }
-
+.beaconanimation {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  padding: 2%;
+  /* background-color:#f3f6fa ; */
+}
+.bodydetailimgdiv {
+  width: 50%;
+  height: 100%;
+  display: block;
+  float: left;
+}
+/* .headerbackground {
+  display: block;
+  width: 100%;
+  height: 10vh;
+} */
+.bodydetail {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* background-color: white; */
+  color: #3f72be;
+}
+/* .BeaconData {
+  margin: 0% 3%;
+  height: 100%;
+} */
 .beaconmoving {
-  width: 5vw;
+  width: 50%;
+  height: 50%;
   z-index: 2;
   opacity: 1;
   animation: jump 1.5s linear infinite;
+}
+/* .infocard {
+} */
+.Beacondataleft,
+.Beacondataright {
+  width: 50%;
+  height: 50%;
+}
+.BeacondataDetail {
+  display: flex;
+  background-color: skyblue;
+  border-radius: 10px;
+  color: white;
+  width: 100%;
 }
 
 @keyframes jump {
@@ -311,4 +350,33 @@ monitortitle {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* 워커리스트 */
+#BeaconWorker {
+  height: 40vh;
+  overflow-y: auto;
+}
+
+.subm-username {
+  width: 40%;
+}
+
+.subm-part {
+  width: 30%;
+}
+
+.subm-scan {
+  width: 30%;
+}
+
+.subm-white {
+  background-color: white;
+}
+
+.subm-title {
+  /* background-color: #3f72be30; */
+  background-color: skyblue;
+  color:white;
+  font-weight: bold;
 }
