@@ -2,8 +2,8 @@ document.getElementById("closeMessage").addEventListener("click", closeModal)
 document.getElementById("seeAll").addEventListener("click", seeAll)
 document.getElementById("submitMessage").addEventListener("click", sendMessage)
 
-// let userId = JSON.parse(window.localStorage.getItem("userInfo")).data.userId;
-let userId = "3"
+let userId = JSON.parse(window.localStorage.getItem("userInfo")).data.userId;
+// let userId = "3"
 
 // let beaconHere = [{ "beaconName" : "121212341234123123213123", "beaconId": "12id", },{ "beaconName" : "13", "beaconId": "13id", },{ "beaconName" : "14", "beaconId": "14id", },{ "beaconName" : "15", "beaconId": "15id", },{ "beaconName" : "16", "beaconId": "16id", },{ "beaconName" : "17", "beaconId": "17id", },{ "beaconName" : "18", "beaconId": "18id", },{ "beaconName" : "19", "beaconId": "19id", },{ "beaconName" : "20", "beaconId": "20id", },{ "beaconName" : "21", "beaconId": "21id", },{ "beaconName" : "22", "beaconId": "22id", },{ "beaconName" : "23", "beaconId": "23id", },{ "beaconName" : "24", "beaconId": "24id", },{ "beaconName" : "25", "beaconId": "25id", },{ "beaconName" : "26", "beaconId": "26id", },{ "beaconName" : "27", "beaconId": "27id", },{ "beaconName" : "28", "beaconId": "28id", },{ "beaconName" : "29", "beaconId": "29id", },{ "beaconName" : "30", "beaconId": "30id", },{ "beaconName" : "31", "beaconId": "31id", },{ "beaconName" : "32", "beaconId": "32id", },{ "beaconName" : "33", "beaconId": "33id", },{ "beaconName" : "34", "beaconId": "34id", },{ "beaconName" : "35", "beaconId": "35id", },{ "beaconName" : "36", "beaconId": "36id", },{ "beaconName" : "37", "beaconId": "37id", },{ "beaconName" : "38", "beaconId": "38id", },{ "beaconName" : "39", "beaconId": "39id", },{ "beaconName" : "40", "beaconId": "40id", },{ "beaconName" : "41", "beaconId": "41id", },{ "beaconName" : "42", "beaconId": "42id", },{ "beaconName" : "43", "beaconId": "43id", },{ "beaconName" : "44", "beaconId": "44id", },{ "beaconName" : "45", "beaconId": "45id", },{ "beaconName" : "46", "beaconId": "46id", },{ "beaconName" : "47", "beaconId": "47id", },{ "beaconName" : "48", "beaconId": "48id", },{ "beaconName" : "49", "beaconId": "49id", },{ "beaconName" : "50", "beaconId": "50id", },{ "beaconName" : "51", "beaconId": "51id", },{ "beaconName" : "52", "beaconId": "52id", },{ "beaconName" : "53", "beaconId": "53id", },{ "beaconName" : "54", "beaconId": "54id", },{ "beaconName" : "55", "beaconId": "55id", },{ "beaconName" : "56", "beaconId": "56id", },{ "beaconName" : "57", "beaconId": "57id", },{ "beaconName" : "58", "beaconId": "58id", },{ "beaconName" : "59", "beaconId": "59id", },]
 
@@ -40,7 +40,7 @@ function scanBeacon() {
 }
 
 setTimeout(scanBeacon, 0)
-setInterval(scanBeacon, 3000)
+let scanning = setInterval(scanBeacon, 3000)
 
 // 모든 위치의 비콘 검색 및 아이콘 생성
 fetch("http://k4b101.p.ssafy.io/api/beacon/list", {method: "GET",})
@@ -70,12 +70,15 @@ function seeAll() {
   if (everyBeacon) {
     btn.innerHTML = "현재 설비 보기"
     everyBeacon = false
+    clearInterval(scanning)
     viewAll.classList.remove("invisible")
     viewHere.classList.add("invisible")
   }
   else {
     btn.innerHTML = "전체 설비 보기"
     everyBeacon = true
+    setTimeout(scanBeacon, 0)
+    setInterval(scanBeacon, 3000)
     viewHere.classList.remove("invisible")
     viewAll.classList.add("invisible")
   }
