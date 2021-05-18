@@ -35,13 +35,84 @@ beacon__map.addEventListener("click", (event) => {
       if (beacons[i].beaconId == event.target.dataset.id) {
         // 클릭한 비콘의 정보
         console.log(beacons[i]);
-        let BeaconMovingImg = document.createElement("img");
-        BeaconMovingImg.src = "../../assets/pics/buildthing.png";
-        BeaconMovingImg.className = "beaconmoving";
-        BeaconAnimation.appendChild(BeaconMovingImg);
-        let data = document.createElement("div");
-        data.innerHTML = beacons[i];
-        content.appendChild(data);
+        console.log(document.getElementsByClassName("beaconmoving").length);
+        if (document.getElementsByClassName("beaconmoving").length == 0) {
+          let body = document.createElement("div"); //몸통
+          let BeacondataName = beacons[i].beaconName;
+          let BeaconBattery = beacons[i].beaconBattery;
+          let BeaconId = beacons[i].beaconId;
+          let BeaconMoisture = beacons[i].beaconMoisture;
+          let BeaconTemperature = beacons[i].beaconTemperature;
+          let BeaconTempMax = beacons[i].tempMax;
+          let BeaconTempMin = beacons[i].tempMin;
+
+          let bodyheader = document.createElement("div");
+          let headerbackground = document.createElement("img");
+
+          headerbackground.src = "../../assets/pics/background2.jpg";
+          headerbackground.className = "headerbackground";
+          // bodyheader.appendChild(headerbackground);
+          BeaconAnimation.appendChild(bodyheader);
+
+          //detail
+          let bodydetail = document.createElement("div");
+          bodydetail.className = "bodydetail";
+          let BeaconMovingImg = document.createElement("img");
+          let bodydetailimgdiv = document.createElement("div");
+
+          bodydetailimgdiv.className = "bodydetailimgdiv";
+          let BeaconName = document.createElement("div");
+          BeaconMovingImg.src = "../../assets/pics/buildthing.png";
+          BeaconMovingImg.className = "beaconmoving";
+          bodydetailimgdiv.appendChild(BeaconMovingImg);
+          BeaconName.className = "beaconname";
+          BeaconName.innerHTML = `<div>
+          <h1>${BeacondataName}</h1>
+          <p>비콘ID : ${BeaconId}</p>
+          </div>`;
+
+          bodydetail.appendChild(bodydetailimgdiv);
+          bodydetail.appendChild(BeaconName);
+          BeaconAnimation.appendChild(bodydetail);
+
+          //beacondataa
+          let BeaconData = document.createElement("div");
+          let BeacondataDetail = document.createElement("div");
+          let BeacondataBattery = document.createElement("div");
+          let BeacondataTemperature = document.createElement("div");
+          let BeacondataMoisture = document.createElement("div");
+          let BeacondataTemperatureAlarm = document.createElement("div");
+          let Beacondataleft = document.createElement("div");
+          let Beacondataright = document.createElement("div");
+          Beacondataleft.className = "Beacondataleft";
+          Beacondataright.className = "Beacondataright";
+          BeaconData.className = "BeaconData";
+          BeacondataDetail.className = "BeacondataDetail ";
+          BeacondataBattery.className = "BeacondataBattery infocard";
+          BeacondataMoisture.className = "BeacondataMoisture infocard";
+          BeacondataTemperature.className = "BeacondataTemperature infocard";
+          BeacondataTemperatureAlarm.className =
+            "BeacondataTemperatureAlarm infocard";
+          BeacondataBattery.innerHTML = `  <h2>${BeaconBattery}%</h2>
+          <p>Battery</p>`;
+          BeacondataTemperature.innerHTML = `  <h2>${BeaconTemperature}℃</h2>
+          <p>Temperature</p>`;
+          BeacondataMoisture.innerHTML = `  <h2>${BeaconMoisture}%</h2>
+          <p>Moisture</p>`;
+          BeacondataTemperatureAlarm.innerHTML = `  <h2>${BeaconTempMax}℃ ~ ${BeaconTempMin}℃</h2>
+          <p>Warning range</p>`;
+          Beacondataleft.appendChild(BeacondataBattery);
+          Beacondataright.appendChild(BeacondataTemperature);
+          Beacondataleft.appendChild(BeacondataMoisture);
+          Beacondataright.appendChild(BeacondataTemperatureAlarm);
+          BeacondataDetail.appendChild(Beacondataleft);
+          BeacondataDetail.appendChild(Beacondataright);
+          BeaconData.appendChild(BeacondataDetail);
+          BeaconAnimation.appendChild(BeaconData);
+        }
+        // let data = document.createElement("div");
+        // data.innerHTML = beacons[i];
+        // content.appendChild(data);
         // 오른쪽에 자료를 넣기
 
         break;

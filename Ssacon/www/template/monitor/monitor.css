@@ -53,6 +53,7 @@ main {
 
 .subm-n {
   font-weight: bold;
+  border-radius: 10px;
 }
 
 .subm-highlight {
@@ -296,12 +297,49 @@ monitortitle {
     box-shadow: 0 0 0 4rem transparent;
   }
 }
-
+.beaconanimation {
+  width: 95%;
+  height: 40vh;
+  border-radius: 10px;
+  /* background-color:#f3f6fa ; */
+}
+.bodydetailimgdiv {
+  width: 50%;
+  height: 20%;
+  display: block;
+  float: left;
+}
+/* .headerbackground {
+  display: block;
+  width: 100%;
+  height: 10vh;
+} */
+.bodydetail {
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+  color: #3f72be;
+}
 .beaconmoving {
-  width: 5vw;
+  width: 50%;
+  height: 50%;
   z-index: 2;
   opacity: 1;
   animation: jump 1.5s linear infinite;
+}
+.infocard {
+}
+.Beacondataleft,
+.Beacondataright {
+  width: 50%;
+  height: 50%;
+}
+.BeacondataDetail {
+  display: flex;
+  background-color: skyblue;
+  color: white;
+  width: 100%;
+  height: 50%;
 }
 
 @keyframes jump {
