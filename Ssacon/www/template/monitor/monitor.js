@@ -198,6 +198,11 @@ beacon__map.addEventListener("click", (event) => {
       "<li class='subm-temp'>온도(°C)</li>" +
       "<li class='subm-humi'>습도(%)</li>" +
       "<li class='subm-batt'>배터리(%)</li>";
+    WorkerStatus.innerHTML =
+      "<ul class='subm-title'>" +
+      "<li class='subm-username'>이름</li>" +
+      "<li class='subm-part'>파트</li>" +
+      "<li class='subm-scan'>스캔 여부</li>";
     // 오른쪽에 전체 목록 관련으로 바꾸기
     for (let i = 0; i < beacons.length; i++) {
       //비콘들 정보 넣기
@@ -225,11 +230,7 @@ beacon__map.addEventListener("click", (event) => {
       item.appendChild(batt);
       BeaconStatus.appendChild(item);
       // 넣기전에 한번 초기화
-      WorkerStatus.innerHTML =
-        "<ul class='subm-title'>" +
-        "<li class='subm-username'>이름</li>" +
-        "<li class='subm-part'>파트</li>" +
-        "<li class='subm-scan'>스캔 여부</li>";
+     
 
       // 근무자들 정보 넣기
       if (beacon.connectWorkers.length) {
@@ -252,7 +253,7 @@ beacon__map.addEventListener("click", (event) => {
             Whumi.className = "subm-scan";
             Whumi.innerHTML = "O";
             Witem.appendChild(Whumi);
-
+            console.log(Witem)
             WorkerStatus.appendChild(Witem);
           }
         );
@@ -561,6 +562,7 @@ function Monitor() {
         .then((response) => response.json())
         .then((result) => {
           alarmlist = result.data;
+          alarmList.innerHTML = "";
           alarmlist.forEach((alarm) => {
             let item = document.createElement("div");
             let left = document.createElement("div");
@@ -725,7 +727,7 @@ function Monitor() {
                 "?id=" +
                 alarm.id;
             });
-
+            // console.log(alarmList);
             alarmList.appendChild(item);
           });
           function timeForToday(value) {
@@ -769,6 +771,12 @@ async function render_first() {
     "<li class='subm-temp'>온도(°C)</li>" +
     "<li class='subm-humi'>습도(%)</li>" +
     "<li class='subm-batt'>배터리(%)</li>";
+  // 넣기전에 한번 초기화
+  WorkerStatus.innerHTML =
+    "<ul class='subm-title'>" +
+    "<li class='subm-username'>이름</li>" +
+    "<li class='subm-part'>파트</li>" +
+    "<li class='subm-scan'>스캔 여부</li>";
   // 오른쪽에 전체 목록 관련으로 바꾸기
   for (let i = 0; i < beacons.length; i++) {
     //비콘들 정보 넣기
@@ -795,12 +803,7 @@ async function render_first() {
     batt.innerHTML = beacon.beaconBattery;
     item.appendChild(batt);
     BeaconStatus.appendChild(item);
-    // 넣기전에 한번 초기화
-    WorkerStatus.innerHTML =
-      "<ul class='subm-title'>" +
-      "<li class='subm-username'>이름</li>" +
-      "<li class='subm-part'>파트</li>" +
-      "<li class='subm-scan'>스캔 여부</li>";
+    
     // 근무자들 정보 넣기
     if (beacon.connectWorkers.length) {
       beacon.connectWorkers.forEach.call(
@@ -847,8 +850,9 @@ async function render_first() {
           Whumi.className = "subm-scan";
           Whumi.innerHTML = "X";
           Witem.appendChild(Whumi);
-
+          console.log(Witem)
           WorkerStatus.appendChild(Witem);
+          console.log(WorkerStatus)
         }
       );
     }

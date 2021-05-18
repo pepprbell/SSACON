@@ -187,17 +187,44 @@ function showAlarmList(alarmlist) {
     
         let time = document.createElement("div")
         time.className = "time"
-        time.innerHTML = alarm.time
+        let datatime = timeForToday(alarm.time)
+        time.innerHTML = datatime
         right.appendChild(time)
     
         item.appendChild(left)
         item.appendChild(right)
         
         item.addEventListener('click', () => {
-            console.log(alarm);
-            console.log(alarm.id);
-            window.location.href="file:///android_asset/www/template/alarm/alarmdetail.html?" + "id=" + alarm.id ;
+            window.location.href="file:///android_asset/www/template/alarm/alarmdetail.html" + "?id=" + alarm.id ;
         })
         body.appendChild(item)
     })
 }
+
+function timeForToday(value) {
+    const today = new Date();
+    const timeValue = new Date(value);
+
+    const betweenTime = Math.floor(
+      (today.getTime() - timeValue.getTime()) / 1000 / 60
+    );
+    if (betweenTime < 1) return "방금전";
+    if (betweenTime < 60) {
+      return `${betweenTime}분전`;
+    }
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) {
+      return `${betweenTimeDay}일전`;
+    }
+
+    return `${Math.floor(betweenTimeDay / 365)}년전`;
+  }
+
+
+

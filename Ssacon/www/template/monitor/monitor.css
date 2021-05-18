@@ -13,13 +13,16 @@ header {
   align-items: center;
   background-color: white;
 }
+body {
+  margin: 0px;
+}
 
 main {
   position: relative;
   display: flex;
   flex-direction: row;
   background-color: #f3f6fa;
-  margin-top: 10vh;
+  margin-top: 10%;
 }
 
 .BeaconList {
@@ -377,6 +380,6 @@ monitortitle {
 .subm-title {
   /* background-color: #3f72be30; */
   background-color: skyblue;
-  color:white;
+  color: white;
   font-weight: bold;
 }
