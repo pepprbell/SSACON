@@ -16,9 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class MonitoringServiceImpl implements MonitoringService{
@@ -36,6 +34,8 @@ public class MonitoringServiceImpl implements MonitoringService{
         MonitoringResponse ret = new MonitoringResponse();
         List<Beacon> beacons = beaconRepository.findAll();
         List<BeaconMonitoring> finRet = new ArrayList<>();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
 
         MonitoringTotal fin = new MonitoringTotal();
 

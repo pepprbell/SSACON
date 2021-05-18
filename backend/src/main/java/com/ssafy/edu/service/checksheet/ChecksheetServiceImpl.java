@@ -14,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ChecksheetServiceImpl implements ChecksheetService{
@@ -35,6 +32,8 @@ public class ChecksheetServiceImpl implements ChecksheetService{
 
     @Override
     public ResponseEntity<ChecksheetResponse> sendChecksheet(ChecksheetRequest checksheet){
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         ChecksheetResponse ret = new ChecksheetResponse();
         Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(checksheet.getBeaconId());
         Date now = Date.from(Instant.now());
@@ -99,6 +98,8 @@ public class ChecksheetServiceImpl implements ChecksheetService{
     @Override
     public ResponseEntity<ChecksheetResponse> getChecksheet(){
         ChecksheetResponse ret = new ChecksheetResponse();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         List<Checksheet> checksheets = checksheetRepository.findAll();
         List<ChecksheetListResponse> tmp = new ArrayList<>();
         for(Checksheet i: checksheets){

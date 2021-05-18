@@ -20,10 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class MessageServiceImpl implements MessageService{
@@ -45,6 +42,8 @@ public class MessageServiceImpl implements MessageService{
     @Override
     public ResponseEntity<MessageResponse> createMessage(MessageCreateForm messageCreateForm) {
         MessageResponse ret = new MessageResponse();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(messageCreateForm.getBeaconId());
         Optional<User> userOpt = userRepository.findByUserId(messageCreateForm.getUserId());
         Date now = Date.from(Instant.now());
@@ -94,6 +93,8 @@ public class MessageServiceImpl implements MessageService{
     @Override
     public ResponseEntity<MessageResponse> getMessageUser(String userId){
         MessageResponse ret = new MessageResponse();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         Optional<User> userOpt = userRepository.findByUserId(userId);
         List<MessageBeacon> fin = new ArrayList<>();
         Date now = Date.from(Instant.now());

@@ -60,6 +60,8 @@ public class BeaconServiceImpl implements BeaconService{
     @Override
     public ResponseEntity<BeaconResponse> getBeaconAll(){
         BeaconResponse ret = new BeaconResponse();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         List<Beacon> beacons = beaconRepository.findAll();
         BeaconList beaconList = new BeaconList();
         LineInfo lines = new LineInfo();
@@ -107,6 +109,8 @@ public class BeaconServiceImpl implements BeaconService{
     @Override
     public ResponseEntity<BeaconResponse> createBeacon(String id, BeaconCreateRequest beaconCreateRequest) {
         BeaconResponse ret = new BeaconResponse();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         Beacon tmp = Beacon.builder()
                 .beaconId(id)
                 .line(beaconCreateRequest.getLine())
@@ -131,6 +135,8 @@ public class BeaconServiceImpl implements BeaconService{
     @Override
     public ResponseEntity<BeaconResponse> updateBeacon(String id, BeaconCreateRequest beaconCreateRequest) {
         BeaconResponse ret = new BeaconResponse();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(id);
         if(beaconOpt.isPresent()) {
             beaconOpt.get().setLine(beaconCreateRequest.getLine());
@@ -157,6 +163,8 @@ public class BeaconServiceImpl implements BeaconService{
         BeaconResponse ret = new BeaconResponse();
 
         List<AlarmResultResponse> scanRet = new ArrayList<>();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
 
         Optional<User> userOpt = userRepository.findByUserId(userid);
         if(userOpt.isPresent()) {
@@ -232,8 +240,8 @@ public class BeaconServiceImpl implements BeaconService{
                         List<Alarm> beaconAlarm = alarmRepository.findByTypeAndBeaconId("warning", wBeacon.getBeaconId());
                         if(!beaconAlarm.isEmpty()) {
                             Alarm last = beaconAlarm.get(beaconAlarm.size() - 1);
-                            if ((i.getHumidity() < wBeacon.getHumidtyMin() || i.getHumidity() > wBeacon.getHumidtyMax())
-                                    || (i.getTemperature() < wBeacon.getTempMin() || i.getTemperature() > wBeacon.getTempMax())) {
+                            if ( i.getHumidity() < wBeacon.getHumidtyMin() || i.getHumidity() > wBeacon.getHumidtyMax()
+                                    || i.getTemperature() < wBeacon.getTempMin() || i.getTemperature() > wBeacon.getTempMax() ) {
 
                                 if (now.getTime() - last.getTime().getTime() > 600000) {
                                     Alarm w = Alarm.builder()
@@ -288,8 +296,8 @@ public class BeaconServiceImpl implements BeaconService{
                             }
                         }
                         else{
-                            if ((i.getHumidity() < wBeacon.getHumidtyMin() || i.getHumidity() > wBeacon.getHumidtyMax())
-                                    || (i.getTemperature() < wBeacon.getTempMax() || i.getTemperature() > wBeacon.getTempMax())) {
+                            if (i.getHumidity() < wBeacon.getHumidtyMin() || i.getHumidity() > wBeacon.getHumidtyMax()
+                                    || i.getTemperature() < wBeacon.getTempMin() || i.getTemperature() > wBeacon.getTempMax()) {
                                 Alarm w = Alarm.builder()
                                         .type("warning")
                                         .line(wBeacon.getLine())
@@ -495,6 +503,8 @@ public class BeaconServiceImpl implements BeaconService{
     @Override
     public ResponseEntity<BeaconResponse> deleteBeacon(String beaconId){
         BeaconResponse ret = new BeaconResponse();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         Optional<Beacon> beaconOpt = beaconRepository.findByBeaconId(beaconId);
         if(beaconOpt.isPresent()){
             beaconRepository.delete(beaconOpt.get());

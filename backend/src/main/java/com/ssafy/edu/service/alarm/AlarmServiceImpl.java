@@ -12,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AlarmServiceImpl implements AlarmService{
@@ -26,6 +24,8 @@ public class AlarmServiceImpl implements AlarmService{
 
     @Override
     public ResponseEntity<AlarmResponse> getAlarmAll(String userId){
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         AlarmResponse ret = new AlarmResponse();
         List<Alarm> alarms = alarmRepository.findByUserIdOrderByTimeDesc(userId);
         List<AlarmResultResponse> alarmResult = new ArrayList<>();
@@ -58,6 +58,8 @@ public class AlarmServiceImpl implements AlarmService{
     @Override
     public ResponseEntity<AlarmResponse> getAlarmOne(Long alarmId){
         AlarmResponse ret = new AlarmResponse();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         Optional<Alarm> alarm = alarmRepository.findById(alarmId);
         AlarmResultResponse tmp = new AlarmResultResponse();
         if(alarm.isPresent()){
@@ -92,6 +94,8 @@ public class AlarmServiceImpl implements AlarmService{
         AlarmResponse ret = new AlarmResponse();
         Optional<User> userOpt = userRepository.findByUserId(userId);
         Optional<Alarm> alarmOpt = alarmRepository.findById(alarmId);
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         if(userOpt.isPresent() && alarmOpt.isPresent() && userOpt.get().getUserId() == alarmOpt.get().getUserId()){
             alarmRepository.delete(alarmOpt.get());
             ret.status = true;
@@ -105,6 +109,8 @@ public class AlarmServiceImpl implements AlarmService{
     @Override
     public ResponseEntity<AlarmResponse> getAdminAlarm(String userId){
         AlarmResponse ret = new AlarmResponse();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         Optional<User> userOpt = userRepository.findByUserId(userId);
         if(userOpt.isPresent()){
             if(userOpt.get().isAdmin()){

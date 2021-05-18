@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -22,6 +24,9 @@ public class UserServiceImpl implements UserService{
     public ResponseEntity<UserResponse> login(LoginRequest loginInfo){
         UserResponse ret = new UserResponse();
         LoginResponse re = new LoginResponse();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+
         Optional<User> tmp = userRepository.findByUserId(loginInfo.getUserid());
         if(tmp.isPresent()){
             String tmppw = loginInfo.getPassword();
@@ -51,6 +56,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public ResponseEntity<UserResponse> logout(String userId){
         UserResponse ret = new UserResponse();
+        Locale.setDefault(Locale.KOREA);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         Optional<User> tmp = userRepository.findByUserId(userId);
         if(tmp.isPresent() && tmp.get().isLogin()){
             tmp.get().setLogin(false);
