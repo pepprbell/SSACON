@@ -204,6 +204,7 @@ public class BeaconServiceImpl implements BeaconService{
                                                 .type("attendance")
                                                 .line(beaconOpt.get().getLine())
                                                 .session(e.getSession())
+                                                .userId(userOpt.get().getUserId())
                                                 .time(now)
                                                 .build();
                                         Alarm l = alarmRepository.save(tmpAttend);
