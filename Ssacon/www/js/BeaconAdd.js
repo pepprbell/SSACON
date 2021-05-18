@@ -181,7 +181,7 @@ var beaconAdd = {
     console.log(connection || null);
     connection.connect()
     connection.on('connect', async function (beaconAddInfo) {
-      document.querySelector('.loading_bg').classList.remove('no_loading_bg')
+      // document.querySelector('.loading_bg').classList.remove('no_loading_bg')
       // await connection.changeName(values.equipment)
       await connection.changeTxPower(TxPower.indexOf(values.signalPower))
       await connection.changeSensorInterval(values.sensing)
@@ -206,7 +206,6 @@ var beaconAdd = {
           const btn = document.getElementById('cu_btn');
           btn.className = 'nothing'
           beaconAddInfo = null;
-          // 모달끄기
           document.querySelector('.modal-bg').classList.remove('bg-active')
           document.querySelector('.modal_body').classList.remove('modal_body_hide')
         })
@@ -243,7 +242,7 @@ var beaconAdd = {
       console.log('disconnect', isTimeout, errorMessage)
       console.log('isConnected', connection.isConnected)
     })
-    document.querySelector('.loading_bg').classList.add('no_loading_bg')
+    // document.querySelector('.loading_bg').classList.add('no_loading_bg')
     document.getElementById('beacon_c_container').innerHTML = ''
     this.bleManager.startScan()
   },
@@ -490,7 +489,6 @@ function line_option() {
   const new_options = lineEquipment[option]
   const line2 = document.getElementById('beacon_equipment')
   let options = ``
-
   new_options.forEach(e => {
     options += `<option value="${e}">${e}</option>`
   });
