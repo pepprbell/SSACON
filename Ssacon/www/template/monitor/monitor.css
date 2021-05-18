@@ -118,19 +118,19 @@ main {
 }
 
 .subm-name {
-  width: 46%;
+  width: 40%;
 }
 
 .subm-temp {
-  width: 17%;
+  width: 20%;
 }
 
 .subm-humi {
-  width: 17%;
+  width: 20%;
 }
 
 .subm-batt {
-  width: 30%;
+  width: 20%;
 }
 
 .subm-wname {
@@ -372,4 +372,11 @@ monitortitle {
 
 .subm-white {
   background-color: white;
+}
+
+.subm-title {
+  /* background-color: #3f72be30; */
+  background-color: skyblue;
+  color:white;
+  font-weight: bold;
 }
