@@ -550,7 +550,7 @@ function Monitor() {
           });
         }
       });
-    });
+    })
   .then(() => {
     // fetch(알람다가져온후) 거기에 기존에잇느거 지우고 다시 넣기
     let alarmUserInfo = window.localStorage.getItem("userInfo");
