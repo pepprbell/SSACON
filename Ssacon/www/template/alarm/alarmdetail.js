@@ -43,7 +43,7 @@ function alarmSep(alarm) {
         
         let description = document.createElement("div")
             description.className ="description"
-            description.innerHTML= alarm.line+ " " + alarm.equipment+ " " + alarm.description + " - " + alarm.writer
+            description.innerHTML= " [ " + alarm.writer + " ] " + alarm.line+ "-" + alarm.equipment+ " " + alarm.description
         content.appendChild(description)
     }
     else if(alarm.type == "checksheet") {
@@ -56,7 +56,7 @@ function alarmSep(alarm) {
     
             let description = document.createElement("div")
             description.className = "description"
-            description.innerHTML = alarm.submissionBeaconId + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+            description.innerHTML = alarm.line + " 라인 " + alarm.equipment + " 설비 체크시트 제출 확인"
             content.appendChild(description)
         }
         else {
@@ -70,7 +70,7 @@ function alarmSep(alarm) {
     
             let description = document.createElement("div")
             description.className = "description"
-            description.innerHTML = alarm.submissionBeaconId + " 위치에서 " + alarm.properBeaconId + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+            description.innerHTML = alarm.line + " 라인 " + alarm.equipment + " 설비 체크시트 제출 확인(위치 재확인 요망)"
             content.appendChild(description)
         }
     }
@@ -79,18 +79,18 @@ function alarmSep(alarm) {
     
         let type = document.createElement("div")
         type.className ="type yellow"
-        type.innerHTML= "경고"
+        type.innerHTML= "위험"
         content.appendChild(type)
     
         let description = document.createElement("div")
         description.className ="description"
-        description.innerHTML= alarm.location + " 위치의 " + alarm.equipment + "설비 온도가 적정범위를 벗어났습니다. 점검해주세요" 
+        description.innerHTML= alarm.line + " 라인 " + alarm.equipment + "설비 온도가 적정범위를 벗어났습니다. 점검해주세요"
         content.appendChild(description)
     }
     else if(alarm.type == "attendance") {
         let type = document.createElement("div")
         type.className ="type"
-        type.innerHTML= "출석 확인"
+        type.innerHTML= "교육장 출석"
         content.appendChild(type)
     
         let description = document.createElement("div")
@@ -107,9 +107,7 @@ function alarmSep(alarm) {
     
         let description = document.createElement("div")
         description.className ="description"
-        description.innerHTML= alarm.line+ " " + alarm.location + " 위치 " + 
-        alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + 
-        "%입니다. 점검해주세요." 
+        description.innerHTML= alarm.line+ "-" + alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + "%입니다. 점검해주세요."
         content.appendChild(description)
     } else {
         alert('존재하지 않은 비콘입니다.')

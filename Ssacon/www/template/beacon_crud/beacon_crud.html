@@ -8,302 +8,279 @@
   <title>비콘 추가</title>
 </head>
 <body>
-  <div class="loading_bg no_loading_bg">
+  <!-- <div class="loading_bg no_loading_bg">
     <div class="loading"></div>
-  </div>
-
+  </div> -->
 
   <div class="title">
     <div class="back_btn" id="beaconBackBtt"></div>
-    <div class="title_content">
-      <div class="title_content_1">비콘 리스트</div>
-      <div class="title_content_2">
-        스캔중
-        <div class="loader"></div>
+      <div class="title_content">
+        <div class="title_content_1">비콘 리스트</div>
+        <div class="title_content_2">스캔중<div class="loader"></div>
       </div>
     </div>
-    <div class="title_div"></div>
+  </div>
+  <div class="title_div"></div>
+
 
     <div id="beacon_c_container">
-      <!-- <div class="beacon_card_body">
-      <div class="top">
-        <div class="left">
-          <img class="beacon_img" src="../../image/beacon.png" alt="비콘이미지">
-        </div>
+      <div class="beacon_card_body">
+        <div class="top">
+          <div class="left">
+            <img class="beacon_img" src="../../image/beacon.png" alt="비콘이미지">
+          </div>
 
-        <div class="center">
-          <div id="${beacon.id}name" class="beacon_title">TAB용접기</div>
-          <div>
-            <span class="beacon_opthion_name">RSSI</span>
-            <span id="${beacon.id}_rssi" class="beacon_opthion_value">-4dBm</span>
-          </div>
-          <div>
-            <span class="beacon_opthion_name">Adv. 주기</span>
-            <span id="${beacon.id}_advertising" class="beacon_opthion_value">4sec</span>
-          </div>
-          <div>
-            <span class="beacon_opthion_name">센싱 주기</span>
-            <span id="${beacon.id}_sensing" class="beacon_opthion_value">3sec</span>
-          </div>
-          <br>
-        </div>
-
-        <div class="right">
-          <div class="batteryContainer">
-            <div class="batteryOuter">
-              <div id="batteryLevel"></div>
+          <div class="center">
+            <div id="${beacon.id}name" class="beacon_title">TAB용접기</div>
+            <div>
+              <span class="beacon_opthion_name">RSSI</span>
+              <span id="${beacon.id}_rssi" class="beacon_opthion_value">-4dBm</span>
             </div>
-            <div class="batteryBump"></div>
+            <div>
+              <span class="beacon_opthion_name">Adv. 주기</span>
+              <span id="${beacon.id}_advertising" class="beacon_opthion_value">4sec</span>
+            </div>
+            <div>
+              <span class="beacon_opthion_name">센싱 주기</span>
+              <span id="${beacon.id}_sensing" class="beacon_opthion_value">3sec</span>
+            </div>
+            <br>
           </div>
-          <div id="${beacon.id}_vbatt" class="beacon_vbatt">22%</div>
-        </div>
-      </div>
-      <div class="bottom">
-        <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
-      </div>
-    </div> -->
-      <!-- 
-    <div class="beacon_card_body">
-      <div class="top">
-        <div class="left">
-          <div class="beacon_img"></div>
-          <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
-        </div>
 
-        <div class="center">
-          <div id="${beacon.id}name" class="beacon_title">장비3</div>
-          <div>
-            <span class="beacon_opthion_name">RSSI</span>
-            <span id="${beacon.id}_rssi" class="beacon_opthion_value">-4dBm</span>
+          <div class="right">
+            <div class="batteryContainer">
+              <div class="batteryOuter">
+                <div id="batteryLevel"></div>
+              </div>
+              <div class="batteryBump"></div>
+            </div>
+            <div id="${beacon.id}_vbatt" class="beacon_vbatt">22%</div>
           </div>
-          <div>
-            <span class="beacon_opthion_name">Adv. 주기</span>
-            <span id="${beacon.id}_advertising" class="beacon_opthion_value">4sec</span>
-          </div>
-          <div>
-            <span class="beacon_opthion_name">센싱 주기</span>
-            <span id="${beacon.id}_sensing" class="beacon_opthion_value">3sec</span>
-          </div>
-          <br>
         </div>
+        <div class="bottom">
+          <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
+        </div>
+      </div>
+  <!-- 
+      <div class="beacon_card_body">
+        <div class="top">
+          <div class="left">
+            <div class="beacon_img"></div>
+            <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
+          </div>
 
-        <div class="right">
-          <div id="${beacon.id}_vbatt" class="beacon_vbatt">22%</div>
+          <div class="center">
+            <div id="${beacon.id}name" class="beacon_title">장비3</div>
+            <div>
+              <span class="beacon_opthion_name">RSSI</span>
+              <span id="${beacon.id}_rssi" class="beacon_opthion_value">-4dBm</span>
+            </div>
+            <div>
+              <span class="beacon_opthion_name">Adv. 주기</span>
+              <span id="${beacon.id}_advertising" class="beacon_opthion_value">4sec</span>
+            </div>
+            <div>
+              <span class="beacon_opthion_name">센싱 주기</span>
+              <span id="${beacon.id}_sensing" class="beacon_opthion_value">3sec</span>
+            </div>
+            <br>
+          </div>
+
+          <div class="right">
+            <div id="${beacon.id}_vbatt" class="beacon_vbatt">22%</div>
+          </div>
+        </div>
+        <div class="bottom">
+          <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
         </div>
       </div>
-      <div class="bottom">
-        <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
+
+      <div class="beacon_card_body">
+        <div class="top">
+          <div class="left">
+            <div class="beacon_img"></div>
+            <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
+          </div>
+
+          <div class="center">
+            <div id="${beacon.id}name" class="beacon_title">장비3</div>
+            <div>
+              <span class="beacon_opthion_name">RSSI</span>
+              <span id="${beacon.id}_rssi" class="beacon_opthion_value">-4dBm</span>
+            </div>
+            <div>
+              <span class="beacon_opthion_name">Adv. 주기</span>
+              <span id="${beacon.id}_advertising" class="beacon_opthion_value">4sec</span>
+            </div>
+            <div>
+              <span class="beacon_opthion_name">센싱 주기</span>
+              <span id="${beacon.id}_sensing" class="beacon_opthion_value">3sec</span>
+            </div>
+            <br>
+          </div>
+
+          <div class="right">
+            <div id="${beacon.id}_vbatt" class="beacon_vbatt">22%</div>
+          </div>
+        </div>
+        <div class="bottom">
+          <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
+        </div>
       </div>
+
+      <div class="beacon_card_body">
+        <div class="top">
+          <div class="left">
+            <div class="beacon_img"></div>
+            <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
+          </div>
+
+          <div class="center">
+            <div id="${beacon.id}name" class="beacon_title">장비3</div>
+            <div>
+              <span class="beacon_opthion_name">RSSI</span>
+              <span id="${beacon.id}_rssi" class="beacon_opthion_value">-4dBm</span>
+            </div>
+            <div>
+              <span class="beacon_opthion_name">Adv. 주기</span>
+              <span id="${beacon.id}_advertising" class="beacon_opthion_value">4sec</span>
+            </div>
+            <div>
+              <span class="beacon_opthion_name">센싱 주기</span>
+              <span id="${beacon.id}_sensing" class="beacon_opthion_value">3sec</span>
+            </div>
+            <br>
+          </div>
+
+          <div class="right">
+            <div id="${beacon.id}_vbatt" class="beacon_vbatt">22%</div>
+          </div>
+        </div>
+        <div class="bottom">
+          <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
+        </div>
+      </div>
+
+      <div class="beacon_card_body">
+        <div class="top">
+          <div class="left">
+            <div class="beacon_img"></div>
+            <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
+          </div>
+
+          <div class="center">
+            <div id="${beacon.id}name" class="beacon_title">장비3</div>
+            <div>
+              <span class="beacon_opthion_name">RSSI</span>
+              <span id="${beacon.id}_rssi" class="beacon_opthion_value">-4dBm</span>
+            </div>
+            <div>
+              <span class="beacon_opthion_name">Adv. 주기</span>
+              <span id="${beacon.id}_advertising" class="beacon_opthion_value">4sec</span>
+            </div>
+            <div>
+              <span class="beacon_opthion_name">센싱 주기</span>
+              <span id="${beacon.id}_sensing" class="beacon_opthion_value">3sec</span>
+            </div>
+            <br>
+          </div>
+
+          <div class="right">
+            <div id="${beacon.id}_vbatt" class="beacon_vbatt">22%</div>
+          </div>
+        </div>
+        <div class="bottom">
+          <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
+        </div>
+      </div> -->
+
     </div>
+      
 
-    <div class="beacon_card_body">
-      <div class="top">
-        <div class="left">
-          <div class="beacon_img"></div>
-          <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
-        </div>
 
-        <div class="center">
-          <div id="${beacon.id}name" class="beacon_title">장비3</div>
-          <div>
-            <span class="beacon_opthion_name">RSSI</span>
-            <span id="${beacon.id}_rssi" class="beacon_opthion_value">-4dBm</span>
-          </div>
-          <div>
-            <span class="beacon_opthion_name">Adv. 주기</span>
-            <span id="${beacon.id}_advertising" class="beacon_opthion_value">4sec</span>
-          </div>
-          <div>
-            <span class="beacon_opthion_name">센싱 주기</span>
-            <span id="${beacon.id}_sensing" class="beacon_opthion_value">3sec</span>
-          </div>
-          <br>
-        </div>
 
-        <div class="right">
-          <div id="${beacon.id}_vbatt" class="beacon_vbatt">22%</div>
-        </div>
-      </div>
-      <div class="bottom">
-        <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
-      </div>
-    </div>
-
-    <div class="beacon_card_body">
-      <div class="top">
-        <div class="left">
-          <div class="beacon_img"></div>
-          <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
-        </div>
-
-        <div class="center">
-          <div id="${beacon.id}name" class="beacon_title">장비3</div>
-          <div>
-            <span class="beacon_opthion_name">RSSI</span>
-            <span id="${beacon.id}_rssi" class="beacon_opthion_value">-4dBm</span>
-          </div>
-          <div>
-            <span class="beacon_opthion_name">Adv. 주기</span>
-            <span id="${beacon.id}_advertising" class="beacon_opthion_value">4sec</span>
-          </div>
-          <div>
-            <span class="beacon_opthion_name">센싱 주기</span>
-            <span id="${beacon.id}_sensing" class="beacon_opthion_value">3sec</span>
-          </div>
-          <br>
-        </div>
-
-        <div class="right">
-          <div id="${beacon.id}_vbatt" class="beacon_vbatt">22%</div>
-        </div>
-      </div>
-      <div class="bottom">
-        <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
-      </div>
-    </div>
-
-    <div class="beacon_card_body">
-      <div class="top">
-        <div class="left">
-          <div class="beacon_img"></div>
-          <img src="file:///android_asset/www/image/beacon_logo.jpg" alt="비콘이미지">
-        </div>
-
-        <div class="center">
-          <div id="${beacon.id}name" class="beacon_title">장비3</div>
-          <div>
-            <span class="beacon_opthion_name">RSSI</span>
-            <span id="${beacon.id}_rssi" class="beacon_opthion_value">-4dBm</span>
-          </div>
-          <div>
-            <span class="beacon_opthion_name">Adv. 주기</span>
-            <span id="${beacon.id}_advertising" class="beacon_opthion_value">4sec</span>
-          </div>
-          <div>
-            <span class="beacon_opthion_name">센싱 주기</span>
-            <span id="${beacon.id}_sensing" class="beacon_opthion_value">3sec</span>
-          </div>
-          <br>
-        </div>
-
-        <div class="right">
-          <div id="${beacon.id}_vbatt" class="beacon_vbatt">22%</div>
-        </div>
-      </div>
-      <div class="bottom">
-        <button type="button" class=beacon_add_butt value="${beacon.id}">비콘 추가</button>
-      </div>
-    </div> -->
-    </div>
 
     <!-- <div class="modal_body modal_body_hide"> -->
     <div class="modal_body">
       <div class="modal-bg" id="modal_container">
-        <!-- <div class="modal-bg bg-active" id="modal_container"> -->
+      <!-- <div class="modal-bg bg-active" id="modal_container"> -->
         <div class="title title-modal">
-          <button type="button" class="modal-close" id="beaconModalClose">
-            x
-          </button>
-
+          <button type="button" class="modal-close" id="beaconModalClose">x</button>
+          
           <div class="title_content">
             <div class="title_content_1">비콘 연결</div>
-            <div class="title_content_2">
-              스캔중
-              <div class="loader"></div>
-            </div>
+            <div class="title_content_2">스캔중<div class="loader"></div></div>
           </div>
-
+    
           <div class="btns">
-            <button id="d_btn" class="beaconDeleteBtn" type="button">
-              삭제
-            </button>
-            <button id="cu_btn" class="beaconCreateBtn" type="button">
-              추가
-            </button>
+            <button id="d_btn" class="beaconDeleteBtn" type="button">삭제</button>
+            <button id="cu_btn" class="beaconCreateBtn" type="button">추가</button>
             <!-- <button id="cu_btn" class="beaconUpdateBtn" type="button">수정</button> -->
           </div>
+    
         </div>
         <div class="title_div"></div>
         <div class="modal">
+
           <div class="wrapper">
-            <div class="input-data">
+            <div  class="input-data">
               <div class="two-ele">
                 <label for="line">라인</label>
                 <span>* 필수항목</span>
               </div>
-              <br />
+              <br>
               <select name="line" id="beacon_line">
                 <option value="">----------</option>
               </select>
             </div>
           </div>
-
+          
           <div class="wrapper">
-            <div class="input-data">
+            <div  class="input-data">
               <div class="two-ele">
                 <label for="equipment">설비</label>
                 <span>* 필수항목</span>
               </div>
-              <br />
+              <br>
               <select name="equipment" id="beacon_equipment">
                 <option value="">----------</option>
               </select>
             </div>
           </div>
-
+          
           <div class="wrapper">
-            <div class="input-data">
+            <div  class="input-data">
               <div class="two-ele">
                 <label for="temperature">온도 범위</label>
                 <span>최소 ~ 최대</span>
               </div>
-              <br />
-              <input
-                id="beacon_temperatureMin"
-                type="number"
-                name="temperatureMin"
-                class="towInput"
-              />
+              <br>
+              <input id="beacon_temperatureMin" type="number" name="temperatureMin" class="towInput">
               <span>~</span>
-              <input
-                id="beacon_temperatureMax"
-                type="number"
-                name="temperatureMax"
-                class="towInput"
-              />
+              <input id="beacon_temperatureMax" type="number" name="temperatureMax" class="towInput">
             </div>
           </div>
 
           <div class="wrapper">
-            <div class="input-data">
+            <div  class="input-data">
               <div class="two-ele">
                 <label for="humidity">습도 범위</label>
                 <span>최소 ~ 최대</span>
               </div>
-              <br />
-              <input
-                id="beacon_humidityMin"
-                type="number"
-                name="humidityMin"
-                class="towInput"
-              />
+              <br>
+              <input id="beacon_humidityMin" type="number" name="humidityMin" class="towInput">
               <span> ~ </span>
-              <input
-                id="beacon_humidityMax"
-                type="number"
-                name="humidityMax"
-                class="towInput"
-              />
+              <input id="beacon_humidityMax" type="number" name="humidityMax" class="towInput">
             </div>
           </div>
-
+          
           <div class="wrapper">
-            <div class="input-data">
+            <div  class="input-data">
               <div class="two-ele">
                 <label for="signalPower">신호 세기</label>
                 <span>단위:dBm</span>
               </div>
-              <br />
+              <br>
               <select name="signalPower" id="beacon_signalPower">
                 <option value="4">4 dBm [20m ~ 32m]</option>
                 <option value="0" selected>0 dBm [6m ~ 8n]</option>
@@ -317,22 +294,18 @@
           </div>
 
           <div class="wrapper">
-            <div class="input-data">
+            <div  class="input-data">
               <div class="two-ele">
                 <label for="sensing">신호 주기</label>
                 <span>단위:sec</span>
               </div>
-              <br />
-              <input
-                id="beacon_sensing"
-                type="number"
-                name="sensing"
-                class="input"
-              />
+              <br>
+              <input id="beacon_sensing" type="number" name="sensing" class="input">
             </div>
           </div>
 
-          <br /><br />
+          <br><br>
+
         </div>
       </div>
     </div>

@@ -115,7 +115,7 @@ function showAlarmList(alarmlist) {
     
                 let description = document.createElement("div")
                 description.className = "description"
-                description.innerHTML = alarm.submissionBeaconId + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+                description.innerHTML = alarm.line + " 라인 " + alarm.equipment + " 설비 체크시트 제출 확인"
                 right.appendChild(description)
             }
             else {
@@ -131,7 +131,7 @@ function showAlarmList(alarmlist) {
     
                 let description = document.createElement("div")
                 description.className = "description"
-                description.innerHTML = alarm.submissionBeaconId + " 위치에서 " + alarm.properBeaconId + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+                description.innerHTML = alarm.line + " 라인 " + alarm.equipment + " 설비 체크시트 제출 확인(위치 재확인 요망)"
                 right.appendChild(description)
             }
         }

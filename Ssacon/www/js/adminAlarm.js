@@ -29,18 +29,18 @@ function alarm() {
         let icon;
         if(alarm.type == "takeover") {
             title = "인수 인계"
-            description = alarm.line+ " " + alarm.equipment+ " " + alarm.description + " - " + alarm.writer
+            description = " [ " + alarm.writer + " ] " + alarm.line+ "-" + alarm.equipment+ " " + alarm.description
             icon="res://info.png"                
         }
         else if(alarm.type == "checksheet") {
             if(alarm.properBeaconId == alarm.submissionBeaconId) {
                 // 잘 제출 한 경우
                 title = "체크시트 제출 확인"
-                description = alarm.submissionBeaconId + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+                description = alarm.line + " 라인 " + alarm.equipment + " 설비 체크시트 제출 확인"
                 icon="res://success.png"                    }
             else {
                 title = "잘못된 위치에서 체크시트 제출"
-                description = alarm.submissionBeaconId + " 근처에서 " + alarm.properBeaconId + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+                description = alarm.line + " 라인 " + alarm.equipment + " 설비 체크시트 제출 확인(위치 재확인 요망)"
                 icon="res://warning.png"
             }
         }
@@ -56,9 +56,7 @@ function alarm() {
         }
         else if(alarm.type == "battery") {
             title="비콘 배터리 잔량 부족"
-            description = alarm.line+ " " + alarm.beaconId + " 위치 " + 
-            alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + 
-            "%입니다. 점검해주세요."
+            description = alarm.line+ "-" + alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + "%입니다. 점검해주세요."
             icon="res://danger.png"
         }
         item["id"] = alarm.id
