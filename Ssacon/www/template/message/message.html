@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link rel="stylesheet" href="../navbar/navbar.css"> -->
-    <link rel="stylesheet" href="message.css" />
-    <link rel="stylesheet" href="../navbar/navbar.css" />
-    <title>인수인계 작성</title>
-  </head>
-  <body>
-    <header class="header">
-      <i class="fas fa-chevron-left"></i>
-      <p class="pageName">인수인계 메시지 작성</p>
-      <i class="fas fa-bars"></i>
-    </header>
-    <div class="container">
-      <!-- <button id="openMessage" class="btn">open modal</button> -->
-      <div class="beacon-list">
-        <div class="title">
-          <p>
-            비콘 목록<span id="scanning-2">스캔 중</span
-            ><span id="scanning" class="loader"></span>
-          </p>
-          <button id="seeAll" class="btn">전체 설비 보기</button>
-        </div>
-        <div id="beaconHere" class="beacon-div"></div>
-        <div id="beaconAll" class="beacon-div invisible"></div>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="message.css">
+  <title>인수인계 작성</title>
+  <link rel="stylesheet" href="../navbar/navbar.css">
+</head>
+<body>
+    <script type="text/javascript" src="../navbar/navbar.js"></script>
+  <header class="header">
+    <i class="fas fa-chevron-left"></i>
+    <p class="pageName">인수인계 메시지 작성</p>
+    <i class="fas fa-bars"></i>
+  </header>
+  <div class="container">
+    <!-- <button id="openMessage" class="btn">open modal</button> -->
+    <div class="beacon-list">
+      <div class="title">
+        <p>비콘 목록<span id="scanning-2">스캔 중</span><span id="scanning" class="loader"></span></p>
+        <button id="seeAll" class="btn">전체 설비 보기</button>
+      </div>
+      <div id="beaconHere" class="beacon-div">
+      </div>
+      <div id="beaconAll" class="beacon-div invisible">
       </div>
     </div>
 
@@ -47,8 +45,11 @@
       </div>
     </div>
 
-    <script type="text/javascript" src="message.js"></script>
-    <script type="text/javascript" src="../navbar/navbar.js"></script>
+  <script type="text/javascript" src="../../cordova.js"></script>
+  <script type="text/javascript" src="../../dist/js/BeaconScan_bundle.js"></script>
+  <script type="text/javascript" src="../navbar/navbar.js"></script>
     <script type="text/javascript" src="../../js/background.js"></script>
-  </body>
+  <script type="text/javascript" src="message.js"></script>
+</body>
 </html>
+

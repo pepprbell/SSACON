@@ -54,7 +54,7 @@ const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
 const body = document.querySelector('body')
 
 // 알림 목록 불러오기
-fetch(`http://k4b101.p.ssafy.io/api/alarm/${userInfo}`, {
+fetch(`http://k4b101.p.ssafy.io/api/alarm/${userInfo.data.userId}`, {
     method: 'GET',
 })
 .then((res) => {

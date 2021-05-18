@@ -1,15 +1,16 @@
-document.getElementById("checkSubmit").addEventListener("click",checkSubmit)
+document.getElementById("checkSubmit").addEventListener("click", getBeacon)
 
 // test parameters
-let checkName = "조작장치가 정상적으로 작동하는가?"
-let machine = "음극분체호퍼"
-let beaconId = "sampleId"
-let beaconName = "sampleName"
-let properbeaconId = "properbeaconId"
-let userId = "3"
+let checkName = "시작 전 안전점검";
+let equipment = "상온에이징";
+let lineName = 'l101';
+let properBeaconId = "D4:5C:67:6A:7A:7A";
+let beaconId = null;
+let beaconName = null;
+let userId = JSON.parse(window.localStorage.getItem("userInfo")).data.userId;
 
 // change innerHTML
-document.getElementById("machineName").innerHTML = machine
+document.getElementById("machineName").innerHTML = equipment
 
 // load userId for beacon scanning
 // userInfo = window.localStorage.getItem("userInfo")
@@ -25,28 +26,47 @@ function getBeacon() {
   .then((res) => res.json())
   .then((result) => {
     console.log(result.data)
-    beaconId = result.data[0].beaconId
-    beaconName = result.data[0].beaconName
-    document.getElementById("beaconName").innerHTML = beaconName
+    let location = result.data
+    if (!location.length) {
+      alert('위치정보가 없습니다. 잠시 후 다시 시도해 주세요.')
+      return
+    } else {
+      location.forEach(e => {
+        if (e.beaconId === properBeaconId) {
+          beaconId = e.beaconId
+          beaconName = e.beaconName
+          document.getElementById("beaconName").innerHTML = beaconName
+        }
+      });
+      if (beaconId) {
+        checkSubmit()
+      } else {
+        beaconId = location[0].beaconId
+        beaconName = location[0].beaconName
+        checkSubmit()
+      }
+    }
   })
   // testcode
   // document.getElementById("beaconName").innerHTML = Date()
 }
 
 // beacon scanning - initially 0s, interval 3s
-setTimeout(getBeacon, 0)
+
 // setInterval(getBeacon, 3000)
 
 function checkSubmit() {
   // let options = document.querySelector('input[name=cRadio]:checked').value
   // console.log(options)
   let submitContent = {
-    "machine": machine,
+    "line": lineName,
+    "equipment": equipment,
     "checkName": checkName,
     "beaconId": beaconId,
-    "properbeaconId": properbeaconId,
+    "properBeaconId": properBeaconId,
     "userId": userId,
   }
+  console.log(submitContent);
 
   fetch("http://k4b101.p.ssafy.io/api/checksheet/", {
     method: "POST",
@@ -57,11 +77,10 @@ function checkSubmit() {
   })
   .then((res) => res.json())
   .then((result) => {
-    console.log(result)
-    data = result.data
-    if (result.status == 200) {
-      alert("제출이 완료되었습니다.")
-      window.location = "../sheetlist/sheetlist.html"
+    console.log(result.status)
+    if (result.status) {
+      alert(`${checkName} 제출이 완료되었습니다.`)
+      window.history.back()
     }
   })
   .catch((err) => console.log(err))

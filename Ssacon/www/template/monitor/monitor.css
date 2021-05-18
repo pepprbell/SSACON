@@ -43,7 +43,7 @@ main {
 }
 .BeaconStatus {
   width: 30%;
-  height: 40%;
+  height: 90vh;
   background-color: #f3f6fa;
 }
 
@@ -61,8 +61,10 @@ main {
 }
 
 .subm-container {
+  background-color: #fff;
   text-align: center;
   margin: 0 auto;
+  margin-bottom: 3vw;
   width: 100%;
 }
 
@@ -93,18 +95,30 @@ main {
 }
 
 .subm-name {
-  width: 30%;
+  width: 46%;
 }
 
 .subm-temp {
-  width: 25%;
+  width: 17%;
 }
 
 .subm-humi {
-  width: 25%;
+  width: 17%;
 }
 
 .subm-batt {
+  width: 30%;
+}
+
+.subm-wname {
+  width: 30%;
+}
+
+.subm-part {
+  width: 40%;
+}
+
+.subm-conn {
   width: 20%;
 }
 
@@ -270,6 +284,11 @@ monitortitle {
   opacity: 0.4;
 }
 
+.invisible {
+  display: none;
+  visibility: hidden;
+}
+
 /* 
 @keyframes goodBeacon {
   from {
@@ -349,4 +368,26 @@ monitortitle {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* 워커리스트 */
+#BeaconWorker {
+  height: 40vh;
+  overflow-y:auto;
+}
+
+.subm-username {
+  width: 40%;
+}
+
+.subm-part {
+  width: 30%;
+}
+
+.subm-scan {
+  width: 30%;
+}
+
+.subm-white {
+  background-color: white;
 }
