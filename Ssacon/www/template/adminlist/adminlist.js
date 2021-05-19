@@ -33,7 +33,7 @@ function moveCheckSheet() {
   window.location = "../sheetlist/sheetlist.html";
 }
 function moveCheckSheetList() {
-  window.location = "../sheetlist/sheetlist.html";
+  window.location = "../seeChecklist/seeChecklist.html";
 }
 function moveBeaconMornitor() {
   window.location = "../monitor/monitor.html";
