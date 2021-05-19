@@ -292,15 +292,15 @@ function createNewBeaconCard(beacon, beaconName) {
         <div class="center">
           <div id="${beacon.id}name" class="beacon_title">Undefined</div>
           <div>
-            <span class="beacon_opthion_name">RSSI</span>
+            <span class="beacon_opthion_name">신호 RSSI</span>
             <span id="${beacon.id}_rssi" class="beacon_opthion_value">${beacon.rssi}dBm</span>
           </div>
           <div>
-            <span class="beacon_opthion_name">Adv. 주기</span>
+            <span class="beacon_opthion_name">신호 주기</span>
             <span id="${beacon.id}_advertising" class="beacon_opthion_value">${beacon.intervalOfAdvertising.value / 10}sec</span>
           </div>
           <div>
-            <span class="beacon_opthion_name">센싱 주기</span>
+            <span class="beacon_opthion_name">비콘 주기</span>
             <span id="${beacon.id}_sensing" class="beacon_opthion_value">${beacon.intervalOfSensing.value}sec</span>
           </div>
           <br>
