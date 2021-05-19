@@ -1,4 +1,5 @@
 const content = document.querySelector(".content")
+console.log(window.location);
 const alarmId = window.location.href.split("?")[1].split("=")[1]
 const yesButton =  document.querySelector(".check")
 
@@ -42,11 +43,11 @@ function alarmSep(alarm) {
         
         let description = document.createElement("div")
             description.className ="description"
-            description.innerHTML= alarm.line+ " " + alarm.equipment+ " " + alarm.description + " - " + alarm.writer
+            description.innerHTML= " [ " + alarm.writer + " ] " + alarm.line+ "-" + alarm.equipment+ " " + alarm.description
         content.appendChild(description)
     }
     else if(alarm.type == "checksheet") {
-        if(alarm.equipment == alarm.submission) {
+        if(alarm.properBeaconId == alarm.submissionBeaconId) {
             // 잘 제출 한 경우
             let type = document.createElement("div")
             type.className ="type"
@@ -55,7 +56,7 @@ function alarmSep(alarm) {
     
             let description = document.createElement("div")
             description.className = "description"
-            description.innerHTML = alarm.submissionLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+            description.innerHTML = alarm.line + " 라인 " + alarm.equipment + " 설비 체크시트 제출 확인"
             content.appendChild(description)
         }
         else {
@@ -69,7 +70,7 @@ function alarmSep(alarm) {
     
             let description = document.createElement("div")
             description.className = "description"
-            description.innerHTML = alarm.submissionLocation + " 위치에서 " + alarm.properLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+            description.innerHTML = alarm.line + " 라인 " + alarm.equipment + " 설비 체크시트 제출 확인(위치 재확인 요망)"
             content.appendChild(description)
         }
     }
@@ -78,18 +79,18 @@ function alarmSep(alarm) {
     
         let type = document.createElement("div")
         type.className ="type yellow"
-        type.innerHTML= "경고"
+        type.innerHTML= "위험"
         content.appendChild(type)
     
         let description = document.createElement("div")
         description.className ="description"
-        description.innerHTML= alarm.location + " 위치의 " + alarm.equipment + "설비 온도가 적정범위를 벗어났습니다. 점검해주세요" 
+        description.innerHTML= alarm.line + " 라인 " + alarm.equipment + "설비 온도가 적정범위를 벗어났습니다. 점검해주세요"
         content.appendChild(description)
     }
     else if(alarm.type == "attendance") {
         let type = document.createElement("div")
         type.className ="type"
-        type.innerHTML= "출석 확인"
+        type.innerHTML= "교육장 출석"
         content.appendChild(type)
     
         let description = document.createElement("div")
@@ -106,9 +107,7 @@ function alarmSep(alarm) {
     
         let description = document.createElement("div")
         description.className ="description"
-        description.innerHTML= alarm.line+ " " + alarm.location + " 위치 " + 
-        alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + 
-        "%입니다. 점검해주세요." 
+        description.innerHTML= alarm.line+ "-" + alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + "%입니다. 점검해주세요."
         content.appendChild(description)
     } else {
         alert('존재하지 않은 비콘입니다.')
@@ -145,5 +144,20 @@ function timeForToday(value) {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   }
 
+function timeForToday(value) {
+    const today = new Date();
+    const timeValue = new Date(value);
 
+    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+    if (betweenTime < 1) return "방금전";
+    if (betweenTime < 60) return `${betweenTime}분전`;
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) return `${betweenTimeHour}시간전`;
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) return `${betweenTimeDay}일전`;
+
+    return `${Math.floor(betweenTimeDay / 365)}년전`;
+  }
 

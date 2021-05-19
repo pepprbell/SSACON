@@ -14,8 +14,8 @@ let alarmlist = [
         "type": "checksheet",
         "line": "line1",
         "equipment": "D2",
-        "properLocation": "D3",
-        "submissionLocation": "D4",
+        "properBeaconId": "D3",
+        "submissionBeaconId": "D4",
         "time": "2020-05-14 16:43:22",
     },
     {
@@ -96,11 +96,11 @@ function showAlarmList(alarmlist) {
             
             let description = document.createElement("div")
             description.className ="description"
-            description.innerHTML= alarm.line+ " " + alarm.equipment+ " " + alarm.description + " - " + alarm.writer
+            description.innerHTML= " [ " + alarm.writer + " ] " + alarm.line+ "-" + alarm.equipment+ " " + alarm.description
             right.appendChild(description)
         }
         else if(alarm.type == "checksheet") {
-            if(alarm.properLocation == alarm.submissionLocation) {
+            if(alarm.properBeaconId == alarm.submissionBeaconId) {
                 // 잘 제출 한 경우
     
                 let icon = document.createElement("img")
@@ -115,7 +115,7 @@ function showAlarmList(alarmlist) {
     
                 let description = document.createElement("div")
                 description.className = "description"
-                description.innerHTML = alarm.submissionLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+                description.innerHTML = alarm.line + " 라인 " + alarm.equipment + " 설비 체크시트 제출 확인"
                 right.appendChild(description)
             }
             else {
@@ -131,7 +131,7 @@ function showAlarmList(alarmlist) {
     
                 let description = document.createElement("div")
                 description.className = "description"
-                description.innerHTML = alarm.submissionLocation + " 위치에서 " + alarm.properLocation + " 위치의 " + alarm.equipment + " 설비 체크시트 제출 확인"
+                description.innerHTML = alarm.line + " 라인 " + alarm.equipment + " 설비 체크시트 제출 확인(위치 재확인 요망)"
                 right.appendChild(description)
             }
         }
@@ -148,7 +148,7 @@ function showAlarmList(alarmlist) {
     
             let description = document.createElement("div")
             description.className ="description"
-            description.innerHTML= alarm.location + " 위치의 " + alarm.equipment + "설비 온도가 적정범위를 벗어났습니다. 점검해주세요" 
+            description.innerHTML= alarm.line + " 라인 " + alarm.equipment + "설비 온도가 적정범위를 벗어났습니다. 점검해주세요" 
             right.appendChild(description)
         }
         else if(alarm.type == "attendance") {
@@ -159,12 +159,12 @@ function showAlarmList(alarmlist) {
     
             let type = document.createElement("div")
             type.className ="type"
-            type.innerHTML= "출석 확인"
+            type.innerHTML= "교육장 출석"
             right.appendChild(type)
     
             let description = document.createElement("div")
             description.className ="description"
-            description.innerHTML= alarm.session + " 출석 확인"
+            description.innerHTML= alarm.session + " 출석 완료"
             right.appendChild(description)
             
         }
@@ -181,9 +181,7 @@ function showAlarmList(alarmlist) {
     
             let description = document.createElement("div")
             description.className ="description"
-            description.innerHTML= alarm.line+ " " + alarm.location + " 위치 " + 
-            alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + 
-            "%입니다. 점검해주세요." 
+            description.innerHTML= alarm.line+ "-" + alarm.equipment + " 비콘 배터리 잔량이 " + alarm.battery + "%입니다. 점검해주세요."
             right.appendChild(description)
         }
     
