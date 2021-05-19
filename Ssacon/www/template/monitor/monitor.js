@@ -440,7 +440,7 @@ function Monitor() {
       var myDougnutChart = new Piechart({
         canvas: myCanvas,
         data: { 근무중: onSignalWorker, 자리이탈: nonSignalWorker },
-        colors: ["#3F72BE", "#ff0000", "#57d9ff", "#937e88"],
+        colors: ["#10cf4c", "#ff0000", "#57d9ff", "#937e88"],
         doughnutHoleSize: 0.5,
         legend: myLegend,
       });
