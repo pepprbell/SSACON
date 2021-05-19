@@ -139,10 +139,22 @@ sidemenu__footer.appendChild(line2);
 const navbar__logout = document.createElement("div");
 navbar__logout.addEventListener("click", logout);
 function logout() {
-  localStorage.clear();
-  setTimeout(() => {
-    window.location = "../login/login.html";
-  }, 1000);
+  // /user/logout/{userId}
+  let userId = navbar__userInfo.data.userId;
+  console.log(navbar__userInfo);
+  console.log(userId);
+  fetch(`http://k4b101.p.ssafy.io/api/user/logout/${userId}`, {
+    method: "POST",
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log("로그아웃됐나?");
+      localStorage.clear();
+      setTimeout(() => {
+        window.location = "../login/login.html";
+      }, 1000);
+    })
+    .catch((error) => console.log("error", error));
 }
 navbar__logout.innerHTML =
   "<img class='navbar__menu__icon' src='file:///android_asset/www/template/navbar/icons/logout_side.png'>" +
