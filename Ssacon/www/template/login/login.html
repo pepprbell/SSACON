@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="login.css" rel="stylesheet" />
+
+    <title>로그인</title>
+  </head>
+  <body>
+    <main>
+      <form action="" id="form" method="post">
+        <header>
+          <img src="../../assets/pics/logo.png" alt="ssafy" class="avatar" />
+          <h2>로그인</h2>
+          <img
+            src="../../assets/pics/ssafylogo3.png"
+            alt="Ssafy"
+            class="avatar"
+          />
+        </header>
+        <input type="text" placeholder="아이디" name="username" required />
+        <input
+          type="password"
+          placeholder="비밀번호"
+          name="password"
+          required
+        />
+        <button type="submit">로그인</button>
+      </form>
+    </main>
+    <div class="modal hidden">
+      <div class="modal__overlay" />
+      <div class="modal__content">
+        <div class="modal__header margin_bottom">
+          <!-- <img class="avatar" src="../../assets/pics/logo.png" /> -->
+        </div>
+        <div class="check_mark" id="check_mark">
+          <div class="sa-icon sa-success animate">
+            <span class="sa-line sa-tip animateSuccessTip"></span>
+            <span class="sa-line sa-long animateSuccessLong"></span>
+            <div class="sa-placeholder"></div>
+            <div class="sa-fix"></div>
+          </div>
+        </div>
+        <img
+          id="fail_mark"
+          class="fail_mark"
+          src="../../assets/pics/xicon.png"
+        />
+        <!-- <hr class="margin_bottom" /> -->
+        <h1 id="modal__login"></h1>
+      </div>
+    </div>
+    <script src="./login.js"></script>
+    <script type="text/javascript" src="../../js/background.js"></script>
+  </body>
+</html>

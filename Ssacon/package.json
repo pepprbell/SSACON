@@ -1,0 +1,43 @@
+{
+  "name": "io.cordova.hellocordova",
+  "displayName": "HelloCordova",
+  "version": "1.0.0",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "cordova-android": "^9.1.0",
+    "cordova-custom-config": "^5.1.0",
+    "cordova-plugin-androidx-adapter": "^1.1.3",
+    "cordova-plugin-background-mode": "git+https://bitbucket.org/TheBosZ/cordova-plugin-run-in-background.git",
+    "cordova-plugin-badge": "^0.8.8",
+    "cordova-plugin-ble-central": "^1.3.1",
+    "cordova-plugin-device": "^2.0.3",
+    "cordova-plugin-local-notification": "0.9.0-beta.2",
+    "cordova-plugin-whitelist": "^1.3.4"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-ble-central": {},
+      "cordova-custom-config": {},
+      "cordova-plugin-background-mode": {},
+      "cordova-plugin-androidx-adapter": {},
+      "cordova-plugin-local-notification": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "buildthing-ble-sdk": "^1.1.6"
+  }
+}

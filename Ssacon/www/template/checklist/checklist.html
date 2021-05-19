@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="checklist.css" />
+    <link rel="stylesheet" href="../navbar/navbar.css" />
+    <title>Checklist</title>
+  </head>
+  <body>
+    <header class="header">
+      <i class="fas fa-chevron-left"></i>
+      <p class="pageName">Check Sheet 작성</p>
+      <p></p>
+    </header>
+    <div class="check-container">
+      <div class="c-table">
+        <ul>
+          <li class="c-head">No. 1</li>
+          <li>조작장치가 정상적으로 작동하는가?</li>
+        </ul>
+        <ul>
+          <li class="c-head">점검방법</li>
+          <li>육안확인</li>
+        </ul>
+        <ul>
+          <li class="c-head">이전 점검자</li>
+          <li>차수연</li>
+          <li class="c-head">이전 점검일</li>
+          <li>2021-05-05</li>
+        </ul>
+        <ul>
+          <li class="c-head">이전 점검 결과</li>
+          <li>Y</li>
+          <li class="c-head">Spec</li>
+          <li>-</li>
+        </ul>
+        <ul>
+          <li class="c-head">점검 결과</li>
+          <li>
+            <label for="radioOk">OK</label>
+            <input
+              id="radioOk"
+              name="cRadio"
+              type="radio"
+              value="OK"
+              checked="true"
+            />
+            <label for="radioNg">NG</label>
+            <input id="radioNg" name="cRadio" type="radio" value="NG" />
+          </li>
+        </ul>
+        <ul style="column-count: 3">
+          <li class="c-head">처리 결과</li>
+          <li>문제 없음</li>
+        </ul>
+        <ul>
+          <li class="c-head">점검할 위치</li>
+          <li id="machineName">설비명</li>
+          <li class="c-head">현재 위치</li>
+          <li id="beaconName">비콘명</li>
+        </ul>
+      </div>
+      <button id="checkSubmit" class="c-btn">테스트용 제출 버튼</button>
+    </div>
+
+    <script type="text/javascript" src="../navbar/navbar.js"></script>
+    <script type="text/javascript" src="../../cordova.js"></script>
+    <script
+      type="text/javascript"
+      src="../../dist/js/BeaconScan_bundle.js"
+    ></script>
+    <script type="text/javascript" src="checklist.js"></script>
+    <script type="text/javascript" src="../../js/background.js"></script>
+  </body>
+</html>

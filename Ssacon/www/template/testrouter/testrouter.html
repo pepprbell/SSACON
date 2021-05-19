@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="app">
+      <h1>Apache Cordova</h1>
+      <div id="deviceready" class="blink">
+        <button id="startScanBtn">StartScan</button>
+        <button id="stopScanBtn">StopScan</button>
+        <button id="sendBeaconInfo">근무자 비콘신호 보내기</button>
+        <button id="checkAttendance">교육장 출석 체크</button>
+        <input type="text" id="username" />
+      </div>
+
+      <div id="beaconList"></div>
+    </div>
+
+    <script type="text/javascript" src="../../cordova.js"></script>
+    <!-- <script type="text/javascript" src="../../js/BeaconScan.js"></script> -->
+    <!-- <script type="text/javascript" src="../../dist/js/bundle.js"></script> -->
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="sheetlist.css">
+  <title>체크리스트 목록</title>
+  <link rel="stylesheet" href="../navbar/navbar.css">
+</head>
+<body>
+  <script type="text/javascript" src="../navbar/navbar.js"></script>
+  <p class="subm-n">작성할 체크리스트는 현재 <span class="subm-highlight">[4개]</span>입니다.</p>
+  <div id="container" class="subm-container">
+    <div class="subm-header">
+      <ul>
+        <li class="subm-mach">설비명</li>
+        <li class="subm-name">Check Sheet 명</li>
+        <li class="subm-task">점검<br>항목</li>
+      </ul>
+    </div>
+    <div id="content">
+      <ul>
+        <li class="subm-mach">상온에이징</li>
+        <li class="subm-name">시작 전 안전점검</li>
+        <li class="subm-task">0/3</li>
+      </ul>
+      <ul>
+        <li class="subm-mach">#10음극P/D믹서#2</li>
+        <li class="subm-name">시작 전 안전점검 [믹싱]</li>
+        <li class="subm-task">0/10</li>
+      </ul>
+      <ul>
+        <li class="subm-mach">#11음극분체호퍼#1</li>
+        <li class="subm-name">믹싱 S Position</li>
+        <li class="subm-task">0/5</li>
+      </ul>
+      <ul>
+        <li class="subm-mach">#11음극분체호퍼#2</li>
+        <li class="subm-name">시작 전 안전점검 [믹싱]</li>
+        <li class="subm-task">0/4</li>
+      </ul>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="../../cordova.js"></script>
+  <script type="text/javascript" src="../../dist/js/BeaconScan_bundle.js"></script>
+  <script type="text/javascript" src="sheetlist.js"></script>
+  <script type="text/javascript" src="../../js/background.js"></script>
+</body>
+</html>

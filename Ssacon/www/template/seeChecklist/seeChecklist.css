@@ -1,0 +1,65 @@
+body {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.subm-n {
+  font-weight: bold;
+}
+
+.subm-highlight {
+  color: #3f72be;
+}
+
+.subm-container {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  font-size: 2vw;
+}
+
+.subm-container ul {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #ccc;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
+
+.subm-container li {
+  display: inline-block;
+  padding: 7px 0;
+}
+
+.subm-header {
+  font-weight: bold;
+  background-color: #3f72be10;
+  color: #3f72be;
+  border-top: 2px solid #3f72be;
+  border-bottom: 2px solid #3f72be;
+}
+
+.subm-header ul {
+  border-bottom: 0;
+}
+
+.subm-mach {
+  width: 20%;
+}
+
+.subm-name {
+  width: 55%;
+}
+
+.subm-place {
+  width: 15%;
+}
+
+.subm-task {
+  width: 10%;
+  font-size: 1.5vw;
+}

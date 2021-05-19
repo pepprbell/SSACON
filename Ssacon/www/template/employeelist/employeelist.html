@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="employeelist.css" />
+    <link rel="stylesheet" href="../navbar/navbar.css" />
+    <title>목록</title>
+  </head>
+  <body>
+    <script src="../navbar/navbar.js"></script>
+    <!-- <header class="header"><div id="header">관리자 목록</div></header> -->
+    <div class="center">
+      <main>
+        <div class="card" id="WorkerAlarm">
+          <img class="img" src="../../assets/pics/alarm.png" alt="" />
+          <View class="view">
+            <text class="text">알람 목록</text>
+            <smalltext>알람을 확인하세요.</smalltext>
+          </View>
+        </div>
+        <div class="card" id="WorkerCheckSheet">
+          <img class="img" src="../../assets/pics/check.png" alt="" />
+          <View class="view">
+            <text class="text">체크시트</text>
+            <smalltext>체크리스트를 작성하세요.</smalltext>
+          </View>
+        </div>
+        <div class="card" id="WorkerMessage">
+          <img class="img" src="../../assets/pics/message.png" alt="" />
+          <View class="view">
+            <text class="text">인수인계</text>
+            <smalltext>비콘에 메시지를 남기세요.</smalltext>
+          </View>
+        </div>
+      </main>
+    </div>
+    <script type="text/javascript" src="../../cordova.js"></script>
+    <script
+      type="text/javascript"
+      src="../../dist/js/BeaconScan_bundle.js"
+    ></script>
+    <script src="employeelist.js"></script>
+    <script type="text/javascript" src="../../js/background.js"></script>
+  </body>
+</html>
