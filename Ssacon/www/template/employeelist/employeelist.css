@@ -1,0 +1,148 @@
+:root {
+  font-family: Roboto;
+  font-style: normal;
+}
+html body {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f3f6fa;
+}
+header {
+  position: static;
+  text-align: center;
+  width: 100%;
+  height: 5%;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: #034ea2;
+}
+main {
+  background-color: #f3f6fa;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.card {
+  background-color: white;
+  border-radius: 4vw;
+  /* font-size: 4vw; */
+  /* height: 30%; */
+  width: 70%;
+  margin: auto;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  padding: 5%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.img {
+  width: 10%;
+  float: left;
+}
+text {
+  font-size: 5vw;
+  font-weight: bolder;
+  display: block;
+}
+
+smalltext {
+  font-size: 1vw;
+  display: block;
+  margin-left: 5%;
+}
+
+view {
+  margin-left: 5%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.enabled {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  html body {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  header {
+    position: absolute;
+    top: 0;
+    text-align: center;
+    width: 100%;
+    height: 10vw;
+    font-size: 4vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: #034ea2;
+  }
+  main {
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .card {
+    background-color: white;
+    border-radius: 1vw;
+    height: 15vw;
+    margin: 20%;
+    padding: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .img {
+    width: 137px;
+    height: 203px;
+    margin-bottom: 3%;
+  }
+  view {
+    margin-left: 5%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  smalltext {
+    display: none;
+  }
+  .text {
+    font-size: 1.5vw;
+    color: #034ea2;
+    font-weight: bolder;
+    text-align: center;
+    padding-top: 3vw;
+  }
+  center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  .enabled {
+    display: none;
+  }
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="message.css">
+  <title>인수인계 작성</title>
+  <link rel="stylesheet" href="../navbar/navbar.css">
+</head>
+<body>
+    <script type="text/javascript" src="../navbar/navbar.js"></script>
+  <div class="container">
+    <!-- <button id="openMessage" class="btn">open modal</button> -->
+    <div class="beacon-list">
+      <div class="title">
+        <p>비콘 목록<span id="scanning-2">스캔 중</span><span id="scanning" class="loader"></span></p>
+        <button id="seeAll" class="btn">전체 설비 보기</button>
+      </div>
+      <div id="beaconHere" class="beacon-div">
+      </div>
+      <div id="beaconAll" class="beacon-div invisible">
+        <select name="lineSelect" id="lineSelect">
+        </select>
+      </div>
+    </div>
+
+    <div id="modal" class="m-modal">
+      <div class="m-content">
+        <div class="m-input">
+          <p id="beaconName" class="m-name"></p>
+          <textarea
+            id="message"
+            class="m-textarea"
+            placeholder="인수인계 사항 입력"
+          ></textarea>
+        </div>
+        <div class="m-button">
+          <button id="submitMessage" class="m-submit">저장</button>
+          <button id="closeMessage" class="m-close">취소</button>
+        </div>
+      </div>
+    </div>
+
+  <script type="text/javascript" src="../../cordova.js"></script>
+  <script type="text/javascript" src="../../dist/js/BeaconScan_bundle.js"></script>
+  <script type="text/javascript" src="../../js/background.js"></script>
+  <script type="text/javascript" src="message.js"></script>
+</body>
+</html>
+

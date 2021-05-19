@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../navbar/navbar.css" />
+    <link rel="stylesheet" href="./monitor.css" />
+    <link rel="stylesheet" href="./monitorAlarmlist.css" />
+    <link rel="stylesheet" href="../navbar/navbar.css" />
+
+    <title>Monitor</title>
+  </head>
+  <body>
+    <script src="../navbar/navbar.js"></script>
+    <!-- <header class="header"><h2>Monitor</h2></header> -->
+    <main>
+      <div class="leftlist">
+        <monitortitle>근무자 현황</monitortitle>
+        <div class="leftup">
+          <canvas id="myCanvas" class="donut"></canvas>
+          <div class="donutinfo">
+            <div id="myLegend"></div>
+          </div>
+        </div>
+        <monitortitle class="mg-top">알람목록</monitortitle>
+        <div id="alarmList" class="alarmlist"></div>
+      </div>
+      <div class="BeaconList">
+        <monitortitle>L101 현황</monitortitle>
+        <div class="Beacon__map"></div>
+      </div>
+      <div class="BeaconStatus">
+        <monitortitle>비콘 현황</monitortitle>
+        <div id="BeaconStatus" class="subm-container"></div>
+        <monitortitle>근무자 현황</monitortitle>
+        <div id="WorkerStatus" class="subm-container2"></div>
+      </div>
+    </main>
+    <footer></footer>
+    <!-- <script src="./BeaconList.js"></script> -->
+    <script src="./monitor.js"></script>
+    <script type="text/javascript"></script>
+    <script type="text/javascript" src="../../js/background.js"></script>
+  </body>
+</html>

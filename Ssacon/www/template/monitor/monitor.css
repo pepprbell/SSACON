@@ -1,0 +1,385 @@
+html main {
+  margin: 0;
+  padding: 0;
+  /* margin-top: 10vh; */
+  width: 100%;
+  height: 90%;
+}
+header {
+  display: flex;
+  width: 100%;
+  height: 5%;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+body {
+  margin: 0px;
+}
+
+main {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background-color: #f3f6fa;
+  margin-top: 10%;
+}
+
+.BeaconList {
+  width: 50%;
+  height: 90vh;
+  background-color: #f3f6fa;
+}
+.card {
+  border: solid 1px #aaa;
+  border-radius: 9px;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  width: 30px;
+  height: 30px;
+  float: left;
+  background-color: white;
+  padding: 3px 3px 3px 3px;
+  margin: 5px;
+  font-size: 5pt;
+  font-family: sans-serif;
+}
+.BeaconStatus {
+  width: 30%;
+  height: 90vh;
+  background-color: #f3f6fa;
+}
+
+.table {
+  border: 1px solid black;
+}
+
+.subm-n {
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.subm-highlight {
+  color: #3f72be;
+}
+
+.subm-container {
+  background-color: #fff;
+  text-align: center;
+  margin: 0 auto;
+  width: 95%;
+  height: 45%;
+  overflow: scroll;
+  border-radius: 10px;
+}
+.subm-container2 {
+  background-color: #fff;
+  text-align: center;
+  margin: 0 auto;
+  width: 95%;
+  height: 37%;
+  overflow: scroll;
+  border-radius: 10px;
+}
+.subm-container ul {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #ccc;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
+
+.subm-container li {
+  display: inline-block;
+  padding: 10px 0;
+}
+/* -------------------------- */
+.subm-container2 ul {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #ccc;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
+
+.subm-container2 li {
+  display: inline-block;
+  padding: 10px 0;
+}
+.subm-header {
+  font-weight: bold;
+  background-color: #3f72be10;
+  color: #3f72be;
+  border-top: 2px solid #3f72be;
+  border-bottom: 2px solid #3f72be;
+}
+
+.subm-header ul {
+  border-bottom: 0;
+}
+
+.subm-name {
+  width: 40%;
+}
+
+.subm-temp {
+  width: 20%;
+}
+
+.subm-humi {
+  width: 20%;
+}
+
+.subm-batt {
+  width: 20%;
+}
+
+.subm-wname {
+  width: 30%;
+}
+
+.subm-part {
+  width: 40%;
+}
+
+.subm-conn {
+  width: 20%;
+}
+
+.mylegend {
+  display: flex;
+  justify-content: space-evenly;
+}
+.donut {
+  width: 100%;
+  height: 60%;
+  margin: 10% 0%;
+}
+.donutinfo {
+  width: 100%;
+  height: 10%;
+}
+.leftlist {
+  width: 20%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.leftup {
+  width: 85%;
+  height: 30vh;
+  display: block;
+  justify-content: center;
+  box-shadow: 2px 2px 2px 2px #e2e2e2;
+
+  background-color: white;
+  border-radius: 10px;
+  /* margin: 10px 0%; */
+}
+.mg-top {
+  margin-top: 10px;
+}
+monitortitle {
+  font-size: small;
+  font-weight: bold;
+  width: 98%;
+  display: flex;
+  justify-content: center;
+  color: white;
+  background: #3f72be; /* fallback for old browsers */
+  border-radius: 10px;
+  margin: 10px auto;
+
+  padding: 10px 20px;
+  /* text-align: center; */
+}
+
+.BeaconList__lineName {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5vw;
+  font-style: bold;
+  color: #3f72be;
+}
+
+.Beacon__map {
+  background-image: url("./icons/blueprint2.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  /* background-position: center; */
+  margin: auto;
+  width: 95%;
+  height: 90%;
+  position: relative;
+  border-radius: 20px;
+  /* border: 1px solid #3f72be; */
+}
+
+.Beacon__img {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+}
+
+.Beacon__item {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #3f72be;
+  position: absolute;
+  animation-name: beacon;
+  animation: beacon 2s infinite;
+}
+
+.bad {
+  background-color: red;
+  animation-name: bad__beacon;
+  animation: bad__beacon 2s infinite;
+}
+
+.Beacon__worker {
+  width: 25px;
+  height: 25px;
+  /* border-radius: 50%; */
+  position: absolute;
+  /* background-color: skyblue; */
+}
+
+.Beacon__worker__img {
+  width: 15px;
+  height: 15px;
+}
+
+.picked_area {
+  position: absolute;
+  border: 1px solid skyblue;
+  background-color: skyblue;
+  opacity: 0.4;
+}
+
+.invisible {
+  display: none;
+  visibility: hidden;
+}
+
+/* 
+@keyframes goodBeacon {
+  from {
+    background-color: skyblue;
+  }
+  to {
+    background-color: blue;
+  }
+} */
+
+@keyframes beacon {
+  0% {
+    box-shadow: 0 0 0 0 #afeeee;
+  }
+  100% {
+    box-shadow: 0 0 0 4rem transparent;
+  }
+}
+
+@keyframes bad__beacon {
+  0% {
+    box-shadow: 0 0 0 0 red;
+  }
+  100% {
+    box-shadow: 0 0 0 4rem transparent;
+  }
+}
+.beaconanimation {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  padding: 2%;
+  /* background-color:#f3f6fa ; */
+}
+.bodydetailimgdiv {
+  width: 50%;
+  height: 100%;
+  display: block;
+  float: left;
+}
+/* .headerbackground {
+  display: block;
+  width: 100%;
+  height: 10vh;
+} */
+.bodydetail {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* background-color: white; */
+  color: #3f72be;
+}
+/* .BeaconData {
+  margin: 0% 3%;
+  height: 100%;
+} */
+.beaconmoving {
+  width: 50%;
+  height: 50%;
+  z-index: 2;
+  opacity: 1;
+  animation: jump 1.5s linear infinite;
+}
+/* .infocard {
+} */
+.Beacondataleft,
+.Beacondataright {
+  width: 50%;
+  height: 50%;
+}
+.BeacondataDetail {
+  display: flex;
+  background-color: skyblue;
+  border-radius: 10px;
+  color: white;
+  width: 100%;
+}
+
+@keyframes jump {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 워커리스트 */
+#BeaconWorker {
+  height: 40vh;
+  overflow-y: auto;
+}
+
+.subm-username {
+  width: 40%;
+}
+
+.subm-part {
+  width: 30%;
+}
+
+.subm-scan {
+  width: 30%;
+}
+
+.subm-white {
+  background-color: white;
+}
+
+.subm-title {
+  /* background-color: #3f72be30; */
+  background-color: skyblue;
+  color: white;
+  font-weight: bold;
+}
