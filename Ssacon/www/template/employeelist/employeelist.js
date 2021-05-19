@@ -12,10 +12,20 @@ WorkerMessage.addEventListener("click", moveWorkerMessage);
 document.addEventListener("backbutton", onBackKeyDown, false);
 
 function onBackKeyDown() {
-  localStorage.clear();
-  setTimeout(() => {
-    window.location = "../login/login.html";
-  }, 1000);
+  let userId = userInfo.data.userId;
+  console.log(userId);
+  fetch(`http://k4b101.p.ssafy.io/api/user/logout/${userId}`, {
+    method: "POST",
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log("로그아웃 확인");
+      localStorage.clear();
+      setTimeout(() => {
+        window.location = "../login/login.html";
+      }, 1000);
+    })
+    .catch((error) => console.log("error", error));
 }
 function moveWorkerAlarm() {
   window.location = "../alarm/alarmlist.html";

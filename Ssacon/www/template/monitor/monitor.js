@@ -117,7 +117,7 @@ beacon__map.addEventListener("click", (event) => {
           BeacondataMoisture.innerHTML = `  <h3>${BeaconMoisture}%</h3>
           <p>Moisture</p>`;
           BeacondataTemperatureAlarm.innerHTML = `  <h3>${BeaconTempMax}℃ ~ ${BeaconTempMin}℃</h3>
-          <p>Warning range</p>`;
+          <p>Warning Range</p>`;
           Beacondataleft.appendChild(BeacondataBattery);
           Beacondataright.appendChild(BeacondataTemperature);
           Beacondataleft.appendChild(BeacondataMoisture);
@@ -230,7 +230,6 @@ beacon__map.addEventListener("click", (event) => {
       item.appendChild(batt);
       BeaconStatus.appendChild(item);
       // 넣기전에 한번 초기화
-     
 
       // 근무자들 정보 넣기
       if (beacon.connectWorkers.length) {
@@ -253,7 +252,7 @@ beacon__map.addEventListener("click", (event) => {
             Whumi.className = "subm-scan";
             Whumi.innerHTML = "O";
             Witem.appendChild(Whumi);
-            console.log(Witem)
+            console.log(Witem);
             WorkerStatus.appendChild(Witem);
           }
         );
@@ -803,7 +802,7 @@ async function render_first() {
     batt.innerHTML = beacon.beaconBattery;
     item.appendChild(batt);
     BeaconStatus.appendChild(item);
-    
+
     // 근무자들 정보 넣기
     if (beacon.connectWorkers.length) {
       beacon.connectWorkers.forEach.call(
@@ -850,9 +849,9 @@ async function render_first() {
           Whumi.className = "subm-scan";
           Whumi.innerHTML = "X";
           Witem.appendChild(Whumi);
-          console.log(Witem)
+          console.log(Witem);
           WorkerStatus.appendChild(Witem);
-          console.log(WorkerStatus)
+          console.log(WorkerStatus);
         }
       );
     }
