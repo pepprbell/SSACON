@@ -86,3 +86,48 @@ header {
 .c-head {
   font-weight: bold;
 }
+
+.modal__background {
+  position: absolute;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  top:0;
+  left:0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.7;
+  z-index: 1000;
+}
+
+.modal {
+  position:absolute;
+  display: flex;
+  top: 20vh;
+  left:25vw;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50vw;
+  height: 30vh;
+  background-color:white;
+  border-radius: 15px;
+  color: black;
+  font-size:32px;
+  z-index: 1200;
+  text-align: center;
+}
+
+.modal__yes {
+  background:#3f72be;
+  border-radius: 15px;
+  color: white;
+  width: 30%;
+  margin-top: 5%;
+  height: 20%;
+  font-size: 24px;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}

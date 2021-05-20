@@ -29,7 +29,7 @@ body {
 .content {
     position:relative;
     border-radius:15px;
-    height: 80%;
+    height: 70%;
     width: 80%;
     margin:auto;
     margin-top:5%;
@@ -74,7 +74,7 @@ body {
     font-size:4vw;
     font-weight: bold;
     margin-top:5%;
-    height:12vw;
+    height:10vh;
     margin-left:10%;
     background-color: #3F72BE;
     color: white;

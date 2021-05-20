@@ -29,6 +29,7 @@ function getBeacon() {
     let location = result.data
     if (!location.length) {
       alert('위치정보가 없습니다. 잠시 후 다시 시도해 주세요.')
+      
       return
     } else {
       location.forEach(e => {
@@ -79,9 +80,26 @@ function checkSubmit() {
   .then((result) => {
     console.log(result.status)
     if (result.status) {
-      alert(`${checkName} 제출이 완료되었습니다.`)
-      window.history.back()
+      // alert(`${checkName} 제출이 완료되었습니다.`)
+      const modal = document.createElement("div")
+      const modal__background = document.createElement("div")
+      const modal__yes = document.createElement("div")
+      
+      modal.className = 'modal'
+      modal__background.className = 'modal__background'
+      modal__yes.className = 'modal__yes'
+      
+      modal.innerHTML = `${checkName} 제출이 완료되었습니다.`
+      modal__yes.innerHTML = '확인'
+      modal.appendChild(modal__yes)
+
+      const checklist__body = document.querySelector('body')
+
+      checklist__body.appendChild(modal)
+      checklist__body.appendChild(modal__background)
+      // window.history.back()
     }
   })
   .catch((err) => console.log(err))
 }
+

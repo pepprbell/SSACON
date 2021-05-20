@@ -1,38 +1,42 @@
 window.onload = init();
 
-const container = document.getElementById('container')
-
-fetch("http://k4b101.p.ssafy.io/api/checksheet", {method: "GET",})
-.then((res) => res.json())
-.then((result) => {
-  console.log(result)
-  const lists = result.data
-  lists.forEach(function(checklist) {
-    let item = document.createElement("ul")
-    let mach = document.createElement("li")
-    mach.className = "subm-mach"
-    mach.innerHTML = checklist.machine
-    item.appendChild(mach)
+function init() {
+  const container = document.getElementById('container')
+  const cnt = document.querySelector('.subm-highlight')
+  fetch("http://k4b101.p.ssafy.io/api/checksheet/", {method: "GET",})
+  .then((res) => res.json())
+  .then((result) => {
+    console.log(result)
+    const lists = result.data
+    const list_cnt = result.data.length
+    cnt.innerHTML = `[${list_cnt}개]`
+    lists.forEach(function(checklist) {
+      let item = document.createElement("ul")
+      let mach = document.createElement("li")
+      mach.className = "subm-mach"
+      mach.innerHTML = checklist.machine
+      item.appendChild(mach)
+      
+      let name = document.createElement("li")
+      name.className = "subm-name"
+      name.innerHTML = checklist.checkName
+      item.appendChild(name)
     
-    let name = document.createElement("li")
-    name.className = "subm-name"
-    name.innerHTML = checklist.checkName
-    item.appendChild(name)
-  
-    let place = document.createElement("li")
-    place.className = "subm-place"
-    place.innerHTML = checklist.beaconName
-    item.appendChild(place)
-  
-    let task = document.createElement("li")
-    task.className = "subm-task"
-    task.innerHTML = "1/1"
-    item.appendChild(task)
-  
-    container.appendChild(item)
+      let place = document.createElement("li")
+      place.className = "subm-place"
+      place.innerHTML = checklist.beaconName
+      item.appendChild(place)
+    
+      let task = document.createElement("li")
+      task.className = "subm-task"
+      task.innerHTML = "1/1"
+      item.appendChild(task)
+    
+      container.appendChild(item)
+    })
   })
-})
-.catch((err) => console.log(err))
+  .catch((err) => console.log(err))
+}
 
 
 // let lists = [
