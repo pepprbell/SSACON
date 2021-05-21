@@ -169,7 +169,7 @@ function sendMessage() {
     "userId": userId,
   }
 
-  fetch("http://k4b101.p.ssafy.io/api/message", {
+  fetch("http://k4b101.p.ssafy.io/api/message/", {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
@@ -180,11 +180,11 @@ function sendMessage() {
   .then((result) => {
     console.log(result)
     console.log(messageContent)
-    if (result.state) {
+    if (result.status) {
       closeModal()
     }
     else {
-      alert(result.state)
+      alert(result.status)
     }
   })
   .catch((err) => console.log(err))
